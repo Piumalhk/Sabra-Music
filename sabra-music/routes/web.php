@@ -10,34 +10,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Login view route
-Route::view('/login', 'login')->name('login');
-
-// Handle login form submission
-Route::post('/login', function (Request $request) {
-    $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
-    ]);
-
-    $remember = $request->filled('remember');
-
-    if (Auth::attempt($credentials, $remember)) {
-        $request->session()->regenerate();
-        return redirect()->intended('/dashboard');
-    }
-
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ])->onlyInput('email');
-})->name('login.attempt');
-
-Route::get('/dashboard', function () {
-    
-    echo 'dashboard';
+Route::get('/dashbosard', function () {
+    return view('dashboard');
 });
 
-// Home view route
-Route::view('/home', 'home')->name('home');
+Route::get('/home', function () {
+    return view('home');
+});
 
-
+Route::get('/login', function () {
+    return view('login');
+});

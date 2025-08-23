@@ -12,14 +12,20 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #111; /* Dark background */
+      background-image: url('<?= asset('images/bg1.jpg') ?>');
+      background-size: cover;     /* make it cover the screen */
+      background-position: right; /* center image */
+      background-repeat: no-repeat;
+      height: 120vh;
     }
 
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #000; 
-      padding: 15px 50px;
+      background:none;
+      padding: 25px 100px;
+      height: 60px;
     }
 
     .logo {
@@ -28,7 +34,8 @@
     }
 
     .logo img {
-      height: 40px; /* Adjust to your logo */
+      height: 50px; /* Adjust to your logo */
+
     }
 
     .nav-links {
@@ -67,8 +74,8 @@
   <nav class="navbar">
 
     <div class="logo">
--      
-+      <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
+    
+      <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
     </div>
 
     <div class="nav-links">
