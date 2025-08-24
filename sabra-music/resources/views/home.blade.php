@@ -1,4 +1,6 @@
 <?php
+
+
 // navbar.php (Laravel Blade style with PHP)
 ?>
 <!DOCTYPE html>
