@@ -21,3 +21,21 @@ Route::get('/home', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+Route::get('/booking', function () {
+    return view('booking');
+});
+
+Route::get('/history', function () {
+    return view('history');
+});
+
+Route::get('/schedule', function () {
+    return view('schedule');
+});
+
+Route::get('/signup', function () {
+    return view('signup');
+});
+
+
