@@ -227,6 +227,43 @@
     /* place both buttons on the top-right near the heading; prev sits left of next */
     .prev { right: 86px; background: white; color: black; }
     .next { right: 28px; background: rgba(0,0,0,0.85); color: white; }
+
+     /* About Section */
+    .about {
+      background-image: url('<?= asset('images/bg.jpeg') ?>');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      padding: 100px 50px;
+      color: white;
+      position: relative;
+    }
+    .about::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    .about h2 {
+      position: relative;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+    .about p {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* Main Footer */
+    .main-footer {
+      background: #111;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
     
   </style>
 </head>
@@ -363,6 +400,20 @@
       updateButtons();
     });
   </script>
+
+  <!-- About -->
+  <section class="about">
+    <h2>About Us</h2>
+    <p>
+      Seamless Flight Booking And Travel Planning At Your Fingertips—Effortless, 
+      Affordable, And Stress-Free Journeys Await You.
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    © 2025 | Sabra Music | All Rights Reserved
+  </footer>
 
 </body>
 </html>
