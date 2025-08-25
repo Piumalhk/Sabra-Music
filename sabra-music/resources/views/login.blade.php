@@ -94,7 +94,7 @@
     .signin-box input {
       width: 100%;
       padding: 12px 16px;
-      margin: 25px 0;
+      margin: 30px 0;
       border: none;
       border-radius: 4px;
       background: #333;
