@@ -1,0 +1,31 @@
+* text=auto
+
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+
+/.github export-ignore
+CHANGELOG.md export-ignore
+
+# Always use LF line endings
+* text=auto eol=lf
+
+# Windows batch files use CRLF
+*.bat text eol=crlf
+
+# Shell scripts use LF
+*.sh text eol=lf
+
+# Binary files (don’t convert)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.exe binary
+*.woff binary
+*.woff2 binary
