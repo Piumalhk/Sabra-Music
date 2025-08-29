@@ -24,6 +24,7 @@
       flex-direction: column;
       justify-content: space-between;
       color: white;
+      scroll-behavior: smooth;
     }
 
     /* Navbar */
@@ -73,7 +74,7 @@
 
     /* Hero Section */
     .hero {
-      padding: 80px 100px;
+      padding: 80px 110px;
       max-width: 600px;
     }
 
@@ -279,9 +280,9 @@
 
     <div class="nav-links">
       <a href="#">SCHEDULE</a>
-      <a href="#">UP COMING</a>
+      <a href="#event">UP COMING</a>
       <a href="#">HISTORY</a>
-      <a href="#">ABOUT</a>
+      <a href="#about">ABOUT</a>
     </div>
 
     <a href="admin.php" class="admin-btn">ADMIN</a>
@@ -290,7 +291,7 @@
   <!-- Hero Section -->
   <section class="hero">
     <small>ELEVATE YOUR MUSICAL JOURNEY</small>
-    <h1>Feel The <br> Rhythm Of Your Soul!</h1>
+    <h1>Feel The <br> Rhythm Of Your <br> Soul!</h1>
     <a href="#" class="signup-btn">Sign Up</a>
   </section>
 
@@ -303,7 +304,7 @@
     <a href="#"><i class="fab fa-linkedin"></i></a>
   </div>
 
-  <section class="events">
+  <section class="events" id="event">
     <h2>Up Coming Event</h2>
     <div class="event-container">
       <button class="nav-btn prev" onclick="scrollSlider(-1)">&#10094;</button>
@@ -404,7 +405,7 @@
   </script>
 
   <!-- About -->
-  <section class="about">
+  <section class="about" id="about">
     <h2>About Us</h2>
     <p>
       Seamless Flight Booking And Travel Planning At Your Fingertips—Effortless, 
