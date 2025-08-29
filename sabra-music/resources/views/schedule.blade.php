@@ -73,13 +73,14 @@
       align-items: center;
       text-align: center;
       padding: 0 20px;
+      margin-top: -50px;
     }
 
     .hero h1 {
-      font-size: 28px;
+      font-size: 34px;
       font-weight: bold;
       line-height: 1.5;
-      max-width: 850px;
+      max-width: 900px;
     }
 
     .start-btn {
@@ -91,7 +92,7 @@
       text-decoration: none;
       font-weight: bold;
       display: inline-block;
-      margin-top: 100px;
+      margin-top: 50px;
       transition: background 0.3s ease;
     }
 
@@ -105,6 +106,7 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
+      <a href="/home">
       <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
     </div>
 
