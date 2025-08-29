@@ -114,9 +114,9 @@
       display: flex;
       align-items: center;
       gap: 15px;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(33, 32, 32, 0.6);
       width: fit-content;
-      margin: 40px 100px;
+      margin: 40px 90px;
       border-radius: 25px;
     }
 
@@ -279,7 +279,7 @@
     </div>
 
     <div class="nav-links">
-      <a href="#">SCHEDULE</a>
+      <a href="/schedule">SCHEDULE</a>
       <a href="#event">UP COMING</a>
       <a href="#">HISTORY</a>
       <a href="#about">ABOUT</a>
@@ -292,7 +292,7 @@
   <section class="hero">
     <small>ELEVATE YOUR MUSICAL JOURNEY</small>
     <h1>Feel The <br> Rhythm Of Your <br> Soul!</h1>
-    <a href="#" class="signup-btn">Sign Up</a>
+    <a href="/signup" class="signup-btn">Sign Up</a>
   </section>
 
   <!-- Footer Social Icons -->

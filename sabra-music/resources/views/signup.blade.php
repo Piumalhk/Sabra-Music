@@ -183,10 +183,11 @@
       display: flex;
       align-items: center;
       gap: 15px;
-      background: rgba(0, 0, 0, 0.6);
+       background: rgba(33, 32, 32, 0.6);
       width: fit-content;
       margin: 250px 420px;
       border-radius: 25px;
+      backdrop-filter: blur(5px);
     }
 
     .footer span {
@@ -212,6 +213,7 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
+      <a href="/home">
       <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
     </div>
 
