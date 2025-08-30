@@ -38,4 +38,9 @@ Route::get('/signup', function () {
     return view('signup');
 });
 
+Route::get('/admin', function () {
+    return view('admin');
+});
+
+
 
