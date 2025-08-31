@@ -218,7 +218,7 @@
 
  
 
-    <a href="admin.php" class="admin-btn">ADMIN</a>
+  <a href="/adminlogin" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Signin Section -->
