@@ -149,6 +149,7 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
+      <a href="/home">
       <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
     </div>
 

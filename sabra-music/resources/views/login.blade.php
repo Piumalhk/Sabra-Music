@@ -81,7 +81,8 @@
       width: 350px;
       text-align: center;
       position: relative;
-      left: -320px;   
+      left: -450px;   
+      height: 400px;
     }
 
     .signin-box h2 {
@@ -94,7 +95,7 @@
     .signin-box input {
       width: 100%;
       padding: 12px 16px;
-      margin: 30px 0;
+      margin: 20px 0;
       border: none;
       border-radius: 4px;
       background: #333;
@@ -116,7 +117,7 @@
       border-radius: 4px;
       font-weight: bold;
       font-size: 14px;
-      margin-top: 15px;
+     margin-right: 20px;
       cursor: pointer;
       transition: background 0.3s ease;
     }
@@ -135,6 +136,75 @@
       color: white;
       text-decoration: underline;
     }
+
+      /* Auto-typing text popup */
+    .typing-popup {
+      position: fixed;
+      right: 150px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 30px;
+      border-radius: 30px;
+     text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      width: 700px;
+      height: 435px;
+      margin-top: 50px;
+      backdrop-filter: blur(5px);
+    
+    
+    }
+
+    .typing-popup h3 {
+      margin: 30px 0 15px 0;
+      font-size: 45px;
+      color: #fff;
+    }
+    .typing-text {
+      font-size: 30px;
+      line-height: 1.5;
+      min-height: 60px;
+     margin-top: 20px;
+  
+    }
+
+    .cursor {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }}
+
+            /* Footer Social Links */
+    .footer {
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+       background: rgba(33, 32, 32, 0.6);
+      width: fit-content;
+      margin: 250px 420px;
+      border-radius: 25px;
+      backdrop-filter: blur(5px);
+    }
+
+    .footer span {
+      font-size: 14px;
+      margin-right: 10px;
+    }
+
+    .footer a {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #bbb;
+    }
   </style>
 </head>
 <body>
@@ -142,15 +212,11 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
+      <a href="/home">
       <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
     </div>
 
-    <div class="nav-links">
-      <a href="#">SCHEDULE</a>
-      <a href="#">UP COMING</a>
-      <a href="#">HISTORY</a>
-      <a href="#">ABOUT</a>
-    </div>
+ 
 
     <a href="admin.php" class="admin-btn">ADMIN</a>
   </nav>
@@ -169,6 +235,71 @@
       
     </div>
   </div>
+
+    <!-- Auto-typing popup -->
+  <div class="typing-popup">
+    <h3>Welcome to Sabra Music!</h3>
+    <div class="typing-text" id="typingText"></div>
+    <div class="footer">
+    <span>Follow</span>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-facebook"></i></a>
+    <a href="#"><i class="fab fa-linkedin"></i></a>
+  </div>
+  </div>
+
+  <script>
+    const texts = [
+      "Join our musical community today!",
+      "Discover amazing events and performances.",
+      "Book venues for your musical journey.",
+      "Connect with fellow music enthusiasts.",
+      "Experience the rhythm of your soul!"
+    ];
+
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById('typingText');
+    const typingSpeed = 100;
+    const deletingSpeed = 50;
+    const pauseTime = 2000;
+
+    function typeText() {
+      const currentText = texts[textIndex];
+      
+      if (!isDeleting) {
+        // Typing
+        typingElement.innerHTML = currentText.substring(0, charIndex + 1) + '<span class="cursor">|</span>';
+        charIndex++;
+        
+        if (charIndex === currentText.length) {
+          isDeleting = true;
+          setTimeout(typeText, pauseTime);
+          return;
+        }
+        setTimeout(typeText, typingSpeed);
+      } else {
+        // Deleting
+        typingElement.innerHTML = currentText.substring(0, charIndex) + '<span class="cursor">|</span>';
+        charIndex--;
+        
+        if (charIndex === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          setTimeout(typeText, 500);
+          return;
+        }
+        setTimeout(typeText, deletingSpeed);
+      }
+    }
+
+    // Start typing animation when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(typeText, 1000);
+    });
+  </script>
 
 </body>
 </html>

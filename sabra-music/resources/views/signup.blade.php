@@ -217,12 +217,7 @@
       <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
     </div>
 
-    <div class="nav-links">
-      <a href="#">SCHEDULE</a>
-      <a href="#">UP COMING</a>
-      <a href="#">HISTORY</a>
-      <a href="#">ABOUT</a>
-    </div>
+    
 
     <a href="admin.php" class="admin-btn">ADMIN</a>
   </nav>
@@ -238,7 +233,7 @@
         <input type="password" name="password_confirmation" placeholder="CONFIRM PASSWORD :" required>
         <button type="submit">SIGN UP</button>
       </form>
-      <p>ALREADY HAVE AN ACCOUNT? <a href="#">LOGIN</a></p>
+      <p>Already Have An Account? <a href="/login">Login</a></p>
     </div>
   </div>
 

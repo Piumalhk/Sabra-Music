@@ -128,7 +128,7 @@
         Choose Your Preferred Date, Time, And Venue — 
         And Secure Your Spot At The Art Center In Just A Few Clicks.
       </h1>
-      <a href="#" class="start-btn">START BOOKING</a>
+      <a href="/booking" class="start-btn">START BOOKING</a>
     </div>
   </section>
 
