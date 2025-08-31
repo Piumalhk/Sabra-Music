@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sabra Music - Admin Sign IN</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+	<style>
+		body {
+			margin: 0;
+			font-family: Arial, sans-serif;
+			background-color: #111; 
+			background-image: url('{{ asset('images/bg1.jpg') }}');
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			color: white;
+		}
+
+		/* Navbar */
+		.navbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background: none;
+			padding: 25px 100px;
+			height: 60px;
+		}
+
+		.logo img {
+			height: 50px;
+		}
+
+		.admin-btn {
+			background: white;
+			color: black;
+			padding: 8px 20px;
+			border-radius: 20px;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 14px;
+			transition: background 0.3s ease;
+		}
+
+		.admin-btn:hover {
+			background: #ddd;
+		}
+
+		/* Signin Form */
+		.signin-container {
+			flex: 1;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.signin-box {
+			background: rgba(178, 178, 178, 0.7);
+			color: #222;          
+			padding: 40px;
+			border-radius: 10px;
+			width: 350px;
+			text-align: center;
+			position: relative;
+			left: -450px;   
+			height: 420px;
+		}
+
+		.signin-box h2 {
+			margin-bottom: 25px;
+			font-size: 22px;
+			font-weight: bold;
+			color: #fff;
+		}
+
+		.signin-box input {
+			width: 100%;
+			padding: 12px 16px;
+			margin: 18px 0;
+			border: none;
+			border-radius: 4px;
+			background: #333;
+			color: white;
+			font-size: 14px;
+			box-sizing: border-box;
+		}
+
+		.signin-box input::placeholder {
+			color: #bbb;
+		}
+
+		.signin-box button {
+			width: 100%;
+			padding: 12px;
+			background: white;
+			color: black;
+			border: none;
+			border-radius: 4px;
+			font-weight: bold;
+			font-size: 14px;
+			margin-right: 20px;
+			cursor: pointer;
+			transition: background 0.3s ease;
+		}
+
+		.signin-box button:hover {
+			background: #ddd;
+		}
+
+		.signin-box p {
+			margin-top: 15px;
+			font-size: 13px;
+			color: #bbb;
+		}
+
+		.signin-box p a {
+			color: white;
+			text-decoration: underline;
+		}
+
+		/* Auto-typing text popup */
+		.typing-popup {
+			position: fixed;
+			right: 150px;
+			top: 50%;
+			transform: translateY(-50%);
+			background: rgba(0, 0, 0, 0.5);
+			color: white;
+			padding: 30px;
+			border-radius: 30px;
+			text-align: center;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+			width: 700px;
+			height: 435px;
+			margin-top: 50px;
+			backdrop-filter: blur(5px);
+		}
+
+		.typing-popup h3 {
+			margin: 30px 0 15px 0;
+			font-size: 45px;
+			color: #fff;
+		}
+		.typing-text {
+			font-size: 30px;
+			line-height: 1.5;
+			min-height: 60px;
+			margin-top: 20px;
+		}
+
+		.cursor {
+			animation: blink 1s infinite;
+		}
+
+		@keyframes blink {
+			0%, 50% { opacity: 1; }
+			51%, 100% { opacity: 0; }}
+
+		/* Footer Social Links */
+		.footer {
+			padding: 15px 30px;
+			display: flex;
+			align-items: center;
+			gap: 15px;
+			background: rgba(33, 32, 32, 0.6);
+			width: fit-content;
+			margin: 250px 420px;
+			border-radius: 25px;
+			backdrop-filter: blur(5px);
+		}
+
+		.footer span {
+			font-size: 14px;
+			margin-right: 10px;
+		}
+
+		.footer a {
+			color: white;
+			font-size: 18px;
+			text-decoration: none;
+		}
+
+		.footer a:hover {
+			color: #bbb;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- Navbar -->
+	<nav class="navbar">
+		<div class="logo">
+			<a href="/home">
+			<img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+		</div>
+
+		<a href="/login" class="admin-btn">Back</a>
+	</nav>
+
+	<!-- Signin Section -->
+	<div class="signin-container">
+		<div class="signin-box">
+			<h2>ADMIN SIGN IN</h2>
+			<form action="/admin/login" method="POST">
+				@csrf
+				<input type="email" name="email" placeholder="Email" required>
+				<input type="password" name="password" placeholder="Password" required>
+
+				<button type="submit" style="margin-top: 24px;margin-bottom: 10px;">SIGN IN</button>
+			</form>
+			<p style="margin-top:6px">Forgot password? <a href="#">Reset</a></p>
+		</div>
+	</div>
+
+	<script>
+		const texts = [
+			"Join our musical community today!",
+			"Discover amazing events and performances.",
+			"Book venues for your musical journey.",
+			"Connect with fellow music enthusiasts.",
+			"Experience the rhythm of your soul!"
+		];
+
+		let textIndex = 0;
+		let charIndex = 0;
+		let isDeleting = false;
+		const typingElement = document.getElementById('typingText');
+		const typingSpeed = 100;
+		const deletingSpeed = 50;
+		const pauseTime = 2000;
+
+		function typeText() {
+			const currentText = texts[textIndex];
+      
+			if (!isDeleting) {
+				// Typing
+				typingElement.innerHTML = currentText.substring(0, charIndex + 1) + '<span class="cursor">|</span>';
+				charIndex++;
+        
+				if (charIndex === currentText.length) {
+					isDeleting = true;
+					setTimeout(typeText, pauseTime);
+					return;
+				}
+				setTimeout(typeText, typingSpeed);
+			} else {
+				// Deleting
+				typingElement.innerHTML = currentText.substring(0, charIndex) + '<span class="cursor">|</span>';
+				charIndex--;
+        
+				if (charIndex === 0) {
+					isDeleting = false;
+					textIndex = (textIndex + 1) % texts.length;
+					setTimeout(typeText, 500);
+					return;
+				}
+				setTimeout(typeText, deletingSpeed);
+			}
+		}
+
+		// Start typing animation when page loads
+		document.addEventListener('DOMContentLoaded', function() {
+			setTimeout(typeText, 1000);
+		});
+	</script>
+
+</body>
+</html>
