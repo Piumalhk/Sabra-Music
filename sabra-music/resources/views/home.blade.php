@@ -375,7 +375,7 @@
       <a href="#about">ABOUT</a>
     </div>
 
-    <a href="admin.php" class="admin-btn">ADMIN</a>
+    <a href="/adminlogin" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Hero Section -->

@@ -142,6 +142,43 @@
     .submit-btn:hover {
       background: #ddd;
     }
+
+    /* PDF upload area */
+    .pdf-upload {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(13,27,42,0.12);
+      border: 1px dashed rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #e6eef6;
+    }
+
+    .pdf-dropzone{
+      flex:1;
+      min-height:80px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      text-align:center;
+      padding:12px;
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+      cursor:pointer;
+      transition:background .18s, border-color .18s;
+    }
+
+    .pdf-dropzone.dragover{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.3)}
+
+    .pdf-info{display:flex;flex-direction:column;gap:6px;min-width:220px}
+    .pdf-info .name{font-weight:600}
+    .pdf-info .meta{font-size:13px;color:#cbd5e1}
+    .file-remove{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;color:#e6eef6;cursor:pointer}
+
+    .hidden-file{display:none}
   </style>
 </head>
 <body>
@@ -218,9 +255,80 @@
         <textarea placeholder="Type Here"></textarea>
       </div>
 
+      <!-- PDF upload area -->
+      <div class="pdf-upload">
+        <div id="dropzone" class="pdf-dropzone">
+          <div style="display:flex;flex-direction:column;align-items:center">
+            <i class="fas fa-file-pdf" style="font-size:28px;color:#ef4444"></i>
+            <div style="margin-top:6px">Drag & drop a PDF here or <span style="text-decoration:underline">browse</span></div>
+            <div style="font-size:12px;color:#cbd5e1;margin-top:6px">Max 10MB · PDF only</div>
+          </div>
+          <input id="pdfInput" class="hidden-file" type="file" accept="application/pdf">
+        </div>
+
+        <div class="pdf-info" id="pdfInfo">
+          <div class="name">No file selected</div>
+          <div class="meta">Upload a PDF with supporting documents (rider, schedule, proposal)</div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button id="removeFile" class="file-remove" type="button" style="display:none">Remove</button>
+            <button id="changeFile" class="file-remove" type="button" style="display:none">Change</button>
+          </div>
+        </div>
+      </div>
+
       <button type="submit" class="submit-btn">Submit Booking</button>
     </form>
   </div>
 
 </body>
 </html>
+
+  <script>
+    (function(){
+      const dropzone = document.getElementById('dropzone');
+      const pdfInput = document.getElementById('pdfInput');
+      const pdfInfo = document.getElementById('pdfInfo');
+      const removeBtn = document.getElementById('removeFile');
+      const changeBtn = document.getElementById('changeFile');
+
+      function showFile(file){
+        pdfInfo.querySelector('.name').innerText = file.name;
+        pdfInfo.querySelector('.meta').innerText = Math.round(file.size/1024) + ' KB · ' + file.type;
+        removeBtn.style.display = 'inline-block';
+        changeBtn.style.display = 'inline-block';
+      }
+
+      function clearFile(){
+        pdfInput.value = '';
+        pdfInfo.querySelector('.name').innerText = 'No file selected';
+        pdfInfo.querySelector('.meta').innerText = 'Upload a PDF with supporting documents (rider, schedule, proposal)';
+        removeBtn.style.display = 'none';
+        changeBtn.style.display = 'none';
+      }
+
+      dropzone.addEventListener('click', ()=> pdfInput.click());
+
+      dropzone.addEventListener('dragover', (e)=>{ e.preventDefault(); dropzone.classList.add('dragover'); });
+      dropzone.addEventListener('dragleave', (e)=>{ e.preventDefault(); dropzone.classList.remove('dragover'); });
+      dropzone.addEventListener('drop', (e)=>{
+        e.preventDefault(); dropzone.classList.remove('dragover');
+        const file = e.dataTransfer.files && e.dataTransfer.files[0];
+        handleFile(file);
+      });
+
+      pdfInput.addEventListener('change', (e)=>{
+        const file = e.target.files && e.target.files[0];
+        handleFile(file);
+      });
+
+      removeBtn.addEventListener('click', clearFile);
+      changeBtn.addEventListener('click', ()=> pdfInput.click());
+
+      function handleFile(file){
+        if (!file) return;
+        if (file.type !== 'application/pdf') { alert('Please upload a PDF file.'); return; }
+        if (file.size > 10 * 1024 * 1024) { alert('File too large. Max is 10MB.'); return; }
+        showFile(file);
+      }
+    })();
+  </script>
