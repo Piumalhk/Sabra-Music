@@ -10,6 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sabra Music</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+
   <style>
     body {
       margin: 0;
@@ -267,10 +269,98 @@
       font-size: 14px;
       color: #aaa;
     }
+
+     /* Loading Animation - Music Theme */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(5px);
+    }
+
+    .music-loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    /* Music Bars Animation */
+    .music-bars {
+      display: flex;
+      gap: 8px;
+      align-items: end;
+      height: 50px;
+    }
+
+    .bar {
+      width: 6px;
+      background:white;
+      border-radius: 1px;
+      animation: musicPulse 1.5s ease-in-out infinite;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+    .bar:nth-child(7) { animation-delay: 0.4s; }
+    .bar:nth-child(8) { animation-delay: 0.3s; }
+    .bar:nth-child(9) { animation-delay: 0.2s; }
+    .bar:nth-child(10) { animation-delay: 0.1s; }
+
+    @keyframes musicPulse {
+      0%, 40%, 100% {
+        height: 20px;
+        transform: scaleY(0.4);
+      }
+      20% {
+        height: 50px;
+        transform: scaleY(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    .loading-overlay.show {
+      display: flex;
+    }
     
   </style>
 </head>
 <body>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="music-loader">
+      <!-- Music Bars -->
+      <div class="music-bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      
+    </div>
+  </div>
 
   <!-- Navbar -->
   <nav class="navbar">
@@ -279,9 +369,9 @@
     </div>
 
     <div class="nav-links">
-      <a href="/schedule">SCHEDULE</a>
-      <a href="#event">UP COMING</a>
-      <a href="#">HISTORY</a>
+      <a href="/schedule" class="nav-link">SCHEDULE</a>
+      <a href="#event"  >UP COMING</a>
+      <a href="/history" class="nav-link">HISTORY</a>
       <a href="#about">ABOUT</a>
     </div>
 
@@ -292,7 +382,7 @@
   <section class="hero">
     <small>ELEVATE YOUR MUSICAL JOURNEY</small>
     <h1>Feel The <br> Rhythm Of Your <br> Soul!</h1>
-    <a href="/signup" class="signup-btn">Sign Up</a>
+    <a href="/signup" class="signup-btn nav-link" >Sign Up</a>
   </section>
 
   <!-- Footer Social Icons -->
@@ -372,6 +462,29 @@
   </section>
 
   <script>
+ // Music-themed loading animation for page navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Only show loading for external links (not anchor links)
+          if (this.getAttribute('href').startsWith('#')) {
+            return;
+          }
+          
+          e.preventDefault();
+          loadingOverlay.classList.add('show');
+          
+          // Show loading for 1 second to display the music animation
+          setTimeout(() => {
+            window.location.href = this.getAttribute('href');
+          }, 1000);
+        });
+      });
+    });
+
     function scrollSlider(dir) {
       const slider = document.getElementById('eventSlider');
       if (!slider) return;

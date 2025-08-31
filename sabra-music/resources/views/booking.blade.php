@@ -156,7 +156,7 @@
     <div class="nav-links">
       <a href="#">SCHEDULE</a>
       <a href="#">UP COMING</a>
-      <a href="#">HISTORY</a>
+      <a href="/history">HISTORY</a>
       <a href="#">ABOUT</a>
     </div>
 

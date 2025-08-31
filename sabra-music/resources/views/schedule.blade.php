@@ -37,6 +37,8 @@
     .nav-links {
       display: flex;
       gap: 40px;
+      margin-right: 200px;
+     
     }
 
     .nav-links a {
@@ -99,21 +101,109 @@
     .start-btn:hover {
       background: #ddd;
     }
+   /* Loading Animation - Music Theme */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(5px);
+    }
+
+    .music-loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    /* Music Bars Animation */
+    .music-bars {
+      display: flex;
+      gap: 8px;
+      align-items: end;
+      height: 50px;
+    }
+
+    .bar {
+      width: 6px;
+      background:white;
+      border-radius: 1px;
+      animation: musicPulse 1.5s ease-in-out infinite;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+    .bar:nth-child(7) { animation-delay: 0.4s; }
+    .bar:nth-child(8) { animation-delay: 0.3s; }
+    .bar:nth-child(9) { animation-delay: 0.2s; }
+    .bar:nth-child(10) { animation-delay: 0.1s; }
+
+    @keyframes musicPulse {
+      0%, 40%, 100% {
+        height: 20px;
+        transform: scaleY(0.4);
+      }
+      20% {
+        height: 50px;
+        transform: scaleY(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    .loading-overlay.show {
+      display: flex;
+    }
+    
   </style>
 </head>
 <body>
 
+   <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="music-loader">
+      <!-- Music Bars -->
+      <div class="music-bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      
+    </div>
+  </div>
+
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/home">
+      <a href="/home" class="nav-link">
       <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
     </div>
 
     <div class="nav-links">
       <a href="#">SCHEDULE</a>
       <a href="#">UP COMING</a>
-      <a href="#">HISTORY</a>
+      <a href="/history" class="nav-link">HISTORY</a>
       <a href="#">ABOUT</a>
     </div>
 
@@ -128,9 +218,34 @@
         Choose Your Preferred Date, Time, And Venue — 
         And Secure Your Spot At The Art Center In Just A Few Clicks.
       </h1>
-      <a href="/booking" class="start-btn">START BOOKING</a>
+      <a href="/booking" class="start-btn nav-link">START BOOKING</a>
     </div>
   </section>
 
+
+<script>
+   // Music-themed loading animation for page navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Only show loading for external links (not anchor links)
+          if (this.getAttribute('href').startsWith('#')) {
+            return;
+          }
+          
+          e.preventDefault();
+          loadingOverlay.classList.add('show');
+          
+          // Show loading for 1 second to display the music animation
+          setTimeout(() => {
+            window.location.href = this.getAttribute('href');
+          }, 1000);
+        });
+      });
+    });
+</script>
 </body>
 </html>
