@@ -65,7 +65,7 @@
 			width: 350px;
 			text-align: center;
 			position: relative;
-			left: -450px;   
+			left: 0px;   
 			height: 420px;
 		}
 

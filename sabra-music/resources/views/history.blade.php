@@ -31,6 +31,7 @@
     .nav-links {
       display: flex;
       gap: 40px;
+      margin-right: 200px;
     }
     .nav-links a {
       text-decoration: none;
@@ -226,7 +227,7 @@
     <div class="nav-links">
       <a href="#">SCHEDULE</a>
       <a href="#">UP COMING</a>
-      <a href="#" style="font-weight:bold;text-decoration:underline;">HISTORY</a>
+      <a href="#">HISTORY</a>
       <a href="#">ABOUT</a>
     </div>
     <a href="admin.php" class="admin-btn">ADMIN</a>
