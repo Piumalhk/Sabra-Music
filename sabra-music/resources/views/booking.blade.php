@@ -127,7 +127,8 @@
     }  
 
     .submit-btn {
-      margin-top: 20px;
+      display: block;
+      margin: 20px auto 0; /* center horizontally */
       background: white;
       color: #0d1b2a;
       border: none;
