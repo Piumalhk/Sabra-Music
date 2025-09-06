@@ -218,7 +218,14 @@
         Choose Your Preferred Date, Time, And Venue — 
         And Secure Your Spot At The Art Center In Just A Few Clicks.
       </h1>
-      <a href="/booking" class="start-btn nav-link">START BOOKING</a>
+      <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:50px;">
+        <a href="/booking" class="start-btn nav-link">
+          <i class="fas fa-calendar-plus" style="margin-right:8px"></i>START BOOKING
+        </a>
+        <a href="/check" class="start-btn nav-link" style="background:#10b981;color:#fff;">
+          <i class="fas fa-book-check" style="margin-right:8px"></i>CHECK BOOKING
+        </a>
+      </div>
     </div>
   </section>
 
