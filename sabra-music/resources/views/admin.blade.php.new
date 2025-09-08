@@ -35,7 +35,6 @@
 		.actions{display:flex;gap:10px;align-items:center}
 		.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:#e6eef6;cursor:pointer}
 		.btn.primary{background:var(--accent);border:none;color:#07221a}
-		.btn.pdf-view{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#ef4444}
 		.icon-btn{background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer}
 
 		/* Stats */
@@ -65,9 +64,7 @@
 		.input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e6eef6}
 		.label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
 		.file-input{display:none}
-		.file-label{display:flex;align-items:center;gap:8px;padding:10px;border-radius:8px;border:1px dashed rgba(255,255,255,0.04);cursor:pointer;color:var(--muted);transition:all 0.3s ease}
-		.file-label:hover{background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.1)}
-		.file-label.has-file{border-color:var(--accent);background:rgba(16,185,129,0.05);color:#fff}
+		.file-label{display:flex;align-items:center;gap:8px;padding:10px;border-radius:8px;border:1px dashed rgba(255,255,255,0.04);cursor:pointer;color:var(--muted)}
 		.img-preview{width:100%;height:140px;object-fit:cover;border-radius:8px;background:#031224;display:block}
 		.select{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e6eef6}
 		.help{font-size:12px;color:var(--muted);margin-top:6px}
@@ -219,13 +216,7 @@
 											<td>{{ $activity['user'] }}</td>
 											<td style="text-align:right;color:var(--muted)">
 												@if($activity['type'] == 'booking')
-													<a href="{{ route('admin.bookings.show', $activity['id']) }}" style="color:var(--muted)">Details</a>
-													@php
-														$booking = \App\Models\Booking::find($activity['id']);
-													@endphp
-													@if($booking && $booking->pdf_attachment)
-														<a href="{{ route('admin.bookings.pdf', $activity['id']) }}" style="color:var(--accent)" target="_blank">View PDF</a>
-													@endif
+													<a href="{{ route('admin.bookings.show', $activity['id']) }}" style="color:var(--muted)">View</a>
 												@elseif($activity['type'] == 'event')
 													<a href="{{ route('events.show', $activity['id']) }}" style="color:var(--muted)">View</a>
 												@endif
@@ -259,37 +250,25 @@
 							<div class="form-row">
 								<div class="form-col">
 									<label class="label">Title</label>
-									<input class="input" id="evt-title" name="title" type="text" placeholder="Event title" required value="{{ old('title') }}">
-									@error('title')
-										<div style="color:#ef4444;font-size:12px;margin-top:5px">{{ $message }}</div>
-									@enderror
+									<input class="input" id="evt-title" name="title" type="text" placeholder="Event title" required>
 
 									<label class="label" style="margin-top:8px">Date</label>
-									<input class="input" id="evt-date" name="event_date" type="date" required value="{{ old('event_date') }}">
-									@error('event_date')
-										<div style="color:#ef4444;font-size:12px;margin-top:5px">{{ $message }}</div>
-									@enderror
+									<input class="input" id="evt-date" name="event_date" type="date" required>
 
 									<label class="label" style="margin-top:8px">Time</label>
-									<input class="input" id="evt-time" name="event_time" type="time" required value="{{ old('event_time') }}">
-									@error('event_time')
-										<div style="color:#ef4444;font-size:12px;margin-top:5px">{{ $message }}</div>
-									@enderror
+									<input class="input" id="evt-time" name="event_time" type="time" required>
 
 									<label class="label" style="margin-top:8px">Location</label>
-									<input class="input" id="evt-location" name="location" type="text" placeholder="Location" required value="{{ old('location') }}">
-									@error('location')
-										<div style="color:#ef4444;font-size:12px;margin-top:5px">{{ $message }}</div>
-									@enderror
+									<input class="input" id="evt-location" name="location" type="text" placeholder="Location" required>
+
+									<label class="label" style="margin-top:8px">Price (optional)</label>
+									<input class="input" id="evt-price" name="price" type="text" placeholder="$0.00">
 
 									<label class="label" style="margin-top:8px">Status</label>
-									<select id="evt-status" name="status" class="select">
-										<option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
-										<option value="published" {{ old('status') == 'published' ? 'selected' : '' }}>Published</option>
+									<select id="evt-status" name="status" class="select" required>
+										<option value="draft">Draft</option>
+										<option value="published">Published</option>
 									</select>
-									@error('status')
-										<div style="color:#ef4444;font-size:12px;margin-top:5px">{{ $message }}</div>
-									@enderror
 								</div>
 
 								<div style="width:220px">
@@ -297,24 +276,15 @@
 									<img id="imgPreview" class="img-preview" src="{{ asset('images/bg1.jpg') }}" alt="image preview">
 									<label class="file-label" style="margin-top:8px">
 										<i class="fas fa-upload"></i>
-										<span id="fileLabelText">Choose image</span>
-										<input id="imgInput" name="image" class="file-input" type="file" accept="image/jpeg,image/png,image/jpg">
+										<span id="fileLabelText">Upload image</span>
+										<input id="imgInput" name="image" class="file-input" type="file" accept="image/*">
 									</label>
-									<button type="button" id="clearImage" style="margin-top:4px;font-size:12px;background:transparent;border:0;color:var(--muted);cursor:pointer;padding:0;display:none;">
-										<i class="fas fa-times"></i> Clear image
-									</button>
 									<div class="help">Recommended size: 1200x600px. JPG or PNG.</div>
-									@error('image')
-										<div style="color:#ef4444;font-size:12px;margin-top:5px">{{ $message }}</div>
-									@enderror
 								</div>
 							</div>
 
 							<label class="label" style="margin-top:10px">Description</label>
-							<textarea id="evt-desc" name="description" class="input" style="min-height:120px" placeholder="Short description" required>{{ old('description') }}</textarea>
-							@error('description')
-								<div style="color:#ef4444;font-size:12px;margin-top:5px">{{ $message }}</div>
-							@enderror
+							<textarea id="evt-desc" name="description" class="input" style="min-height:120px" placeholder="Short description" required></textarea>
 
 							<div style="display:flex;gap:8px;margin-top:12px">
 								<button type="submit" name="submit_type" value="publish" id="publishBtn" class="btn primary">Publish</button>
@@ -353,10 +323,7 @@
 											</span>
 										</td>
 										<td>
-											<a href="{{ route('admin.bookings.show', $booking->id) }}" class="btn">Details</a>
-											@if($booking->pdf_attachment)
-												<a href="{{ route('admin.bookings.pdf', $booking->id) }}" class="btn pdf-view" target="_blank"><i class="fas fa-file-pdf"></i> View</a>
-											@endif
+											<a href="{{ route('admin.bookings.show', $booking->id) }}" class="btn">View</a>
 											<form action="{{ route('admin.bookings.status', $booking->id) }}" method="POST" style="display:inline">
 												@csrf
 												@method('PATCH')
@@ -478,9 +445,7 @@
 										<td>{{ ucfirst($user->role) }}</td>
 										<td>Active</td>
 										<td>
-											<a href="#" class="btn edit-user-btn" data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}" data-user-email="{{ $user->email }}" data-user-role="{{ $user->role }}">
-												<i class="fas fa-edit"></i> Edit
-											</a>
+											<button class="btn"><i class="fas fa-edit"></i> Edit</button>
 										</td>
 									</tr>
 								@empty
@@ -506,61 +471,6 @@
 					parentSub.style.display = parentSub.style.display === 'flex' ? 'none' : 'flex';
 				}
 			});
-		});
-		
-		// Event form validation and submission
-		document.addEventListener('DOMContentLoaded', function() {
-			const createForm = document.getElementById('createForm');
-			const publishBtn = document.getElementById('publishBtn');
-			const saveDraftBtn = document.getElementById('saveDraftBtn');
-			
-			if (createForm) {
-				// Set Publish button to select published status
-				publishBtn.addEventListener('click', function() {
-					document.getElementById('evt-status').value = 'published';
-				});
-				
-				// Set Save Draft button to select draft status
-				saveDraftBtn.addEventListener('click', function() {
-					document.getElementById('evt-status').value = 'draft';
-				});
-				
-				// Form validation
-				createForm.addEventListener('submit', function(e) {
-					const title = document.getElementById('evt-title').value;
-					const date = document.getElementById('evt-date').value;
-					const time = document.getElementById('evt-time').value;
-					const location = document.getElementById('evt-location').value;
-					const description = document.getElementById('evt-desc').value;
-					const imageFile = document.getElementById('imgInput').files[0];
-					
-					// Check required fields
-					if (!title || !date || !time || !location || !description) {
-						e.preventDefault();
-						alert('Please fill in all required fields');
-						return;
-					}
-					
-					// Validate image if one is selected
-					if (imageFile) {
-						// Check file size (max 5MB)
-						const maxSize = 5 * 1024 * 1024; // 5MB in bytes
-						if (imageFile.size > maxSize) {
-							e.preventDefault();
-							alert('Image file is too large. Maximum size is 5MB.');
-							return;
-						}
-						
-						// Check file type
-						const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-						if (!validTypes.includes(imageFile.type)) {
-							e.preventDefault();
-							alert('Invalid file type. Please upload a JPG or PNG image.');
-							return;
-						}
-					}
-				});
-			}
 		});
 
 		// Tabs
@@ -604,73 +514,17 @@
 		const imgInput = document.getElementById('imgInput');
 		const imgPreview = document.getElementById('imgPreview');
 		const fileLabelText = document.getElementById('fileLabelText');
-		const clearImageBtn = document.getElementById('clearImage');
-		const defaultPreviewSrc = imgPreview ? imgPreview.src : '';
-		
-		function updateImagePreview(file) {
-			if (!imgPreview) return;
-			
-			if (file) {
-				// Update file name display
-				fileLabelText.innerText = file.name.length > 20 
-					? file.name.substring(0, 17) + '...' 
-					: file.name;
-				
-				// Show image preview
-				const reader = new FileReader();
-				reader.onload = () => {
-					imgPreview.src = reader.result;
-					imgPreview.style.display = 'block';
-				};
-				reader.readAsDataURL(file);
-				
-				// Add a class to show file is selected
-				document.querySelector('.file-label').classList.add('has-file');
-				
-				// Show clear button
-				if (clearImageBtn) {
-					clearImageBtn.style.display = 'block';
-				}
-			} else {
-				// Reset to default
-				imgPreview.src = defaultPreviewSrc;
-				fileLabelText.innerText = 'Choose image';
-				document.querySelector('.file-label').classList.remove('has-file');
-				
-				// Hide clear button
-				if (clearImageBtn) {
-					clearImageBtn.style.display = 'none';
-				}
-			}
-		}
-		
 		if (imgInput) {
-			// Handle file selection
 			imgInput.addEventListener('change', (e) => {
 				const file = e.target.files && e.target.files[0];
 				if (!file) return;
-				updateImagePreview(file);
+				fileLabelText.innerText = file.name;
+				const reader = new FileReader();
+				reader.onload = () => imgPreview.src = reader.result;
+				reader.readAsDataURL(file);
 			});
-			
-			// Make sure clicking anywhere on the label opens file dialog
-			document.querySelectorAll('.file-label').forEach(lbl => {
-				lbl.addEventListener('click', (e) => {
-					// Prevent default if clicking on the input itself
-					if (e.target !== imgInput) {
-						e.preventDefault();
-						imgInput.click();
-					}
-				});
-			});
-			
-			// Clear button functionality
-			if (clearImageBtn) {
-				clearImageBtn.addEventListener('click', () => {
-					// Reset file input
-					imgInput.value = '';
-					updateImagePreview(null);
-				});
-			}
+			// clicking label opens file chooser
+			document.querySelectorAll('.file-label').forEach(lbl => lbl.addEventListener('click', () => imgInput.click()));
 		}
 
 		// Auto-hide alerts after 5 seconds
@@ -683,104 +537,5 @@
 			});
 		}, 5000);
 	</script>
-	
-	<!-- User Edit Modal -->
-	<div id="userEditModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center;">
-		<div style="background:var(--panel); width:450px; border-radius:12px; padding:25px; border:1px solid rgba(255,255,255,0.05); box-shadow:0 10px 30px rgba(0,0,0,0.3);">
-			<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-				<h3 style="margin:0;">Edit User</h3>
-				<button id="closeUserEditModal" style="background:transparent; border:none; color:var(--muted); font-size:18px; cursor:pointer;">
-					<i class="fas fa-times"></i>
-				</button>
-			</div>
-			
-			<form id="userEditForm" action="" method="POST">
-				@csrf
-				@method('PUT')
-				
-				<div style="margin-bottom:15px;">
-					<label class="label">Name</label>
-					<input type="text" name="name" id="edit-user-name" class="input" required>
-				</div>
-				
-				<div style="margin-bottom:15px;">
-					<label class="label">Email</label>
-					<input type="email" name="email" id="edit-user-email" class="input" required>
-				</div>
-				
-				<div style="margin-bottom:15px;">
-					<label class="label">Role</label>
-					<select name="role" id="edit-user-role" class="select">
-						<option value="user">User</option>
-						<option value="admin">Admin</option>
-					</select>
-				</div>
-				
-				<div style="margin-bottom:15px;">
-					<label class="label">Status</label>
-					<select name="is_active" id="edit-user-status" class="select">
-						<option value="1">Active</option>
-						<option value="0">Inactive</option>
-					</select>
-				</div>
-				
-				<div style="margin-top:20px; display:flex; gap:10px; justify-content:flex-end;">
-					<button type="button" id="cancelUserEdit" class="btn">Cancel</button>
-					<button type="submit" class="btn primary">Save Changes</button>
-				</div>
-			</form>
-		</div>
-	</div>
-	
-	<script>
-		// User Edit Modal Functionality
-		document.addEventListener('DOMContentLoaded', function() {
-			const modal = document.getElementById('userEditModal');
-			const closeBtn = document.getElementById('closeUserEditModal');
-			const cancelBtn = document.getElementById('cancelUserEdit');
-			const editForm = document.getElementById('userEditForm');
-			const editButtons = document.querySelectorAll('.edit-user-btn');
-			
-			// Open modal when edit button is clicked
-			editButtons.forEach(button => {
-				button.addEventListener('click', function(e) {
-					e.preventDefault();
-					
-					// Get user data from data attributes
-					const userId = this.getAttribute('data-user-id');
-					const userName = this.getAttribute('data-user-name');
-					const userEmail = this.getAttribute('data-user-email');
-					const userRole = this.getAttribute('data-user-role');
-					
-					// Set form action URL
-					editForm.action = "{{ url('/admin/users/') }}/" + userId;
-					
-					// Set form field values
-					document.getElementById('edit-user-name').value = userName;
-					document.getElementById('edit-user-email').value = userEmail;
-					document.getElementById('edit-user-role').value = userRole;
-					
-					// Show the modal
-					modal.style.display = 'flex';
-				});
-			});
-			
-			// Close modal functions
-			const closeModal = () => {
-				modal.style.display = 'none';
-			};
-			
-			closeBtn.addEventListener('click', closeModal);
-			cancelBtn.addEventListener('click', closeModal);
-			
-			// Close when clicking outside the modal
-			modal.addEventListener('click', function(e) {
-				if (e.target === modal) {
-					closeModal();
-				}
-			});
-		});
-	</script>
 </body>
 </html>
-
