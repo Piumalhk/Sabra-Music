@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Sabra Music - Sign Up</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -10,7 +11,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #111; 
-      background-image: url('<?= asset('images/bg1.jpg') ?>');
+      background-image: url('{{ asset('images/bg1.jpg') }}');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -213,27 +214,38 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/home">
-      <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
+      <a href="/">
+      <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+      </a>
     </div>
 
-    
-
-    <a href="admin.php" class="admin-btn">ADMIN</a>
+    <a href="{{ route('admin.login') }}" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Signup Section -->
   <div class="signup-container">
     <div class="signup-box">
       <h2>SIGN UP</h2>
-      <form action="#" method="POST">
-        <input type="email" name="email" placeholder="EMAIL :" required>
-        <input type="text" name="index_no" placeholder="INDEX NO :" required>
+      
+      @if ($errors->any())
+        <div style="background: rgba(255, 100, 100, 0.8); padding: 10px; border-radius: 4px; margin-bottom: 15px; text-align: left; color: white;">
+            <ul style="margin: 0; padding-left: 20px;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+      @endif
+      
+      <form action="{{ url('/signup') }}" method="POST">
+        @csrf
+        <input type="email" name="email" placeholder="EMAIL :" required value="{{ old('email') }}">
+        <input type="text" name="index_no" placeholder="INDEX NO :" required value="{{ old('index_no') }}">
         <input type="password" name="password" placeholder="ENTER PASSWORD :" required>
         <input type="password" name="password_confirmation" placeholder="CONFIRM PASSWORD :" required>
         <button type="submit">SIGN UP</button>
       </form>
-      <p>Already Have An Account? <a href="/login">Login</a></p>
+      <p>Already Have An Account? <a href="{{ route('login') }}">Login</a></p>
     </div>
   </div>
 

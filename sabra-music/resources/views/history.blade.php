@@ -10,7 +10,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #111;
-      background-image: url('<?= asset('images/bg1.jpg') ?>');
+      background-image: url('{{ asset('images/bg1.jpg') }}');
       background-size: cover;
       background-position: right;
       background-repeat: no-repeat;
@@ -221,44 +221,94 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/home">
-      <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
+      <a href="/">
+      <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
     </div>
     <div class="nav-links">
-      <a href="#">SCHEDULE</a>
-      <a href="#">UP COMING</a>
-      <a href="#">HISTORY</a>
+      <a href="{{ route('schedule') }}">SCHEDULE</a>
+      <a href="/">UP COMING</a>
+      <a href="{{ route('events.history') }}">HISTORY</a>
       <a href="#">ABOUT</a>
     </div>
-    <a href="admin.php" class="admin-btn">ADMIN</a>
+    @auth
+      <a href="{{ route('logout') }}" class="admin-btn" 
+         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        LOGOUT
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
+    @else
+      <a href="{{ route('login') }}" class="admin-btn">LOGIN</a>
+    @endauth
   </nav>
 
   <section class="history-section">
     <div class="history-title">PAST EVENTS</div>
+
+    <!-- Debug info (will be removed later) -->
+    @php
+      $debugAllEvents = \App\Models\Event::where('status', 'published')->get();
+      $debugNow = now()->format('Y-m-d');
+    @endphp
+
     <div class="event-list">
-      <div class="event-row">
-        <div class="event-date">Nov 18</div>
-        <div class="event-card">
-          <div class="event-details">
-            <div class="event-live"><span class="event-live-dot"></span>LIVE</div>
-            <div class="event-title">Nethrawani</div>
-            <div class="event-location"><i class="fas fa-map-marker-alt"></i>Panibharatha Open Air Theatre</div>
-            <div class="event-faculty"><i class="fas fa-home"></i>Faculty Of Management Studies</div>
+      @if(isset($past_events) && count($past_events) > 0)
+        @foreach($past_events as $event)
+        <div class="event-row">
+          <div class="event-date">{{ $event->formattedDate ?? \Carbon\Carbon::parse($event->event_date)->format('M d') }}</div>
+          <div class="event-card">
+            <div class="event-details">
+              <div class="event-live"><span class="event-live-dot"></span>LIVE</div>
+              <div class="event-title">{{ $event->title }}</div>
+              <div class="event-location"><i class="fas fa-map-marker-alt"></i>{{ $event->location }}</div>
+              <div class="event-faculty"><i class="fas fa-home"></i>{{ $event->description }}</div>
+            </div>
+            @if($event->image)
+              <img class="event-img" src="{{ asset('storage/'.$event->image) }}" alt="{{ $event->title }}">
+            @else
+              <div class="event-img" style="display:flex;align-items:center;justify-content:center;background:#eee;">
+                <i class="fas fa-image" style="font-size:24px;color:#aaa;"></i>
+              </div>
+            @endif
           </div>
-          <img class="event-img" src="<?= asset('images/history1.jpg') ?>" alt="Nethrawani">
         </div>
-      </div>
-      <div class="event-row">
-        <div class="event-date">Dec 20</div>
-        <div class="event-card">
-          <div class="event-details">
-            <div class="event-title">Adawwa</div>
-            <div class="event-location"><i class="fas fa-map-marker-alt"></i>Matta Canteen</div>
-            <div class="event-faculty"><i class="fas fa-home"></i>Faculty Of Computing</div>
+        @endforeach
+      @elseif(count($debugAllEvents) > 0)
+        <!-- Display all published events if past_events is empty -->
+        @foreach($debugAllEvents as $event)
+        <div class="event-row">
+          <div class="event-date">{{ \Carbon\Carbon::parse($event->event_date)->format('M d') }}</div>
+          <div class="event-card">
+            <div class="event-details">
+              <div class="event-live"><span class="event-live-dot"></span>LIVE</div>
+              <div class="event-title">{{ $event->title }}</div>
+              <div class="event-location"><i class="fas fa-map-marker-alt"></i>{{ $event->location }}</div>
+              <div class="event-faculty"><i class="fas fa-home"></i>{{ $event->description }}</div>
+            </div>
+            @if($event->image)
+              <img class="event-img" src="{{ asset('storage/'.$event->image) }}" alt="{{ $event->title }}">
+            @else
+              <div class="event-img" style="display:flex;align-items:center;justify-content:center;background:#eee;">
+                <i class="fas fa-image" style="font-size:24px;color:#aaa;"></i>
+              </div>
+            @endif
           </div>
-          <img class="event-img" src="<?= asset('images/history2.jpg') ?>" alt="Adawwa">
         </div>
-      </div>
+        @endforeach
+      @else
+        <div style="text-align:center;color:white;margin:40px 0;">
+          <p>No past events found</p>
+          <p style="font-size:12px;margin-top:20px;color:#aaa;">Current date: {{ $debugNow }}</p>
+          @if(auth()->check() && auth()->user()->is_admin)
+            <p style="margin-top:20px;">
+              <a href="{{ route('admin.seed-past-events-form') }}" style="color:#fff;text-decoration:underline;">
+                Create test past events
+              </a>
+            </p>
+          @endif
+        </div>
+      @endif
     </div>
   </section>
 

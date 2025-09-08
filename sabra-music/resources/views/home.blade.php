@@ -1,5 +1,5 @@
 <?php
-
+use Carbon\Carbon;
 
 // navbar.php (Laravel Blade style with PHP)
 ?>
@@ -110,6 +110,24 @@
       background: #ddd;
     }
 
+    .login-btn {
+      background: transparent;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 20px;
+      border: 2px solid white;
+    }
+
+    .login-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    
     /* Footer Social Links */
     .footer {
       padding: 15px 30px;
@@ -190,12 +208,26 @@
       margin: 0 0 10px;
       font-size: 18px;
       font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .event-info p {
       font-size: 14px;
       color: #444;
       margin: 5px 0;
+    }
+
+    .event-info .description {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #666;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .event-info i {
@@ -383,6 +415,7 @@
     <small>ELEVATE YOUR MUSICAL JOURNEY</small>
     <h1>Feel The <br> Rhythm Of Your <br> Soul!</h1>
     <a href="/signup" class="signup-btn nav-link" >Sign Up</a>
+    <a href="/login" class="login-btn nav-link" >Login</a>
   </section>
 
   <!-- Footer Social Icons -->
@@ -400,61 +433,30 @@
       <button class="nav-btn prev" onclick="scrollSlider(-1)">&#10094;</button>
 
       <div class="event-slider" id="eventSlider">
-        <div class="event-card">
-          <img src="<?= asset('images/bg.jpeg') ?>" alt="Event 1">
-          <div class="event-info">
-            <h3>Ridmya – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Management Studies</p>
+        @forelse($upcoming_events as $event)
+          <div class="event-card">
+            @if($event->image)
+              <img src="{{ Storage::url($event->image) }}" alt="{{ $event->title }}">
+            @else
+              <img src="{{ asset('images/bg1.jpg') }}" alt="{{ $event->title }}">
+            @endif
+            <div class="event-info">
+              <h3>{{ $event->title }}</h3>
+              <p><i class="fas fa-map-marker-alt"></i> {{ $event->location }}</p>
+              <p><i class="fas fa-calendar"></i> {{ \Carbon\Carbon::parse($event->event_date)->format('d M Y') }}</p>
+              <p><i class="fas fa-clock"></i> {{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}</p>
+              <p class="description">{{ \Illuminate\Support\Str::limit($event->description, 80) }}</p>
+            </div>
           </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg1.jpg') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
+        @empty
+          <div class="event-card">
+            <img src="{{ asset('images/bg.jpeg') }}" alt="No Events">
+            <div class="event-info">
+              <h3>No Upcoming Events</h3>
+              <p>Check back soon for new events</p>
+            </div>
           </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg 2.png') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg.jpeg') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg1.jpg') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg.jpeg') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg1.jpg') ?>" alt="Event 3">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
+        @endforelse
       </div>
 
       <button class="nav-btn next" onclick="scrollSlider(1)">&#10095;</button>

@@ -1,8 +1,10 @@
+<?php use Illuminate\Support\Facades\Auth; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Sabra Music</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -10,7 +12,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #111; 
-      background-image: url('<?= asset('images/bg 2.png') ?>');
+      background-image: url('{{ asset('images/bg 2.png') }}');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -65,6 +67,31 @@
 
     .admin-btn:hover {
       background: #ddd;
+    }
+
+    /* Success Message */
+    .success-message {
+      background: rgba(16, 185, 129, 0.8);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin: 0 auto;
+      margin-top: 20px;
+      max-width: 80%;
+      text-align: center;
+      animation: fadeOut 5s forwards;
+      position: fixed;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
     }
 
     /* Hero Section */
@@ -197,18 +224,29 @@
   <nav class="navbar">
     <div class="logo">
       <a href="/home" class="nav-link">
-      <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
+      <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+      </a>
     </div>
 
     <div class="nav-links">
       <a href="#">SCHEDULE</a>
       <a href="#">UP COMING</a>
-      <a href="/history" class="nav-link">HISTORY</a>
+      <a href="{{ route('booking.history') }}" class="nav-link">HISTORY</a>
       <a href="#">ABOUT</a>
     </div>
 
-    <a href="admin.php" class="admin-btn">ADMIN</a>
+    @if(Auth::check())
+      <span class="admin-btn">{{ Auth::user()->index_no }}</span>
+    @else
+      <a href="{{ route('admin.login') }}" class="admin-btn">ADMIN</a>
+    @endif
   </nav>
+  
+  @if(session('success'))
+    <div class="success-message">
+        {{ session('success') }}
+    </div>
+  @endif
 
   <!-- Hero Section -->
   <section class="hero">
@@ -219,10 +257,10 @@
         And Secure Your Spot At The Art Center In Just A Few Clicks.
       </h1>
       <div style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:50px;">
-        <a href="/booking" class="start-btn nav-link">
+        <a href="{{ route('booking.create') }}" class="start-btn nav-link">
           <i class="fas fa-calendar-plus" style="margin-right:8px"></i>START BOOKING
         </a>
-        <a href="/check" class="start-btn nav-link" style="background:#10b981;color:#fff;">
+        <a href="{{ route('booking.check') }}" class="start-btn nav-link" style="background:#10b981;color:#fff;">
           <i class="fas fa-book-check" style="margin-right:8px"></i>CHECK BOOKING
         </a>
       </div>
