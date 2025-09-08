@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Sabra Music - Booking</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -10,7 +11,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #0d1b2a;
-      background-image:  url('<?= asset('images/bg 2.png') ?>');
+      background-image: url('{{ asset('images/bg 2.png') }}');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -106,6 +107,7 @@
       color: white;
       font-size: 14px;
       outline: none;
+      box-sizing: border-box;
     }
 
     input:focus, select:focus, textarea:focus {
@@ -121,10 +123,29 @@
     
     }
     input::placeholder,
-    textarea::placeholder {
+    textarea::placeholder,
+    select option {
     color: #423b3bff; /* Change this to your desired color */
     opacity: 1;
     }  
+
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 30px; /* Space for the dropdown arrow */
+    }
+
+    select, select option {
+      color: white;
+    }
+
+    select option:first-child {
+      color: #423b3bff;
+    }
 
     .submit-btn {
       display: block;
@@ -180,6 +201,99 @@
     .file-remove{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;color:#e6eef6;cursor:pointer}
 
     .hidden-file{display:none}
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: rgba(13, 27, 42, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
+      animation: modalFadeIn 0.3s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .modal-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #ef4444;
+    }
+
+    .modal-message {
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .modal-button {
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .modal-button.primary {
+      background: white;
+      color: #0d1b2a;
+    }
+
+    .modal-button.secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .modal-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Alert Messages */
+    .alert {
+      padding: 12px 15px;
+      margin: 15px 0;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .alert-error {
+      background-color: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .alert-success {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
   </style>
 </head>
 <body>
@@ -189,71 +303,98 @@
     <div class="logo">
       <a href="/home">
       <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+      </a>
     </div>
 
     <div class="nav-links">
-      <a href="#">SCHEDULE</a>
+      <a href="{{ route('schedule') }}">SCHEDULE</a>
       <a href="#">UP COMING</a>
-      <a href="/history">HISTORY</a>
+      <a href="{{ route('booking.history') }}">HISTORY</a>
       <a href="#">ABOUT</a>
     </div>
 
-    <a href="admin.php" class="admin-btn">ADMIN</a>
+    <a href="{{ route('admin.login') }}" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Booking Form Section -->
   <div class="form-container">
-    <form class="booking-form">
+    <form class="booking-form" action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data" id="bookingForm">
+      @csrf
+      
+      @if(session('error'))
+        <div class="alert alert-error">
+          {{ session('error') }}
+        </div>
+      @endif
+      
+      @if($errors->any())
+        <div class="alert alert-error">
+          <ul>
+            @foreach($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+      
       <div class="form-grid">
         <div>
           <label>Event Name</label>
-          <input type="text" placeholder="Name">
+          <input type="text" name="purpose" placeholder="Name" required value="{{ old('purpose') }}">
         </div>
         <div>
           <label>Faculty</label>
-          <input type="text" placeholder="Faculty">
+          <select name="faculty" style="color: white;" required>
+            <option value="" disabled selected style="color: #423b3bff;">Select your faculty</option>
+            <option value="Faculty of Computing" {{ old('faculty') == 'Faculty of Computing' ? 'selected' : '' }}>Faculty of Computing</option>
+            <option value="Faculty of Geomatics" {{ old('faculty') == 'Faculty of Geomatics' ? 'selected' : '' }}>Faculty of Geomatics</option>
+            <option value="Faculty of Social Sciences and Languages" {{ old('faculty') == 'Faculty of Social Sciences and Languages' ? 'selected' : '' }}>Faculty of Social Sciences and Languages</option>
+            <option value="Faculty of Agriculture" {{ old('faculty') == 'Faculty of Agriculture' ? 'selected' : '' }}>Faculty of Agriculture</option>
+            <option value="Faculty of Management" {{ old('faculty') == 'Faculty of Management' ? 'selected' : '' }}>Faculty of Management</option>
+            <option value="Faculty of Technology" {{ old('faculty') == 'Faculty of Technology' ? 'selected' : '' }}>Faculty of Technology</option>
+            <option value="Faculty of Medicine" {{ old('faculty') == 'Faculty of Medicine' ? 'selected' : '' }}>Faculty of Medicine</option>
+            <option value="Faculty of Applied Science" {{ old('faculty') == 'Faculty of Applied Science' ? 'selected' : '' }}>Faculty of Applied Science</option>
+          </select>
         </div>
 
         <div>
-          <label>Event ID</label>
-          <input type="text" placeholder="Event ID">
+          <label>Event Type</label>
+          <input type="text" name="event_type" placeholder="Event Type" required value="{{ old('event_type') }}">
         </div>
         <div>
           <label>Event Location</label>
-          <input type="text" placeholder="Location">
+          <select name="center_id" required>
+            <option value="" disabled selected style="color: #423b3bff;">Select a venue</option>
+            <option value="1" {{ old('center_id') == '1' ? 'selected' : '' }}>Art Center</option>
+            <option value="2" {{ old('center_id') == '2' ? 'selected' : '' }}>Matta</option>
+            <option value="3" {{ old('center_id') == '3' ? 'selected' : '' }}>Pnibharatha Open Air Theater</option>
+            <option value="4" {{ old('center_id') == '4' ? 'selected' : '' }}>Prof J.W. Dyananda Somasundara Auditorium</option>
+            <option value="5" {{ old('center_id') == '5' ? 'selected' : '' }}>Other</option>
+          </select>
         </div>
 
         <div>
           <label>Email</label>
-          <input type="email" placeholder="Email">
+          <input type="email" name="email" placeholder="Email" value="{{ old('email', Auth::user()->email) }}" readonly>
         </div>
-        <div>
-          <label>Address</label>
-          <input type="text" placeholder="Address 1">
-        </div>
-
         <div>
           <label>Date</label>
-          <input type="date" placeholder="Select date" style="color:#423b3bff; opacity:1">
-        </div>
-        <div>
-    
-          <input type="text" placeholder="Address 2">
+          <input type="date" name="booking_date" id="booking_date" placeholder="Select date" style="color:white;" required value="{{ old('booking_date') }}">
         </div>
 
-         <div>
-          <label>Time Slot</label>
-          <input type="time" placeholder="Select time" style="color:#423b3bff; opacity:1">
+        <div>
+          <label>Start Time</label>
+          <input type="time" name="start_time" id="start_time" placeholder="Select time" style="color:white;" required value="{{ old('start_time') }}">
         </div>
         <div>
-          <label>Fees</label>
-          <input type="text" placeholder="Your fees">
+          <label>End Time</label>
+          <input type="time" name="end_time" id="end_time" placeholder="Select time" style="color:white;" required value="{{ old('end_time') }}">
         </div>
       </div>
 
       <div>
         <label style="margin-top: 20px;">Description</label>
-        <textarea placeholder="Type Here"></textarea>
+        <textarea name="description" placeholder="Type Here">{{ old('description') }}</textarea>
       </div>
 
       <!-- PDF upload area -->
@@ -264,7 +405,7 @@
             <div style="margin-top:6px">Drag & drop a PDF here or <span style="text-decoration:underline">browse</span></div>
             <div style="font-size:12px;color:#cbd5e1;margin-top:6px">Max 10MB · PDF only</div>
           </div>
-          <input id="pdfInput" class="hidden-file" type="file" accept="application/pdf">
+          <input id="pdfInput" name="pdf_attachment" class="hidden-file" type="file" accept="application/pdf">
         </div>
 
         <div class="pdf-info" id="pdfInfo">
@@ -277,14 +418,29 @@
         </div>
       </div>
 
-      <button type="submit" class="submit-btn">Submit Booking</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Booking</button>
     </form>
   </div>
 
-</body>
-</html>
+  <!-- Unavailable Booking Modal -->
+  <div id="unavailableModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-title">
+        <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>
+        Booking Unavailable
+      </div>
+      <div class="modal-message">
+        This time slot is already booked or pending approval. Please select a different date or time for your event.
+      </div>
+      <div class="modal-buttons">
+        <button class="modal-button primary" id="checkAvailabilityBtn">Check Availability</button>
+        <button class="modal-button secondary" id="closeModalBtn">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script>
+    // File Upload Handling
     (function(){
       const dropzone = document.getElementById('dropzone');
       const pdfInput = document.getElementById('pdfInput');
@@ -332,4 +488,85 @@
         showFile(file);
       }
     })();
+
+    // Booking Availability Check
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('bookingForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const modal = document.getElementById('unavailableModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const checkAvailabilityBtn = document.getElementById('checkAvailabilityBtn');
+      
+      // Close modal button event
+      closeModalBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+      
+      // Redirect to availability check page
+      checkAvailabilityBtn.addEventListener('click', function() {
+        window.location.href = "{{ route('booking.check') }}";
+      });
+      
+      // Form submission handler
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const centerId = document.querySelector('select[name="center_id"]').value;
+        const bookingDate = document.getElementById('booking_date').value;
+        const startTime = document.getElementById('start_time').value;
+        const endTime = document.getElementById('end_time').value;
+        
+        // Check for empty required fields
+        if (!centerId || !bookingDate || !startTime || !endTime) {
+          alert('Please fill in all required fields');
+          return;
+        }
+        
+        // Check if end time is after start time
+        if (endTime <= startTime) {
+          alert('End time must be after start time');
+          return;
+        }
+        
+        // Check availability before submitting
+        checkAvailability(centerId, bookingDate, startTime, endTime, function(isAvailable) {
+          if (isAvailable) {
+            form.submit(); // Submit the form if slot is available
+          } else {
+            // Show unavailable modal
+            modal.style.display = 'flex';
+          }
+        });
+      });
+      
+      // Function to check availability
+      function checkAvailability(centerId, date, startTime, endTime, callback) {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        fetch("{{ route('booking.checkAvailability') }}", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+          },
+          body: JSON.stringify({
+            center_id: centerId,
+            date: date,
+            start_time: startTime,
+            end_time: endTime
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          callback(data.available);
+        })
+        .catch(error => {
+          console.error('Error checking availability:', error);
+          // Default to allowing submission if check fails
+          callback(true);
+        });
+      }
+    });
   </script>
+</body>
+</html>
