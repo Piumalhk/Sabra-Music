@@ -32,6 +32,10 @@
       height: 60px;
     }
 
+    .logo {
+      min-width: 100px;
+    }
+
     .logo img {
       height: 50px;
     }
@@ -39,8 +43,9 @@
     .nav-links {
       display: flex;
       gap: 40px;
-      margin-right: 200px;
-     
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
     }
 
     .nav-links a {
@@ -67,6 +72,11 @@
 
     .admin-btn:hover {
       background: #ddd;
+    }
+    
+    .auth-section {
+      min-width: 100px;
+      text-align: right;
     }
 
     /* Success Message */
@@ -235,11 +245,13 @@
       <a href="#" onclick="alert('About page coming soon!'); return false;" class="nav-link">ABOUT</a>
     </div>
 
-    @if(Auth::check())
-      <span class="admin-btn">{{ Auth::user()->index_no }}</span>
-    @else
-      <a href="{{ route('admin.login') }}" class="admin-btn">ADMIN</a>
-    @endif
+    <div class="auth-section">
+      @if(Auth::check())
+        <span class="admin-btn">{{ Auth::user()->index_no }}</span>
+      @else
+        <a href="{{ route('admin.login') }}" class="admin-btn">ADMIN</a>
+      @endif
+    </div>
   </nav>
   
   @if(session('success'))
