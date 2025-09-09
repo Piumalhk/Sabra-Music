@@ -6,6 +6,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Admin • Sabra Music</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<style>
 		:root{--bg:#0f1724;--panel:#0b1220;--muted:#9ca3af;--accent:#10b981;--card:#0b1226}
 		*{box-sizing:border-box}
@@ -18,13 +19,11 @@
 		.brand .logo{width:44px;height:44px;border-radius:10px;background:#fff url("{{ asset('images/Group-237.png') }}") center/cover no-repeat}
 		.brand h2{font-size:18px;margin:0}
 		.small{font-size:13px}
-		.nav{margin-top:14px}
-		.nav .section{margin-bottom:8px}
-		.nav a{display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;color:var(--muted);text-decoration:none;margin-bottom:6px}
-		.nav a.active, .nav a:hover{background:rgba(255,255,255,0.03);color:#fff}
-		.nav a i{width:18px;text-align:center}
-		.submenu{padding-left:12px;display:none;flex-direction:column;margin-top:6px}
-		.submenu a{padding:8px 10px;font-size:14px}
+		.nav{margin-top:24px}
+		.nav .section{margin-bottom:12px}
+		.nav a{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;color:var(--muted);text-decoration:none;margin-bottom:6px;transition:all 0.2s ease}
+		.nav a.active, .nav a:hover{background:rgba(255,255,255,0.05);color:#fff}
+		.nav a i{width:18px;text-align:center;font-size:16px}
 
 		/* Main */
 		.main{flex:1;padding:22px}
@@ -92,6 +91,13 @@
 		  border: 1px solid rgba(16, 185, 129, 0.3);
 		}
 
+		/* Recent booking highlight */
+		.booking-row.recent{animation: highlight-fade 3s ease-out}
+		@keyframes highlight-fade {
+			0% { background-color: rgba(16, 185, 129, 0.15); }
+			100% { background-color: transparent; }
+		}
+		
 		/* Responsive */
 		@media (max-width:1000px){.sidebar{display:none}.grid{grid-template-columns:1fr}.form-row{flex-direction:column}}
 	</style>
@@ -107,32 +113,15 @@
 				</div>
 
 				<div class="section">
-					<a href="#bookings" data-target="bookings"><i class="fas fa-calendar-check"></i> Bookings <i style="margin-left:auto" class="fas fa-chevron-down toggle"></i></a>
-					<div class="submenu" data-parent="bookings">
-						<a href="#all-bookings">All Bookings</a>
-						<a href="#pending-approvals">Pending Approvals</a>
-					</div>
+					<a href="#bookings" data-target="bookings"><i class="fas fa-calendar-check"></i> Bookings</a>
 				</div>
 
 				<div class="section">
-					<a href="#events" data-target="events"><i class="fas fa-calendar-day"></i> Events <i style="margin-left:auto" class="fas fa-chevron-down toggle"></i></a>
-					<div class="submenu" data-parent="events">
-						<a href="#add-event">➕ Add Event</a>
-						<a href="#upcoming-events">Upcoming Events</a>
-						<a href="#past-events">Past Events</a>
-					</div>
+					<a href="#events" data-target="events"><i class="fas fa-calendar-day"></i> Events</a>
 				</div>
 
 				<div class="section">
-					<a href="#users" data-target="users"><i class="fas fa-users"></i> Users <i style="margin-left:auto" class="fas fa-chevron-down toggle"></i></a>
-					<div class="submenu" data-parent="users">
-						<a href="#all-users">All Users</a>
-						<a href="#roles">Roles & Permissions</a>
-					</div>
-				</div>
-
-				<div class="section">
-					<a href="#settings" data-target="settings"><i class="fas fa-cog"></i> Settings</a>
+					<a href="#users" data-target="users"><i class="fas fa-users"></i> Users</a>
 				</div>
 			</nav>
 		</aside>
@@ -175,15 +164,15 @@
 			<!-- Stats -->
 			<div class="stats">
 				<div class="card">
-					<div class="label">Total Bookings 📅</div>
+					<div class="label">Total Bookings</div>
 					<div class="value">{{ $stats['bookings'] }}</div>
 				</div>
 				<div class="card">
-					<div class="label">Total Events 🎭</div>
+					<div class="label">Total Events</div>
 					<div class="value">{{ $stats['events'] }}</div>
 				</div>
 				<div class="card">
-					<div class="label">Total Users 👥</div>
+					<div class="label">Total Users</div>
 					<div class="value">{{ $stats['users'] }}</div>
 				</div>
 			</div>
@@ -195,11 +184,15 @@
 						<div style="display:flex;gap:12px;align-items:stretch;margin-top:12px">
 							<div style="flex:1;padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);min-height:160px">
 								<div style="color:var(--muted);font-size:13px">Bookings per month</div>
-								<div style="height:110px;background:linear-gradient(90deg,rgba(255,255,255,0.01),transparent);border-radius:6px;margin-top:8px;display:flex;align-items:center;justify-content:center;color:var(--muted)">[Chart placeholder]</div>
+								<div style="height:130px;border-radius:6px;margin-top:8px;position:relative">
+									<canvas id="bookingsChart"></canvas>
+								</div>
 							</div>
 							<div style="width:220px;padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);min-height:160px">
 								<div style="color:var(--muted);font-size:13px">Event participation</div>
-								<div style="height:110px;background:linear-gradient(90deg,rgba(255,255,255,0.01),transparent);border-radius:6px;margin-top:8px;display:flex;align-items:center;justify-content:center;color:var(--muted)">[Chart]</div>
+								<div style="height:130px;border-radius:6px;margin-top:8px;position:relative">
+									<canvas id="eventsChart"></canvas>
+								</div>
 							</div>
 						</div>
 
@@ -244,9 +237,9 @@
 					<div class="panel" id="quick-actions">
 						<h3>Quick Actions</h3>
 						<div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
-							<button class="btn" onclick="openSection('bookings')">View Bookings</button>
-							<button class="btn" onclick="openSection('events')">Create Event</button>
-							<button class="btn" onclick="openSection('users')">Manage Users</button>
+							<a href="#bookings" class="btn" style="text-align:center;text-decoration:none">View Bookings</a>
+							<a href="#events" class="btn" style="text-align:center;text-decoration:none">Manage Events</a>
+							<a href="#users" class="btn" style="text-align:center;text-decoration:none">Manage Users</a>
 						</div>
 					</div>
 
@@ -337,14 +330,15 @@
 					</div>
 					<div class="tab-content" style="margin-top:8px">
 						<table>
-							<thead><tr><th>User</th><th>Center</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead>
+							<thead><tr><th>User</th><th>Center</th><th>Booking Date</th><th>Time</th><th>Created</th><th>Status</th><th>Actions</th></tr></thead>
 							<tbody id="bookingTableBody">
-								@forelse($bookings as $booking)
-									<tr class="booking-row" data-status="{{ $booking->status }}">
+								@forelse($bookings as $index => $booking)
+									<tr class="booking-row {{ $index < 3 ? 'recent' : '' }}" data-status="{{ $booking->status }}">
 										<td>{{ $booking->user->email }}</td>
 										<td>{{ $booking->center->name }}</td>
 										<td>{{ $booking->booking_date }}</td>
 										<td>{{ $booking->start_time }} - {{ $booking->end_time }}</td>
+										<td title="{{ $booking->created_at }}">{{ $booking->created_at->diffForHumans() }}</td>
 										<td>
 											<span class="status-badge" style="padding:3px 8px;border-radius:12px;font-size:12px;
 												background-color:{{ $booking->status == 'pending' ? 'rgba(234,179,8,0.2)' : ($booking->status == 'approved' ? 'rgba(16,185,129,0.2)' : 'rgba(239,68,68,0.2)') }};
@@ -370,7 +364,7 @@
 										</td>
 									</tr>
 								@empty
-									<tr><td colspan="6" style="text-align:center;color:var(--muted)">No bookings found</td></tr>
+									<tr><td colspan="7" style="text-align:center;color:var(--muted)">No bookings found</td></tr>
 								@endforelse
 							</tbody>
 						</table>
@@ -496,15 +490,14 @@
 	</div>
 
 	<script>
-		// Sidebar submenu toggle
+		// Navigation functionality
 		document.querySelectorAll('.nav .section > a').forEach(a => {
 			a.addEventListener('click', (e) => {
-				const target = a.getAttribute('data-target');
-				if (!target) return; // some links are simple anchors
-				const parentSub = document.querySelector('.submenu[data-parent="'+target+'"]');
-				if (parentSub) {
-					parentSub.style.display = parentSub.style.display === 'flex' ? 'none' : 'flex';
-				}
+				// Mark the clicked link as active
+				document.querySelectorAll('.nav .section > a').forEach(link => {
+					link.classList.remove('active');
+				});
+				a.classList.add('active');
 			});
 		});
 		
@@ -779,6 +772,139 @@
 					closeModal();
 				}
 			});
+		});
+
+		// Initialize Charts
+		document.addEventListener('DOMContentLoaded', function() {
+			// Get booking data for chart
+			const bookingData = @json($bookingsByMonth ?? []);
+			
+			// Process booking data for chart
+			const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+			const currentYear = new Date().getFullYear();
+			const bookingCounts = new Array(12).fill(0);
+			
+			// If we have actual data, fill in the counts
+			if (bookingData.length > 0) {
+				bookingData.forEach(item => {
+					const monthIndex = parseInt(item.month) - 1;
+					bookingCounts[monthIndex] = parseInt(item.count);
+				});
+			}
+			
+			// Create Bookings Chart
+			const bookingsChartElement = document.getElementById('bookingsChart');
+			if (bookingsChartElement) {
+				new Chart(bookingsChartElement, {
+					type: 'bar',
+					data: {
+						labels: months,
+						datasets: [{
+							label: 'Bookings',
+							data: bookingCounts,
+							backgroundColor: 'rgba(16, 185, 129, 0.5)',
+							borderColor: '#10b981',
+							borderWidth: 1,
+							borderRadius: 4,
+							barPercentage: 0.6
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							y: {
+								beginAtZero: true,
+								ticks: {
+									precision: 0,
+									color: '#9ca3af'
+								},
+								grid: {
+									display: false
+								}
+							},
+							x: {
+								ticks: {
+									color: '#9ca3af'
+								},
+								grid: {
+									display: false
+								}
+							}
+						},
+						plugins: {
+							legend: {
+								display: false
+							},
+							tooltip: {
+								backgroundColor: '#0f172a',
+								titleColor: '#e2e8f0',
+								bodyColor: '#e2e8f0',
+								borderColor: 'rgba(255, 255, 255, 0.1)',
+								borderWidth: 1,
+								padding: 10,
+								displayColors: false,
+								callbacks: {
+									title: function(context) {
+										return months[context[0].dataIndex] + ' ' + currentYear;
+									},
+									label: function(context) {
+										const value = context.parsed.y;
+										return value + (value === 1 ? ' booking' : ' bookings');
+									}
+								}
+							}
+						}
+					}
+				});
+			}
+			
+			// Create Events Chart
+			const eventsChartElement = document.getElementById('eventsChart');
+			if (eventsChartElement) {
+				new Chart(eventsChartElement, {
+					type: 'doughnut',
+					data: {
+						labels: ['Upcoming', 'Past'],
+						datasets: [{
+							data: [{{ $upcoming_events->count() }}, {{ $past_events->count() }}],
+							backgroundColor: [
+								'rgba(99, 102, 241, 0.7)',
+								'rgba(244, 63, 94, 0.7)'
+							],
+							borderColor: [
+								'rgba(99, 102, 241, 1)',
+								'rgba(244, 63, 94, 1)'
+							],
+							borderWidth: 1
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						plugins: {
+							legend: {
+								position: 'bottom',
+								labels: {
+									color: '#9ca3af',
+									font: {
+										size: 11
+									},
+									padding: 10
+								}
+							},
+							tooltip: {
+								backgroundColor: '#0f172a',
+								titleColor: '#e2e8f0',
+								bodyColor: '#e2e8f0',
+								borderColor: 'rgba(255, 255, 255, 0.1)',
+								borderWidth: 1,
+								padding: 10
+							}
+						}
+					}
+				});
+			}
 		});
 	</script>
 </body>

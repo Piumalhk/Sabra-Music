@@ -93,6 +93,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking/success', function() {
         return view('booking-success');
     })->name('booking.success');
+    Route::get('/booking/{booking}/edit', [BookingController::class, 'userEdit'])->name('booking.edit');
+    Route::put('/booking/{booking}', [BookingController::class, 'userUpdate'])->name('booking.update');
 });
 
 // Admin routes
@@ -102,8 +104,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // Bookings management
     Route::get('/bookings', [AdminController::class, 'bookings'])->name('admin.bookings.index');
     Route::get('/bookings/{booking}', [AdminController::class, 'showBooking'])->name('admin.bookings.show');
-    Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('admin.bookings.edit');
-    Route::put('/bookings/{booking}', [BookingController::class, 'update'])->name('admin.bookings.update');
+    Route::get('/bookings/{booking}/edit', [AdminController::class, 'editBooking'])->name('admin.bookings.edit');
+    Route::put('/bookings/{booking}', [AdminController::class, 'updateBooking'])->name('admin.bookings.update');
     Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('admin.bookings.destroy');
     Route::patch('/bookings/{booking}/status', [AdminController::class, 'updateBookingStatus'])->name('admin.bookings.status');
     Route::get('/bookings/{booking}/pdf', [BookingController::class, 'viewPdf'])->name('admin.bookings.pdf');

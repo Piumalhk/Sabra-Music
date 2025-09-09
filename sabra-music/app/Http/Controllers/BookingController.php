@@ -125,9 +125,33 @@ class BookingController extends Controller
         $centers = Center::where('is_active', true)->get();
         return view('admin.bookings.edit', compact('booking', 'centers'));
     }
+    
+    /**
+     * Show the form for editing the user's booking.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function userEdit($id)
+    {
+        $booking = Booking::findOrFail($id);
+        
+        // Only booking owner can edit
+        if (Auth::id() !== $booking->user_id) {
+            abort(403);
+        }
+        
+        // Only allow editing of pending bookings
+        if ($booking->status !== 'pending') {
+            return redirect()->route('booking.check')->with('error', 'Only pending bookings can be edited');
+        }
+        
+        $centers = Center::where('is_active', true)->get();
+        return view('booking-edit', compact('booking', 'centers'));
+    }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage (admin only).
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -166,6 +190,72 @@ class BookingController extends Controller
         $booking->update($validated);
         
         return redirect()->route('admin.bookings.index')->with('success', 'Booking updated successfully');
+    }
+    
+    /**
+     * Update the user's booking.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function userUpdate(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+        
+        // Only booking owner can update their booking
+        if (Auth::id() !== $booking->user_id) {
+            abort(403);
+        }
+        
+        // Only allow editing of pending bookings
+        if ($booking->status !== 'pending') {
+            return redirect()->route('booking.check')->with('error', 'Only pending bookings can be edited');
+        }
+        
+        $validated = $request->validate([
+            'center_id' => 'required|exists:centers,id',
+            'booking_date' => 'required|date|after_or_equal:today',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
+            'purpose' => 'required|string|max:255',
+            'pdf_attachment' => 'nullable|file|mimes:pdf|max:10240',
+        ]);
+        
+        // Check for conflicts with other bookings
+        $conflict = Booking::where('center_id', $request->center_id)
+            ->where('booking_date', $request->booking_date)
+            ->where('id', '!=', $id) // Exclude the current booking
+            ->where(function($query) use ($request) {
+                $query->where(function($q) use ($request) {
+                    $q->where('start_time', '<=', $request->start_time)
+                      ->where('end_time', '>=', $request->start_time);
+                })->orWhere(function($q) use ($request) {
+                    $q->where('start_time', '<=', $request->end_time)
+                      ->where('end_time', '>=', $request->end_time);
+                });
+            })
+            ->whereIn('status', ['approved', 'pending'])
+            ->exists();
+            
+        if ($conflict) {
+            return back()->with('error', 'This time slot conflicts with an existing booking');
+        }
+        
+        // Handle file upload if a new file is provided
+        if ($request->hasFile('pdf_attachment')) {
+            // Delete old file if exists
+            if ($booking->pdf_attachment) {
+                Storage::delete($booking->pdf_attachment);
+            }
+            
+            $path = $request->file('pdf_attachment')->store('bookings');
+            $validated['pdf_attachment'] = $path;
+        }
+        
+        $booking->update($validated);
+        
+        return redirect()->route('booking.check')->with('success', 'Booking updated successfully');
     }
 
     /**
@@ -212,10 +302,18 @@ class BookingController extends Controller
     public function check()
     {
         $centers = Center::where('is_active', true)->get();
-        $recentBookings = Booking::with(['user', 'center'])
-            ->orderBy('created_at', 'desc')
-            ->take(10)
-            ->get();
+        
+        // If user is logged in, show only their bookings
+        if (Auth::check()) {
+            $recentBookings = Booking::with(['user', 'center'])
+                ->where('user_id', Auth::id())
+                ->orderBy('created_at', 'desc')
+                ->take(10)
+                ->get();
+        } else {
+            // For non-logged in users, just show empty collection
+            $recentBookings = collect();
+        }
             
         return view('check', compact('centers', 'recentBookings'));
     }
@@ -230,12 +328,20 @@ class BookingController extends Controller
             'date' => 'required|date',
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
+            'exclude_booking_id' => 'nullable|integer', // Added to exclude current booking when editing
         ]);
         
         // Check for conflicts with existing bookings (more complex time overlap check)
-        $conflict = Booking::where('center_id', $request->center_id)
+        $query = Booking::where('center_id', $request->center_id)
             ->where('booking_date', $request->date)
-            ->where(function($query) use ($request) {
+            ->whereIn('status', ['approved', 'pending']);
+            
+        // Exclude the current booking if editing
+        if ($request->has('exclude_booking_id')) {
+            $query->where('id', '!=', $request->exclude_booking_id);
+        }
+        
+        $conflict = $query->where(function($query) use ($request) {
                 // Scenario 1: New booking starts during an existing booking
                 $query->where(function($q) use ($request) {
                     $q->where('start_time', '<=', $request->start_time)
@@ -252,7 +358,6 @@ class BookingController extends Controller
                       ->where('end_time', '<=', $request->end_time);
                 });
             })
-            ->whereIn('status', ['approved', 'pending'])
             ->exists();
             
         return response()->json([

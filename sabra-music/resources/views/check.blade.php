@@ -152,6 +152,40 @@
     .status.pending{background:rgba(234,179,8,0.1);color:#eab308}
     .status.rejected{background:rgba(239,68,68,0.1);color:#ef4444}
     
+    /* Action Buttons */
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: rgba(255,255,255,0.05);
+      color: var(--accent);
+    }
+    
+    .action-btn:hover {
+      background: rgba(16,185,129,0.1);
+      transform: translateY(-2px);
+    }
+    
+    .action-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      color: var(--muted);
+    }
+    
+    .action-btn.disabled:hover {
+      background: rgba(255,255,255,0.05);
+      transform: none;
+    }
+    
+    .edit-btn {
+      text-decoration: none;
+    }
+    
     /* Stats Cards */
     .stats{display:flex;gap:12px;margin-bottom:20px}
     .stat-card{flex:1;background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.03)}
@@ -241,14 +275,25 @@
           <div class="label">Available Event Location 🏛️</div>
           <div class="value">5</div>
         </div>
+        @auth
         <div class="stat-card">
-          <div class="label">Today's Bookings 📅</div>
+          <div class="label">Your Today's Bookings 📅</div>
           <div class="value">{{ $recentBookings->where('booking_date', date('Y-m-d'))->count() }}</div>
         </div>
         <div class="stat-card">
-          <div class="label">Total Bookings 🗓️</div>
+          <div class="label">Your Total Bookings 🗓️</div>
           <div class="value">{{ $recentBookings->count() }}</div>
         </div>
+        @else
+        <div class="stat-card">
+          <div class="label">Today's Bookings 📅</div>
+          <div class="value">-</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Your Total Bookings 🗓️</div>
+          <div class="value">-</div>
+        </div>
+        @endauth
       </div>
 
       <div class="form-grid">
@@ -299,32 +344,52 @@
       <div style="height:8px"></div>
 
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <h3 style="margin:0">Recent Bookings</h3>
+        @auth
+        <h3 style="margin:0">Your Recent Bookings</h3>
         <div class="tabs" id="statusTabs">
           <button data-filter="all" class="active">All</button>
           <button data-filter="pending">Pending</button>
           <button data-filter="approved">Approved</button>
           <button data-filter="rejected">Rejected</button>
         </div>
+        @else
+        <h3 style="margin:0">Recent Bookings</h3>
+        @endauth
       </div>
 
       <div style="margin-top:8px;overflow:auto">
+        @auth
         <table id="bookingsTable">
-          <thead><tr><th>Event Location</th><th>Date</th><th>Time</th><th>User</th><th>Status</th></tr></thead>
+          <thead><tr><th>Event Location</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody>
             @forelse($recentBookings as $booking)
             <tr class="booking-row" data-status="{{ $booking->status }}">
               <td>{{ $booking->center->name }}</td>
               <td>{{ $booking->booking_date }}</td>
               <td>{{ $booking->start_time }} - {{ $booking->end_time }}</td>
-              <td>{{ $booking->user->email }}</td>
               <td><span class="status {{ $booking->status }}">{{ $booking->status }}</span></td>
+              <td>
+                @if($booking->status === 'pending')
+                  <a href="{{ route('booking.edit', $booking->id) }}" class="action-btn edit-btn" title="Edit Booking">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                @else
+                  <span class="action-btn disabled" title="Only pending bookings can be edited">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                @endif
+              </td>
             </tr>
             @empty
-            <tr><td colspan="5" style="text-align:center;color:var(--muted)">No bookings found</td></tr>
+            <tr><td colspan="5" style="text-align:center;color:var(--muted)">You don't have any bookings yet</td></tr>
             @endforelse
           </tbody>
         </table>
+        @else
+        <div style="text-align:center;padding:20px;color:var(--muted)">
+          <p><i class="fas fa-user-clock"></i> Please <a href="{{ route('login') }}" style="color:var(--accent)">login</a> to view your bookings</p>
+        </div>
+        @endauth
       </div>
     </div>
   </div>

@@ -229,10 +229,10 @@
     </div>
 
     <div class="nav-links">
-      <a href="#">SCHEDULE</a>
-      <a href="#">UP COMING</a>
-      <a href="{{ route('booking.history') }}" class="nav-link">HISTORY</a>
-      <a href="#">ABOUT</a>
+      <a href="{{ route('schedule') }}" class="nav-link">SCHEDULE</a>
+      <a href="{{ url('/') }}" class="nav-link">UP COMING</a>
+      <a href="{{ route('events.history') }}" class="nav-link">HISTORY</a>
+      <a href="#" onclick="alert('About page coming soon!'); return false;" class="nav-link">ABOUT</a>
     </div>
 
     @if(Auth::check())

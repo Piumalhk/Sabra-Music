@@ -25,6 +25,13 @@ class AdminController extends Controller
             'users' => User::where('role', 'user')->count(),
         ];
         
+        // Get bookings per month data for chart
+        $bookingsByMonth = Booking::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->whereYear('created_at', Carbon::now()->year)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+        
         // Get recent activities
         $recent_activities = collect();
         
@@ -78,9 +85,9 @@ class AdminController extends Controller
         // Sort activities by time
         $recent_activities = $recent_activities->sortByDesc('time')->take(10);
         
-        // Get bookings for bookings tab
+        // Get bookings for bookings tab - ordered by created_at to show most recent first
         $bookings = Booking::with(['user', 'center'])
-            ->orderBy('booking_date', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
             
         $pending_bookings = $bookings->where('status', 'pending');
@@ -105,7 +112,8 @@ class AdminController extends Controller
             'events',
             'upcoming_events',
             'past_events',
-            'users'
+            'users',
+            'bookingsByMonth'
         ));
     }
     
@@ -116,14 +124,52 @@ class AdminController extends Controller
     
     public function bookings()
     {
-        $bookings = Booking::with(['user', 'center'])->orderBy('booking_date', 'desc')->get();
+        $bookings = Booking::with(['user', 'center'])->orderBy('created_at', 'desc')->get();
         return view('admin.bookings.index', compact('bookings'));
     }
     
     public function showBooking(Booking $booking)
     {
         $booking->load(['user', 'center']);
-        return view('admin.bookings.show', compact('booking'));
+        return view('admin.bookings.details', compact('booking'));
+    }
+    
+    public function editBooking(Booking $booking)
+    {
+        $booking->load(['user', 'center']);
+        $centers = \App\Models\Center::where('is_active', true)->get();
+        return view('admin.bookings.edit', compact('booking', 'centers'));
+    }
+    
+    public function updateBooking(Request $request, Booking $booking)
+    {
+        $validated = $request->validate([
+            'center_id' => 'required|exists:centers,id',
+            'booking_date' => 'required|date',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
+            'purpose' => 'required|string|max:255',
+            'faculty' => 'nullable|string',
+            'event_type' => 'nullable|string',
+            'description' => 'nullable|string',
+            'status' => 'required|in:pending,approved,rejected',
+            'pdf_attachment' => 'nullable|file|mimes:pdf|max:10240',
+        ]);
+        
+        // Handle file upload if a new file is provided
+        if ($request->hasFile('pdf_attachment')) {
+            // Delete old file if exists
+            if ($booking->pdf_attachment) {
+                \Illuminate\Support\Facades\Storage::delete($booking->pdf_attachment);
+            }
+            
+            $path = $request->file('pdf_attachment')->store('bookings');
+            $validated['pdf_attachment'] = $path;
+        }
+        
+        $booking->update($validated);
+        
+        return redirect()->route('admin.bookings.show', $booking->id)->with('success', 'Booking updated successfully');
     }
     
     public function updateBookingStatus(Request $request, Booking $booking)
