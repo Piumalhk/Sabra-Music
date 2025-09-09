@@ -43,14 +43,25 @@
       height: 60px;
     }
 
+    .logo {
+      min-width: 100px;
+    }
+
     .logo img {
       height: 50px;
+    }
+    
+    .auth-section {
+      min-width: 100px;
+      text-align: right;
     }
 
     .nav-links {
       display: flex;
       gap: 40px;
-      margin-right: 200px;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
     }
 
     .nav-links a {
@@ -196,7 +207,8 @@
       .form-grid{grid-template-columns:1fr}
       .stats{flex-direction:column}
       .navbar {padding: 15px 20px;}
-      .nav-links {margin-right: 0; gap: 20px;}
+      .nav-links {gap: 20px;}
+      .logo, .auth-section {min-width: 80px;}
     }
   </style>
 </head>
@@ -237,18 +249,20 @@
       @endauth
     </div>
 
-    @auth
-      @if(Auth::user()->role === 'admin')
-        <a href="{{ route('admin.dashboard') }}" class="admin-btn nav-link">ADMIN</a>
+    <div class="auth-section">
+      @auth
+        @if(Auth::user()->role === 'admin')
+          <a href="{{ route('admin.dashboard') }}" class="admin-btn nav-link">ADMIN</a>
+        @else
+          <form action="{{ route('logout') }}" method="POST" style="display:inline;margin:0">
+            @csrf
+            <button type="submit" class="admin-btn">LOGOUT</button>
+          </form>
+        @endif
       @else
-        <form action="{{ route('logout') }}" method="POST" style="display:inline;margin:0">
-          @csrf
-          <button type="submit" class="admin-btn">LOGOUT</button>
-        </form>
-      @endif
-    @else
-      <a href="{{ route('login') }}" class="admin-btn nav-link">LOGIN</a>
-    @endauth
+        <a href="{{ route('login') }}" class="admin-btn nav-link">LOGIN</a>
+      @endauth
+    </div>
   </nav>
 
   <!-- Success/Error Messages -->
@@ -272,25 +286,25 @@
       <!-- Stats Cards -->
       <div class="stats">
         <div class="stat-card">
-          <div class="label">Available Event Location 🏛️</div>
+          <div class="label">Available Event Location</div>
           <div class="value">5</div>
         </div>
         @auth
         <div class="stat-card">
-          <div class="label">Your Today's Bookings 📅</div>
+          <div class="label">Your Today's Bookings</div>
           <div class="value">{{ $recentBookings->where('booking_date', date('Y-m-d'))->count() }}</div>
         </div>
         <div class="stat-card">
-          <div class="label">Your Total Bookings 🗓️</div>
+          <div class="label">Your Total Bookings</div>
           <div class="value">{{ $recentBookings->count() }}</div>
         </div>
         @else
         <div class="stat-card">
-          <div class="label">Today's Bookings 📅</div>
+          <div class="label">Today's Bookings</div>
           <div class="value">-</div>
         </div>
         <div class="stat-card">
-          <div class="label">Your Total Bookings 🗓️</div>
+          <div class="label">Your Total Bookings</div>
           <div class="value">-</div>
         </div>
         @endauth
