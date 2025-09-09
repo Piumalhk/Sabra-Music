@@ -8,8 +8,14 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<style>
-		:root{--bg:#0f1724;--panel:#0b1220;--muted:#9ca3af;--accent:#10b981;--card:#0b1226}
+		:root{--bg:#0f1724;--panel:#0b1220;--muted:#9ca3af;--accent:#10b981;--card:#0b1226;--light-border: rgba(209,213,219,0.16)}
 		*{box-sizing:border-box}
+
+		/* unify border color and ensure UI parts show a light gray border */
+		/* keep existing border widths/styles but force color to a single tone */
+		* { border-color: var(--light-border) !important; }
+		/* targeted fallback for elements that don't declare a border but should appear bordered */
+		.panel, .card, .input, .select, .file-label, .btn, .tabs button, .sidebar, table, th, td { border: 1px solid var(--light-border) !important; }
 		body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#0b1220 0%, #071022 100%);color:#e6eef6}
 		.app{display:flex;min-height:100vh}
 
@@ -40,6 +46,11 @@
 		/* Stats */
 		.stats{display:flex;gap:14px;margin-bottom:18px}
 		.card{flex:1;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03)}
+
+		/* Gradient variants for stats */
+		.card.gradient-bookings{background:linear-gradient(135deg, rgba(16,185,129,0.14), rgba(6,95,70,0.04));border:1px solid rgba(16,185,129,0.18)}
+		.card.gradient-events{background:linear-gradient(135deg, rgba(249,115,22,0.14), rgba(220,38,38,0.04));border:1px solid rgba(249,115,22,0.16)}
+		.card.gradient-users{background:linear-gradient(135deg, rgba(99,102,241,0.14), rgba(79,70,229,0.04));border:1px solid rgba(99,102,241,0.14)}
 		.card .label{color:var(--muted);font-size:13px}
 		.card .value{font-size:20px;margin-top:6px}
 
@@ -163,15 +174,15 @@
 
 			<!-- Stats -->
 			<div class="stats">
-				<div class="card">
+				<div class="card gradient-bookings">
 					<div class="label">Total Bookings</div>
 					<div class="value">{{ $stats['bookings'] }}</div>
 				</div>
-				<div class="card">
+				<div class="card gradient-events">
 					<div class="label">Total Events</div>
 					<div class="value">{{ $stats['events'] }}</div>
 				</div>
-				<div class="card">
+				<div class="card gradient-users">
 					<div class="label">Total Users</div>
 					<div class="value">{{ $stats['users'] }}</div>
 				</div>
