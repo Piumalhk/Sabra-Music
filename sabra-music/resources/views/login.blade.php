@@ -215,11 +215,8 @@
     <div class="logo">
       <a href="/">
       <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
+      </a>
     </div>
-
- 
-
-  <a href="/adminlogin" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Signin Section -->
