@@ -39,6 +39,20 @@
 		.search input{border:0;background:transparent;color:#fff;outline:none;width:260px}
 		.actions{display:flex;gap:10px;align-items:center}
 		.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:#e6eef6;cursor:pointer}
+
+		/* Logout button styling (topbar) - distinct and readable */
+		header.topbar .actions form .btn.logout-btn {
+			background: rgba(239,68,68,0.12);
+			border: 1px solid rgba(239,68,68,0.28) !important;
+			color: #ffecec !important;
+		}
+		header.topbar .actions form .btn.logout-btn:hover {
+			background: rgba(239,68,68,0.18);
+			border-color: rgba(239,68,68,0.36) !important;
+			transform: translateY(-2px);
+		}
+		header.topbar .actions form .btn.logout-btn:active { transform: translateY(-1px) scale(0.996); }
+		header.topbar .actions form .btn.logout-btn:focus { box-shadow: 0 8px 20px rgba(239,68,68,0.12), 0 0 0 4px rgba(239,68,68,0.06); outline:none }
 		.btn.primary{background:var(--accent);border:none;color:#07221a}
 		.btn.pdf-view{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#ef4444}
 		.icon-btn{background:transparent;border:0;color:var(--muted);font-size:18px;cursor:pointer}
@@ -62,6 +76,17 @@
 		/* Tables */
 		table{width:100%;border-collapse:collapse}
 		th,td{padding:10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);font-size:14px}
+		/* Make table headers visually distinct as headings */
+		table thead th {
+			background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+			color: #f8fafc; /* brighter heading color */
+			font-weight:700;
+			text-transform:uppercase;
+			letter-spacing:0.6px;
+			font-size:13px;
+			padding:12px 10px;
+			border-bottom:2px solid rgba(255,255,255,0.06);
+		}
 		th{color:var(--muted);font-weight:600}
 
 		/* Events & bookings tabs */
@@ -80,6 +105,34 @@
 		.file-label.has-file{border-color:var(--accent);background:rgba(16,185,129,0.05);color:#fff}
 		.img-preview{width:100%;height:140px;object-fit:cover;border-radius:8px;background:#031224;display:block}
 		.select{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e6eef6}
+
+		/* Scoped: keep the Create Event status dropdown the same width but use a dark theme and readable options */
+		#createEventPanel #evt-status.select {
+			/* do not set width here so the element retains its layout width */
+			background: linear-gradient(180deg, rgba(12,14,20,0.92), rgba(8,10,14,0.94));
+			color: #e6eef6;
+			border: 1px solid rgba(255,255,255,0.06) !important;
+			padding: 10px 36px 10px 10px; /* room for custom arrow on the right */
+			border-radius: 8px;
+			appearance: none; -webkit-appearance: none; -moz-appearance: none;
+			background-repeat: no-repeat;
+			background-position: calc(100% - 12px) center;
+			background-size: 12px 12px;
+			/* subtle arrow using SVG data URI for crispness on dark backgrounds */
+			background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e6eef6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+		}
+
+		/* Ensure option text remains readable where browsers allow styling */
+		#createEventPanel #evt-status.select option {
+			background: #0b1220; /* dark fallback for option background */
+			color: #e6eef6;
+		}
+
+		/* Focus state (does not change width) */
+		#createEventPanel #evt-status.select:focus {
+			outline: none;
+			box-shadow: 0 6px 18px rgba(2,6,23,0.6), 0 0 0 4px rgba(16,185,129,0.04);
+		}
 		.help{font-size:12px;color:var(--muted);margin-top:6px}
 
 		/* Alert Messages */
@@ -95,6 +148,34 @@
 		  color: #ef4444;
 		  border: 1px solid rgba(239, 68, 68, 0.3);
 		}
+		<script>
+		// Scroll direction detector - toggles body.scrolling-up / body.scrolling-down
+		(function(){
+			if (typeof window === 'undefined') return;
+			const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (prefersReduced) return;
+
+			let lastY = window.scrollY || 0;
+			let ticking = false;
+
+			function onScroll(){
+				const y = window.scrollY || 0;
+				if (!ticking){
+					window.requestAnimationFrame(() => {
+						if (Math.abs(y - lastY) > 10){
+							if (y > lastY) { document.body.classList.add('scrolling-down'); document.body.classList.remove('scrolling-up'); }
+							else { document.body.classList.add('scrolling-up'); document.body.classList.remove('scrolling-down'); }
+							lastY = y;
+						}
+						ticking = false;
+					});
+					ticking = true;
+				}
+			}
+
+			window.addEventListener('scroll', onScroll, { passive: true });
+		})();
+		</script>
 
 		.alert-success {
 		  background-color: rgba(16, 185, 129, 0.15);
@@ -111,6 +192,133 @@
 		
 		/* Responsive */
 		@media (max-width:1000px){.sidebar{display:none}.grid{grid-template-columns:1fr}.form-row{flex-direction:column}}
+
+		/* Animations */
+		@keyframes revealUp {
+			0% { opacity: 0; transform: translateY(50px); }
+			100% { opacity: 1; transform: translateY(0); }
+		}
+		@keyframes softPulse {
+			0% { transform: scale(1); opacity: 1; }
+			50% { transform: scale(1.03); opacity: 0.96; }
+			100% { transform: scale(1); opacity: 1; }
+		}
+		/* quicker reveal */
+		.reveal { animation: revealUp 500ms cubic-bezier(.22,.9,.28,1) forwards; }
+		/* snappier pulse */
+		.pulse { animation: softPulse 1800ms ease-in-out infinite; }
+		.fade-in { opacity: 0; animation: revealUp 420ms ease forwards; }
+		/* small lift on hover for interactive cards */
+		.panel, .card { transition: transform .18s ease, box-shadow .18s ease; }
+		.panel:hover, .card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(2,6,23,0.45); }
+
+		/* Hover animations for most interactive components */
+		.nav a, .panel, .card, .btn, .tabs button, .file-label, .brand, .search, .panel .btn, table tr td { will-change: transform, box-shadow, background; }
+		.nav a:hover, .btn:hover, .tabs button:hover, .file-label:hover, .brand:hover, .search:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 10px 22px rgba(2,6,23,0.25); }
+		table tbody tr:hover td { background: rgba(30, 22, 139, 0.11); }
+
+		/* Elements that react to scroll direction (small directional nudge) */
+		/* gentler scroll-direction nudges */
+		.scroll-react { transition: transform 600ms cubic-bezier(.2,.9,.2,1); }
+		body.scrolling-down .scroll-react { transform: translateY(-3px); }
+		body.scrolling-up .scroll-react { transform: translateY(3px); }
+
+		@media (prefers-reduced-motion: reduce) {
+			.nav a:hover, .btn:hover, .tabs button:hover, .file-label:hover, .brand:hover, .search:hover { transform: none !important; box-shadow: none !important; }
+			.scroll-react, .panel, .card { transition: none !important; transform: none !important; }
+		}
+
+		/* Respect users who prefer reduced motion */
+		@media (prefers-reduced-motion: reduce) {
+			.reveal, .pulse, .fade-in { animation: none !important; }
+			.panel, .card { transition: none !important; transform: none !important; box-shadow: none !important; }
+		}
+
+		/* Quick Actions - darker, richer button gradients (scoped) */
+		#quick-actions .btn {
+			display:block;
+			width:100%;
+			text-align:center;
+			padding:10px 12px;
+			border-radius:10px;
+			color:#fff !important;
+			text-decoration:none;
+			border:1px solid rgba(255,255,255,0.04) !important;
+			background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.25));
+			box-shadow: 0 6px 18px rgba(2,6,23,0.5), inset 0 -2px 0 rgba(0,0,0,0.25);
+			transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+		}
+
+		/* Individual button tones (Bookings: deep green, Events: deep amber, Users: deep indigo) */
+		#quick-actions .btn:nth-of-type(1) {
+			background: linear-gradient(180deg, #044d37 0%, #063826 100%);
+			border-color: rgba(4,77,55,0.6) !important;
+		}
+		#quick-actions .btn:nth-of-type(2) {
+			background: linear-gradient(180deg, #7a2f0b 0%, #5a2306 100%);
+			border-color: rgba(122,47,11,0.6) !important;
+		}
+		#quick-actions .btn:nth-of-type(3) {
+			background: linear-gradient(180deg, #2f2aa8 0%, #26226f 100%);
+			border-color: rgba(47,42,168,0.6) !important;
+		}
+
+		#quick-actions .btn:hover {
+			transform: translateY(-3px) scale(1.01);
+			box-shadow: 0 18px 40px rgba(2,6,23,0.65), inset 0 -3px 0 rgba(0,0,0,0.35);
+			filter: brightness(1.06);
+		}
+
+		#quick-actions .btn:active {
+			transform: translateY(-1px) scale(0.997);
+			filter: brightness(0.98);
+		}
+
+		#quick-actions .btn:focus {
+			outline: none;
+			box-shadow: 0 8px 24px rgba(2,6,23,0.5), 0 0 0 4px rgba(255,255,255,0.03);
+		}
+
+		/* Create Event - 3D, sharp bordered controls (no new colors; widths unchanged) */
+		#createEventPanel .input,
+		#createEventPanel textarea.input,
+		#createEventPanel .select,
+		#createEventPanel #evt-status.select,
+		#createEventPanel .file-label,
+		#createEventPanel .img-preview {
+			/* keep existing color/background; do not introduce new color fills */
+			background: transparent !important;
+			color: inherit !important;
+			border: 1px solid rgba(209,213,219,0.32) !important; /* sharp visible border */
+			border-radius: 8px;
+			box-shadow: 0 8px 22px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+			transition: transform .14s ease, box-shadow .14s ease, border-color .12s ease;
+			/* do not change width here to preserve layout */
+		}
+
+		/* Hover/focus produce a small 3D lift without changing size */
+		#createEventPanel .input:hover,
+		#createEventPanel textarea.input:hover,
+		#createEventPanel .select:hover,
+		#createEventPanel .file-label:hover,
+		#createEventPanel .img-preview:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(2,6,23,0.72); }
+
+		#createEventPanel .input:focus,
+		#createEventPanel textarea.input:focus,
+		#createEventPanel .select:focus,
+		#createEventPanel #evt-status.select:focus,
+		#createEventPanel .file-label:focus {
+			outline: none;
+			transform: translateY(-3px);
+			box-shadow: 0 20px 44px rgba(2,6,23,0.8), inset 0 1px 0 rgba(255,255,255,0.02);
+			border-color: rgba(209,213,219,0.42) !important;
+		}
+
+		/* File label should be solid bordered and not dashed for sharpness */
+		#createEventPanel .file-label { border-style: solid !important; }
+
+		/* Image preview gets a clear border and subtle elevation */
+		#createEventPanel .img-preview { display:block; border-radius:8px; border:1px solid rgba(209,213,219,0.32) !important; box-shadow: 0 10px 28px rgba(2,6,23,0.6); }
 	</style>
 </head>
 <body>
@@ -154,7 +362,7 @@
 						</div>
 						<form action="{{ route('logout') }}" method="POST" style="margin:0">
 							@csrf
-							<button type="submit" class="btn">Logout</button>
+							<button type="submit" class="btn logout-btn">Logout</button>
 						</form>
 					</div>
 				</div>
@@ -193,13 +401,13 @@
 					<div class="panel" id="dashboard">
 						<h3>Analytics</h3>
 						<div style="display:flex;gap:12px;align-items:stretch;margin-top:12px">
-							<div style="flex:1;padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);min-height:160px">
+							<div style="flex:1;padding:12px;border-radius:8px;background:rgba(255, 255, 255, 0.06);min-height:160px">
 								<div style="color:var(--muted);font-size:13px">Bookings per month</div>
 								<div style="height:130px;border-radius:6px;margin-top:8px;position:relative">
 									<canvas id="bookingsChart"></canvas>
 								</div>
 							</div>
-							<div style="width:220px;padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);min-height:160px">
+							<div style="width:220px;padding:12px;border-radius:8px;background:rgba(255, 255, 255, 0.06);min-height:160px">
 								<div style="color:var(--muted);font-size:13px">Event participation</div>
 								<div style="height:130px;border-radius:6px;margin-top:8px;position:relative">
 									<canvas id="eventsChart"></canvas>
@@ -686,6 +894,79 @@
 				setTimeout(() => alert.style.display = 'none', 500);
 			});
 		}, 5000);
+
+		// Reveal panels/cards when they enter the viewport and replay on subsequent scrolls.
+		// Also animate stat counters when their card becomes visible.
+		document.addEventListener('DOMContentLoaded', function() {
+			const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const panels = Array.from(document.querySelectorAll('.panel, .card'));
+			// initialize hidden
+			panels.forEach(p => { p.style.opacity = 0; });
+
+			if (prefersReduced) {
+				// If user prefers reduced motion, just make elements visible without animations
+				panels.forEach(p => { p.style.opacity = 1; p.classList.remove('reveal'); });
+				// Ensure counters show their final values
+				document.querySelectorAll('.card .value').forEach(el => { el.textContent = el.textContent.trim(); });
+				return;
+			}
+
+			function animateCounter(el, duration = 700) {
+				if (!el) return;
+				// If counter already played, don't animate again
+				if (el._animating || el._played) return;
+				const target = parseInt(el.textContent.trim()) || 0;
+				if (target <= 0) { el.textContent = target; el._played = true; return; }
+				el._animating = true;
+				const startTime = performance.now();
+				function step(now) {
+					const progress = Math.min((now - startTime) / duration, 1);
+					el.textContent = Math.floor(progress * target);
+					if (progress < 1) requestAnimationFrame(step);
+					else { el.textContent = target; el._animating = false; el._played = true; }
+				}
+				requestAnimationFrame(step);
+			}
+
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					const el = entry.target;
+					if (entry.isIntersecting) {
+						// add reveal and make visible
+						el.classList.add('reveal');
+						el.style.opacity = 1;
+						// animate counter if present
+						if (el.classList.contains('card')) {
+							const val = el.querySelector('.value');
+							if (val) animateCounter(val, 700);
+						}
+					} else {
+						// remove reveal so the animation can replay visually when re-entering
+						el.classList.remove('reveal');
+						// reset visibility so the reveal plays when re-entered
+						el.style.opacity = 0;
+						// Do NOT reset stat counters here — they should remain the calculated values
+					}
+				});
+			}, { threshold: 0.15 });
+
+			panels.forEach(p => observer.observe(p));
+
+			// For elements already in view on load, reveal them with a small stagger
+			panels.forEach((p, i) => {
+				const rect = p.getBoundingClientRect();
+				if (rect.top < window.innerHeight && rect.bottom > 0) {
+					setTimeout(() => {
+						p.classList.add('reveal');
+						p.style.opacity = 1;
+							if (p.classList.contains('card')) {
+								const v = p.querySelector('.value');
+								if (v) animateCounter(v, 700);
+							}
+					}, 80 * i);
+				}
+			});
+		});
 	</script>
 	
 	<!-- User Edit Modal -->
