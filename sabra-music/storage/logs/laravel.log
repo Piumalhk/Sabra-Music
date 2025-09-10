@@ -8805,3 +8805,243 @@ Did you mean one of these?
 [2025-09-09 20:45:54] local.INFO: Total published events: 6  
 [2025-09-09 20:45:54] local.INFO: Found 4 past events using DB query  
 [2025-09-09 20:45:54] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:12:36] local.INFO: Fetching past events for history page  
+[2025-09-10 16:12:36] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:12:36] local.INFO: Total published events: 6  
+[2025-09-10 16:12:36] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:12:36] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:14:38] local.INFO: Fetching past events for history page  
+[2025-09-10 16:14:38] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:14:38] local.INFO: Total published events: 6  
+[2025-09-10 16:14:38] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:14:38] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:14:50] local.INFO: Fetching past events for history page  
+[2025-09-10 16:14:50] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:14:50] local.INFO: Total published events: 6  
+[2025-09-10 16:14:50] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:14:50] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:24:51] local.INFO: Fetching past events for history page  
+[2025-09-10 16:24:51] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:24:51] local.INFO: Total published events: 6  
+[2025-09-10 16:24:51] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:24:51] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:28:55] local.INFO: Fetching past events for history page  
+[2025-09-10 16:28:55] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:28:55] local.INFO: Total published events: 6  
+[2025-09-10 16:28:55] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:28:55] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:29:11] local.INFO: Fetching past events for history page  
+[2025-09-10 16:29:11] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:29:11] local.INFO: Total published events: 6  
+[2025-09-10 16:29:11] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:29:11] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:29:18] local.INFO: Fetching past events for history page  
+[2025-09-10 16:29:18] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:29:18] local.INFO: Total published events: 6  
+[2025-09-10 16:29:18] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:29:18] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:33:20] local.INFO: Fetching past events for history page  
+[2025-09-10 16:33:20] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:33:20] local.INFO: Total published events: 6  
+[2025-09-10 16:33:20] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:33:20] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:33:44] local.INFO: Fetching past events for history page  
+[2025-09-10 16:33:44] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:33:44] local.INFO: Total published events: 6  
+[2025-09-10 16:33:44] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:33:44] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:40:30] local.INFO: Fetching past events for history page  
+[2025-09-10 16:40:30] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:40:30] local.INFO: Total published events: 6  
+[2025-09-10 16:40:30] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:40:30] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:40:53] local.INFO: Fetching past events for history page  
+[2025-09-10 16:40:53] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:40:53] local.INFO: Total published events: 6  
+[2025-09-10 16:40:53] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:40:53] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:41:22] local.INFO: Fetching past events for history page  
+[2025-09-10 16:41:22] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:41:22] local.INFO: Total published events: 6  
+[2025-09-10 16:41:22] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:41:22] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:41:33] local.INFO: Fetching past events for history page  
+[2025-09-10 16:41:33] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:41:33] local.INFO: Total published events: 6  
+[2025-09-10 16:41:33] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:41:33] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:41:44] local.INFO: Fetching past events for history page  
+[2025-09-10 16:41:44] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:41:44] local.INFO: Total published events: 6  
+[2025-09-10 16:41:44] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:41:44] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:42:07] local.INFO: Fetching past events for history page  
+[2025-09-10 16:42:07] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:42:07] local.INFO: Total published events: 6  
+[2025-09-10 16:42:07] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:42:07] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:42:21] local.INFO: Fetching past events for history page  
+[2025-09-10 16:42:21] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:42:21] local.INFO: Total published events: 6  
+[2025-09-10 16:42:21] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:42:21] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:42:40] local.INFO: Fetching past events for history page  
+[2025-09-10 16:42:40] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:42:40] local.INFO: Total published events: 6  
+[2025-09-10 16:42:40] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:42:40] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:43:56] local.INFO: Fetching past events for history page  
+[2025-09-10 16:43:56] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:43:56] local.INFO: Total published events: 6  
+[2025-09-10 16:43:56] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:43:56] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:44:43] local.INFO: Fetching past events for history page  
+[2025-09-10 16:44:43] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:44:43] local.INFO: Total published events: 6  
+[2025-09-10 16:44:43] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:44:43] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:45:41] local.INFO: Fetching past events for history page  
+[2025-09-10 16:45:41] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:45:41] local.INFO: Total published events: 6  
+[2025-09-10 16:45:41] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:45:41] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:58:54] local.INFO: Fetching past events for history page  
+[2025-09-10 16:58:55] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:58:55] local.INFO: Total published events: 6  
+[2025-09-10 16:58:55] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:58:55] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:58:56] local.INFO: Fetching past events for history page  
+[2025-09-10 16:58:56] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:58:56] local.INFO: Total published events: 6  
+[2025-09-10 16:58:56] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:58:56] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 16:59:05] local.INFO: Fetching past events for history page  
+[2025-09-10 16:59:05] local.INFO: Current date: 2025-09-10  
+[2025-09-10 16:59:05] local.INFO: Total published events: 6  
+[2025-09-10 16:59:05] local.INFO: Found 4 past events using DB query  
+[2025-09-10 16:59:05] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:09:31] local.INFO: Fetching past events for history page  
+[2025-09-10 17:09:31] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:09:31] local.INFO: Total published events: 6  
+[2025-09-10 17:09:31] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:09:31] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:14:39] local.INFO: Fetching past events for history page  
+[2025-09-10 17:14:39] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:14:39] local.INFO: Total published events: 6  
+[2025-09-10 17:14:39] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:14:39] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:14:39] local.INFO: Fetching past events for history page  
+[2025-09-10 17:14:39] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:14:39] local.INFO: Total published events: 6  
+[2025-09-10 17:14:39] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:14:39] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:15:00] local.INFO: Fetching past events for history page  
+[2025-09-10 17:15:00] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:15:00] local.INFO: Total published events: 6  
+[2025-09-10 17:15:00] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:15:00] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:15:53] local.INFO: Fetching past events for history page  
+[2025-09-10 17:15:53] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:15:53] local.INFO: Total published events: 6  
+[2025-09-10 17:15:53] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:15:53] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:18:27] local.INFO: Fetching past events for history page  
+[2025-09-10 17:18:27] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:18:27] local.INFO: Total published events: 6  
+[2025-09-10 17:18:27] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:18:27] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:22:07] local.INFO: Fetching past events for history page  
+[2025-09-10 17:22:07] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:22:07] local.INFO: Total published events: 6  
+[2025-09-10 17:22:07] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:22:07] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:22:07] local.INFO: Fetching past events for history page  
+[2025-09-10 17:22:07] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:22:07] local.INFO: Total published events: 6  
+[2025-09-10 17:22:07] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:22:07] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:22:41] local.INFO: Fetching past events for history page  
+[2025-09-10 17:22:41] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:22:41] local.INFO: Total published events: 6  
+[2025-09-10 17:22:41] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:22:41] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:31:00] local.INFO: Fetching past events for history page  
+[2025-09-10 17:31:00] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:31:00] local.INFO: Total published events: 6  
+[2025-09-10 17:31:00] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:31:00] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:31:19] local.INFO: Fetching past events for history page  
+[2025-09-10 17:31:19] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:31:19] local.INFO: Total published events: 6  
+[2025-09-10 17:31:19] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:31:19] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:31:19] local.INFO: Fetching past events for history page  
+[2025-09-10 17:31:19] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:31:19] local.INFO: Total published events: 6  
+[2025-09-10 17:31:19] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:31:19] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:32:10] local.INFO: Fetching past events for history page  
+[2025-09-10 17:32:10] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:32:10] local.INFO: Total published events: 6  
+[2025-09-10 17:32:10] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:32:10] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:32:53] local.INFO: Fetching past events for history page  
+[2025-09-10 17:32:53] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:32:53] local.INFO: Total published events: 6  
+[2025-09-10 17:32:53] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:32:53] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:33:11] local.INFO: Fetching past events for history page  
+[2025-09-10 17:33:11] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:33:11] local.INFO: Total published events: 6  
+[2025-09-10 17:33:11] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:33:11] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:33:27] local.INFO: Fetching past events for history page  
+[2025-09-10 17:33:27] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:33:27] local.INFO: Total published events: 6  
+[2025-09-10 17:33:27] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:33:27] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:33:46] local.INFO: Fetching past events for history page  
+[2025-09-10 17:33:46] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:33:46] local.INFO: Total published events: 6  
+[2025-09-10 17:33:46] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:33:46] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:35:33] local.INFO: Fetching past events for history page  
+[2025-09-10 17:35:33] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:35:33] local.INFO: Total published events: 6  
+[2025-09-10 17:35:33] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:35:33] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:35:34] local.INFO: Fetching past events for history page  
+[2025-09-10 17:35:34] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:35:34] local.INFO: Total published events: 6  
+[2025-09-10 17:35:34] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:35:34] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:35:47] local.INFO: Fetching past events for history page  
+[2025-09-10 17:35:47] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:35:47] local.INFO: Total published events: 6  
+[2025-09-10 17:35:47] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:35:47] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:37:24] local.INFO: Fetching past events for history page  
+[2025-09-10 17:37:24] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:37:24] local.INFO: Total published events: 6  
+[2025-09-10 17:37:24] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:37:24] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:37:24] local.INFO: Fetching past events for history page  
+[2025-09-10 17:37:24] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:37:24] local.INFO: Total published events: 6  
+[2025-09-10 17:37:24] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:37:24] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:42:17] local.INFO: Fetching past events for history page  
+[2025-09-10 17:42:17] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:42:17] local.INFO: Total published events: 6  
+[2025-09-10 17:42:17] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:42:17] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:42:17] local.INFO: Fetching past events for history page  
+[2025-09-10 17:42:17] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:42:17] local.INFO: Total published events: 6  
+[2025-09-10 17:42:17] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:42:17] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 17:42:39] local.INFO: Fetching past events for history page  
+[2025-09-10 17:42:39] local.INFO: Current date: 2025-09-10  
+[2025-09-10 17:42:39] local.INFO: Total published events: 6  
+[2025-09-10 17:42:39] local.INFO: Found 4 past events using DB query  
+[2025-09-10 17:42:39] local.INFO: Found 4 past events using Carbon comparison  

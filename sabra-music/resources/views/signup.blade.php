@@ -218,8 +218,6 @@
       <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
       </a>
     </div>
-
-    <a href="{{ route('admin.login') }}" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Signup Section -->
