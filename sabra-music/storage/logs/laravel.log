@@ -9182,3 +9182,18 @@ Did you mean one of these?
 [2025-09-10 19:59:03] local.INFO: Total published events: 7  
 [2025-09-10 19:59:03] local.INFO: Found 4 past events using DB query  
 [2025-09-10 19:59:03] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 21:01:55] local.INFO: Fetching past events for history page  
+[2025-09-10 21:01:55] local.INFO: Current date: 2025-09-10  
+[2025-09-10 21:01:55] local.INFO: Total published events: 7  
+[2025-09-10 21:01:55] local.INFO: Found 4 past events using DB query  
+[2025-09-10 21:01:55] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 21:01:55] local.INFO: Fetching past events for history page  
+[2025-09-10 21:01:55] local.INFO: Current date: 2025-09-10  
+[2025-09-10 21:01:55] local.INFO: Total published events: 7  
+[2025-09-10 21:01:55] local.INFO: Found 4 past events using DB query  
+[2025-09-10 21:01:55] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-10 21:02:02] local.INFO: Fetching past events for history page  
+[2025-09-10 21:02:02] local.INFO: Current date: 2025-09-10  
+[2025-09-10 21:02:02] local.INFO: Total published events: 7  
+[2025-09-10 21:02:02] local.INFO: Found 4 past events using DB query  
+[2025-09-10 21:02:02] local.INFO: Found 4 past events using Carbon comparison  
