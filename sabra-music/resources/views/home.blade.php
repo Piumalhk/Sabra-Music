@@ -13,6 +13,10 @@ use Carbon\Carbon;
   
 
   <style>
+    :root{--accent1:#ff7a18;--accent2:#ff3d6b;--accent3:#6b8bff;--accent4:#00e0ff;--muted:#bbb}
+    /* Colorful theme tweaks for Home page */
+    .colorful-accent{transition:all .18s ease}
+    
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -81,17 +85,121 @@ use Carbon\Carbon;
     }
 
     .hero small {
+      display: inline-block;
       font-size: 12px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #bbb;
+      color: #fff;
+      background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+      position: relative;
+      z-index: 4;
+      font-weight: 700;
     }
 
+    /* subtle gradient lines either side of the small headline */
+    .hero small::before,
+    .hero small::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent1), var(--accent3));
+      opacity: 0.9;
+      border-radius: 2px;
+    }
+    .hero small::before { left: -46px; }
+    .hero small::after { right: -46px; }
+
     .hero h1 {
-      font-size: 50px;
-      font-weight: bold;
+      font-size: 56px;
+      font-weight: 800;
       margin: 20px 0;
-      line-height: 1.2;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      /* animated gradient text */
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3), var(--accent4));
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      animation: gradientShift 8s linear infinite;
+      transition: transform .6s ease;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero .hero-sub {
+      margin-top: 12px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.95);
+      max-width: 640px;
+      line-height: 1.5;
+      opacity: 0.98;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-left: 4px solid;
+      border-image: linear-gradient(180deg, var(--accent2), var(--accent4)) 1;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      display: inline-block;
+      align-items: center;
+    }
+
+    .hero .hero-sub::before {
+      content: '♪';
+      display: inline-block;
+      margin-right: 10px;
+      color: var(--accent2);
+      font-weight: 800;
+      background: rgba(255,255,255,0.03);
+      padding: 6px 8px;
+      border-radius: 8px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+    }
+
+    .floating-notes {
+      position: absolute;
+      right: 120px;
+      top: 140px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .floating-notes .note {
+      color: rgba(255,255,255,0.95);
+      font-size: 20px;
+      opacity: 0.9;
+      transform: translateY(0);
+      display:inline-block;
+    }
+    .floating-notes .note.n1 { animation: floatUp 4.5s ease-in-out infinite; margin-right:6px; }
+    .floating-notes .note.n2 { animation: floatUp 5.4s ease-in-out infinite; margin-right:6px; }
+    .floating-notes .note.n3 { animation: floatUp 6.2s ease-in-out infinite; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0.9; }
+      50% { transform: translateY(-18px); opacity: 0.6; }
+      100% { transform: translateY(0); opacity: 0.9; }
+    }
+
+    .hero h1 .accent { display: inline-block; }
+    .hero a.signup-btn, .hero a.login-btn { transform-origin: center; }
+    .hero a.signup-btn:hover { transform: translateY(-4px) scale(1.02); }
+
+    /* Respect user's reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .hero h1 { animation: none !important; }
+      .floating-notes .note { animation: none !important; }
     }
 
     .signup-btn {
@@ -336,7 +444,8 @@ use Carbon\Carbon;
       width: 6px;
       background:white;
       border-radius: 1px;
-      animation: musicPulse 1.5s ease-in-out infinite;
+      /* slowed down for a gentler pulse */
+      animation: musicPulse 2s ease-in-out infinite;
     }
 
     .bar:nth-child(1) { animation-delay: 0s; }
@@ -369,6 +478,30 @@ use Carbon\Carbon;
     .loading-overlay.show {
       display: flex;
     }
+    /* Page load animations (slower for calmer feel) */
+    .hero, .logo img, .nav-links, .signup-btn, .login-btn {
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+      /* increased duration for a smoother entrance */
+      transition: opacity 1200ms cubic-bezier(.2,.9,.2,1), transform 1200ms cubic-bezier(.2,.9,.2,1);
+    }
+
+    body.page-loaded .logo img { opacity: 1; transform: translateY(0) scale(1); transition-delay: 260ms; }
+    body.page-loaded .nav-links { opacity: 1; transform: translateY(0) scale(1); transition-delay: 360ms; }
+    body.page-loaded .hero { opacity: 1; transform: translateY(0) scale(1); transition-delay: 480ms; }
+    body.page-loaded .signup-btn { opacity: 1; transform: translateY(0) scale(1); transition-delay: 600ms; }
+    body.page-loaded .login-btn { opacity: 1; transform: translateY(0) scale(1); transition-delay: 600ms; }
+
+    /* Slight parallax-like background reveal via pseudo element */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: -1;
+      background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.22));
+      opacity: 0.0;
+      /* slow background reveal to match hero timing */
+      transition: opacity 1500ms ease;
+    }
+    body.page-loaded::after { opacity: 1; }
     
   </style>
 </head>
@@ -410,12 +543,38 @@ use Carbon\Carbon;
     <a href="/adminlogin" class="admin-btn">ADMIN</a>
   </nav>
 
+  <script>
+    // Show loading overlay until everything is loaded
+    (function(){
+      const overlay = document.getElementById('loadingOverlay');
+      if (!overlay) return;
+      overlay.classList.add('show');
+
+      // When the window has fully loaded (images/fonts), hide the overlay and animate in the page
+      window.addEventListener('load', () => {
+          // small delay so user sees loader briefly (increased to match slower transitions)
+          setTimeout(() => {
+            overlay.classList.remove('show');
+            document.body.classList.add('page-loaded');
+          }, 700);
+      });
+    })();
+  </script>
+
   <!-- Hero Section -->
   <section class="hero">
     <small>ELEVATE YOUR MUSICAL JOURNEY</small>
-    <h1>Feel The <br> Rhythm Of Your <br> Soul!</h1>
-    <a href="/signup" class="signup-btn nav-link" >Sign Up</a>
-    <a href="/login" class="login-btn nav-link" >Login</a>
+  <h1 class="headline-lines">FEEL THE RYTHEM<br>OF YOUR SOUL !</h1>
+    <div class="hero-sub">Join a warm, friendly community of musicians and music lovers — discover events, learn, and share the rhythm that moves you.</div>
+
+    <a href="/signup" class="signup-btn nav-link" >Get Started</a>
+    <a href="/login" class="login-btn nav-link" >Member Login</a>
+
+    <div class="floating-notes" aria-hidden="true">
+      <span class="note n1">♪</span>
+      <span class="note n2">♫</span>
+      <span class="note n3">♬</span>
+    </div>
   </section>
 
   <!-- Footer Social Icons -->
