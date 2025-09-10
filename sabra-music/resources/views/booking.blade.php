@@ -7,10 +7,31 @@
   <title>Sabra Music - Booking</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    :root {
+      --primary: #4A4DE7;
+      --primary-light: #6266FF;
+      --accent: #FF3C00;
+      --accent-light: #FF6B3D;
+      --dark: #151424;
+      --light: #fff;
+      --gray: #8A8AA3;
+      --light-gray: #F0F0F5;
+      --card-bg: rgba(255,255,255,0.92);
+      --gradient-1: linear-gradient(45deg, #4A4DE7, #6266FF);
+      --gradient-2: linear-gradient(135deg, #FF3C00, #FF6B3D);
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+      --shadow-lg: 0 12px 36px rgba(0,0,0,0.18);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --transition: all 0.3s ease;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #0d1b2a;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background-color: var(--dark);
       background-image: url('{{ asset('images/bg 2.png') }}');
       background-size: cover;
       background-position: center;
@@ -18,52 +39,98 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      color: white;
+      color: var(--light);
     }
 
-     /* Navbar */
+    /* Navbar */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: none;
-      padding: 25px 100px;
+      background: rgba(21, 20, 36, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 20px 100px;
       height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      min-width: 100px;
     }
 
     .logo img {
       height: 50px;
+      transition: var(--transition);
+    }
+
+    .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    .auth-section {
+      min-width: 100px;
+      text-align: right;
     }
 
     .nav-links {
       display: flex;
       gap: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: white;
+      color: var(--light);
       font-size: 14px;
+      font-weight: 600;
       letter-spacing: 1px;
+      transition: var(--transition);
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: var(--transition);
     }
 
     .nav-links a:hover {
-      color: #bbb;
+      color: var(--accent-light);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .admin-btn {
-      background: white;
-      color: black;
-      padding: 8px 20px;
-      border-radius: 20px;
+      background: var(--primary);
+      color: var(--light);
+      padding: 10px 24px;
+      border-radius: 30px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 14px;
-      transition: background 0.3s ease;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
     }
 
     .admin-btn:hover {
-      background: #ddd;
+      background: var(--primary-light);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
     }
 
 
@@ -111,8 +178,9 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: black;
-      background: rgba(255,255,255,0.15);
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0);
+      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.25);
     }
 
     textarea {
@@ -133,14 +201,16 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
-      background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
       background-repeat: no-repeat;
       background-position: right 10px center;
       padding-right: 30px; /* Space for the dropdown arrow */
+      background-color: rgba(178, 178, 178, 0.7); /* Lighter background for black text */
     }
 
     select, select option {
-      color: white;
+      color: black;
+      font-weight: 600;
     }
 
     select option:first-child {
@@ -294,26 +364,129 @@
       color: #10b981;
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
+    
+    /* Loading Animation - Music Theme */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(21, 20, 36, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
+      opacity: 1;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .music-loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .loading-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--light);
+      letter-spacing: 1px;
+      margin-top: 20px;
+      opacity: 0.8;
+    }
+
+    /* Music Bars Animation */
+    .music-bars {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      height: 60px;
+    }
+
+    .bar {
+      width: 8px;
+      background: linear-gradient(to top, var(--accent), var(--primary));
+      border-radius: 4px;
+      animation: musicPulse 1.5s ease-in-out infinite;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+    .bar:nth-child(7) { animation-delay: 0.4s; }
+    .bar:nth-child(8) { animation-delay: 0.3s; }
+    .bar:nth-child(9) { animation-delay: 0.2s; }
+    .bar:nth-child(10) { animation-delay: 0.1s; }
+
+    @keyframes musicPulse {
+      0%, 40%, 100% {
+        height: 20px;
+        transform: scaleY(0.4);
+      }
+      20% {
+        height: 60px;
+        transform: scaleY(1);
+      }
+    }
+
+    /* Basic animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="music-loader">
+      <!-- Music Bars -->
+      <div class="music-bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="loading-text">Loading Booking...</div>
+    </div>
+  </div>
+
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/home">
-      <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+      <a href="/home" class="nav-link">
+        <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
       </a>
     </div>
-
+    
     <div class="nav-links">
-      <a href="{{ route('schedule') }}">SCHEDULE</a>
-      <a href="#">UP COMING</a>
-      <a href="{{ route('booking.history') }}">HISTORY</a>
-      <a href="#">ABOUT</a>
+      <a href="{{ route('schedule') }}" class="nav-link">SCHEDULE</a>
+      <a href="#" class="nav-link">UP COMING</a>
+      <a href="{{ route('booking.history') }}" class="nav-link">HISTORY</a>
+      <a href="#" class="nav-link">ABOUT</a>
     </div>
-
-    <a href="{{ route('admin.login') }}" class="admin-btn">ADMIN</a>
+    
+    <div class="auth-section">
+      <a href="{{ route('admin.login') }}" class="admin-btn nav-link">ADMIN</a>
+    </div>
   </nav>
 
   <!-- Booking Form Section -->
@@ -344,7 +517,7 @@
         </div>
         <div>
           <label>Faculty</label>
-          <select name="faculty" style="color: white;" required>
+          <select name="faculty" required>
             <option value="" disabled selected style="color: #423b3bff;">Select your faculty</option>
             <option value="Faculty of Computing" {{ old('faculty') == 'Faculty of Computing' ? 'selected' : '' }}>Faculty of Computing</option>
             <option value="Faculty of Geomatics" {{ old('faculty') == 'Faculty of Geomatics' ? 'selected' : '' }}>Faculty of Geomatics</option>
@@ -491,6 +664,34 @@
 
     // Booking Availability Check
     document.addEventListener('DOMContentLoaded', function() {
+      // Hide loading overlay when page loads
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      
+      // Hide loading overlay after a brief delay for visual effect
+      setTimeout(() => {
+        loadingOverlay.classList.add('hidden');
+      }, 800);
+      
+      // Add music-themed loading animation for page navigation
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Only show loading for external links (not anchor links)
+          if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+            return;
+          }
+          
+          e.preventDefault();
+          loadingOverlay.classList.remove('hidden');
+          
+          // Show loading for a short time to display the music animation
+          setTimeout(() => {
+            window.location.href = this.getAttribute('href');
+          }, 800);
+        });
+      });
+      
       const form = document.getElementById('bookingForm');
       const submitBtn = document.getElementById('submitBtn');
       const modal = document.getElementById('unavailableModal');

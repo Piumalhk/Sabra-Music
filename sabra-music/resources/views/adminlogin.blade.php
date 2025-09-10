@@ -35,8 +35,8 @@
 		}
 
 		.admin-btn {
-			background: white;
-			color: black;
+			background: #4A4DE7;
+			color: white;
 			padding: 8px 20px;
 			border-radius: 20px;
 			text-decoration: none;
@@ -46,7 +46,7 @@
 		}
 
 		.admin-btn:hover {
-			background: #ddd;
+			background: #4A4DE7;
 		}
 
 		/* Signin Form */
