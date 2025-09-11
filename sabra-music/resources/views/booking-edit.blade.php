@@ -21,49 +21,95 @@
       color: white;
     }
 
-     /* Navbar */
+     /* Navbar - Updated to match other pages */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: none;
-      padding: 25px 100px;
+      background: rgba(21, 20, 36, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 20px 100px;
       height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      min-width: 100px;
     }
 
     .logo img {
       height: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover img {
+      transform: scale(1.05);
+    }
+    
+    .auth-section {
+      min-width: 100px;
+      text-align: right;
     }
 
     .nav-links {
       display: flex;
       gap: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
     }
 
     .nav-links a {
       text-decoration: none;
       color: white;
       font-size: 14px;
+      font-weight: 600;
       letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #FF3C00;
+      transition: all 0.3s ease;
     }
 
     .nav-links a:hover {
-      color: #bbb;
+      color: #FF6B3D;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .admin-btn {
-      background: white;
-      color: black;
-      padding: 8px 20px;
-      border-radius: 20px;
+      background: #4A4DE7;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 30px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 14px;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .admin-btn:hover {
-      background: #ddd;
+      background: #6266FF;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
 
@@ -228,18 +274,83 @@
 
     .hidden-file{display:none}
 
-    /* Modal Styling */
-    .modal {
-      display: none;
+    /* Loading Animation - Music Theme */
+    .loading-overlay {
       position: fixed;
-      z-index: 1000;
-      left: 0;
       top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.7);
-      align-items: center;
+      background: rgba(21, 20, 36, 0.95);
+      display: flex;
       justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
+      opacity: 1;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .music-loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .loading-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      opacity: 0.8;
+    }
+
+    /* Music Bars Animation */
+    .music-bars {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      height: 60px;
+    }
+
+    .bar {
+      width: 8px;
+      background: linear-gradient(to top, #FF3C00, #4A4DE7);
+      border-radius: 4px;
+      animation: musicPulse 1.5s ease-in-out infinite;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+    .bar:nth-child(7) { animation-delay: 0.4s; }
+    .bar:nth-child(8) { animation-delay: 0.3s; }
+    .bar:nth-child(9) { animation-delay: 0.2s; }
+    .bar:nth-child(10) { animation-delay: 0.1s; }
+
+    @keyframes musicPulse {
+      0%, 40%, 100% {
+        height: 20px;
+        transform: scaleY(0.4);
+      }
+      20% {
+        height: 60px;
+        transform: scaleY(1);
+      }
+    }
+
+    .loading-overlay.show {
+      display: flex;
     }
 
     .modal-content {
@@ -339,33 +450,53 @@
 </head>
 <body>
 
-  <!-- Navbar -->
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="music-loader">
+      <!-- Music Bars -->
+      <div class="music-bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="loading-text">Updating Booking...</div>
+    </div>
+  </div>
   <nav class="navbar">
     <div class="logo">
-      <a href="/">
-      <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+      <a href="{{ url('/home') }}" class="nav-link">
+        <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
       </a>
     </div>
 
     <div class="nav-links">
-      <a href="{{ route('booking.create') }}">BOOK</a>
-      <a href="{{ route('booking.check') }}">CHECK</a>
-      <a href="{{ route('schedule') }}">SCHEDULE</a>
-      <a href="{{ route('booking.history') }}">HISTORY</a>
+      <a href="{{ route('booking.create') }}" class="nav-link">BOOK</a>
+      <a href="{{ route('booking.check') }}" class="nav-link">CHECK</a>
+      <a href="{{ route('schedule') }}" class="nav-link">SCHEDULE</a>
+      <a href="{{ route('booking.history') }}" class="nav-link">HISTORY</a>
     </div>
 
-    @auth
-      @if(Auth::user()->role === 'admin')
-        <a href="{{ route('admin.dashboard') }}" class="admin-btn">ADMIN</a>
+    <div class="auth-section">
+      @auth
+        @if(Auth::user()->role === 'admin')
+          <a href="{{ route('admin.dashboard') }}" class="admin-btn nav-link">ADMIN</a>
+        @else
+          <form action="{{ route('logout') }}" method="POST" style="display:inline;margin:0">
+            @csrf
+            <button type="submit" class="admin-btn">LOGOUT</button>
+          </form>
+        @endif
       @else
-        <form action="{{ route('logout') }}" method="POST" style="display:inline;margin:0">
-          @csrf
-          <button type="submit" class="admin-btn">LOGOUT</button>
-        </form>
-      @endif
-    @else
-      <a href="{{ route('login') }}" class="admin-btn">LOGIN</a>
-    @endauth
+        <a href="{{ route('login') }}" class="admin-btn nav-link">LOGIN</a>
+      @endauth
+    </div>
   </nav>
 
   <h1 class="page-title">Edit Booking</h1>
@@ -486,23 +617,6 @@
     </form>
   </div>
 
-  <!-- Unavailable Booking Modal -->
-  <div id="unavailableModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-title">
-        <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>
-        Booking Unavailable
-      </div>
-      <div class="modal-message">
-        This time slot is already booked or pending approval. Please select a different date or time for your event.
-      </div>
-      <div class="modal-buttons">
-        <button class="modal-button primary" id="checkAvailabilityBtn">Check Availability</button>
-        <button class="modal-button secondary" id="closeModalBtn">Close</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     // File Upload Handling
     (function(){
@@ -560,6 +674,32 @@
       const modal = document.getElementById('unavailableModal');
       const closeModalBtn = document.getElementById('closeModalBtn');
       const checkAvailabilityBtn = document.getElementById('checkAvailabilityBtn');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      
+      // Hide loading overlay after a brief delay for visual effect
+      setTimeout(() => {
+        loadingOverlay.classList.add('hidden');
+      }, 800);
+      
+      // Add music-themed loading animation for page navigation
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Only show loading for external links (not anchor links)
+          if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
+            return;
+          }
+          
+          e.preventDefault();
+          loadingOverlay.classList.remove('hidden');
+          
+          // Show loading for 1 second to display the music animation
+          setTimeout(() => {
+            window.location.href = this.getAttribute('href');
+          }, 800);
+        });
+      });
       
       // Close modal button event
       closeModalBtn.addEventListener('click', function() {
@@ -595,7 +735,11 @@
         // Check availability before submitting (excluding current booking)
         checkAvailability(centerId, bookingDate, startTime, endTime, function(isAvailable) {
           if (isAvailable) {
-            form.submit(); // Submit the form if slot is available
+            // Show loading overlay before submitting
+            loadingOverlay.classList.remove('hidden');
+            setTimeout(() => {
+              form.submit(); // Submit the form if slot is available
+            }, 300);
           } else {
             // Show unavailable modal
             modal.style.display = 'flex';
