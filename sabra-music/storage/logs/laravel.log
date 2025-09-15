@@ -9237,3 +9237,23 @@ Did you mean one of these?
 [2025-09-11 05:12:15] local.INFO: Total published events: 7  
 [2025-09-11 05:12:15] local.INFO: Found 4 past events using DB query  
 [2025-09-11 05:12:15] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-13 04:03:11] local.INFO: Fetching past events for history page  
+[2025-09-13 04:03:11] local.INFO: Current date: 2025-09-13  
+[2025-09-13 04:03:11] local.INFO: Total published events: 7  
+[2025-09-13 04:03:11] local.INFO: Found 4 past events using DB query  
+[2025-09-13 04:03:11] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-13 04:03:11] local.INFO: Fetching past events for history page  
+[2025-09-13 04:03:11] local.INFO: Current date: 2025-09-13  
+[2025-09-13 04:03:11] local.INFO: Total published events: 7  
+[2025-09-13 04:03:11] local.INFO: Found 4 past events using DB query  
+[2025-09-13 04:03:11] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-15 07:05:50] local.INFO: Fetching past events for history page  
+[2025-09-15 07:05:50] local.INFO: Current date: 2025-09-15  
+[2025-09-15 07:05:50] local.INFO: Total published events: 7  
+[2025-09-15 07:05:50] local.INFO: Found 4 past events using DB query  
+[2025-09-15 07:05:50] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-15 07:05:50] local.INFO: Fetching past events for history page  
+[2025-09-15 07:05:50] local.INFO: Current date: 2025-09-15  
+[2025-09-15 07:05:50] local.INFO: Total published events: 7  
+[2025-09-15 07:05:50] local.INFO: Found 4 past events using DB query  
+[2025-09-15 07:05:50] local.INFO: Found 4 past events using Carbon comparison  
