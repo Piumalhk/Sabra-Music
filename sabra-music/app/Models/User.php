@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'index_no',
+        'role',
+        'is_active',
     ];
 
     /**
@@ -41,4 +44,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+    
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 }

@@ -4,34 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Sabra Music - Booking</title>
+  <title>Edit Booking • Sabra Music</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --primary: #4A4DE7;
-      --primary-light: #6266FF;
-      --accent: #FF3C00;
-      --accent-light: #FF6B3D;
-      --dark: #151424;
-      --light: #fff;
-      --gray: #8A8AA3;
-      --light-gray: #F0F0F5;
-      --card-bg: rgba(255,255,255,0.92);
-      --gradient-1: linear-gradient(45deg, #4A4DE7, #6266FF);
-      --gradient-2: linear-gradient(135deg, #FF3C00, #FF6B3D);
-      --shadow-sm: 0 4px 12px rgba(0,0,0,0.08);
-      --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
-      --shadow-lg: 0 12px 36px rgba(0,0,0,0.18);
-      --radius-sm: 8px;
-      --radius-md: 16px;
-      --radius-lg: 24px;
-      --transition: all 0.3s ease;
-    }
-
     body {
       margin: 0;
-      font-family: 'Montserrat', Arial, sans-serif;
-      background-color: var(--dark);
+      font-family: Arial, sans-serif;
+      background-color: #0d1b2a;
       background-image: url('{{ asset('images/bg 2.png') }}');
       background-size: cover;
       background-position: center;
@@ -39,10 +18,10 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      color: var(--light);
+      color: white;
     }
 
-    /* Navbar */
+     /* Navbar - Updated to match other pages */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -63,13 +42,13 @@
 
     .logo img {
       height: 50px;
-      transition: var(--transition);
+      transition: all 0.3s ease;
     }
 
     .logo:hover img {
       transform: scale(1.05);
     }
-
+    
     .auth-section {
       min-width: 100px;
       text-align: right;
@@ -85,11 +64,11 @@
 
     .nav-links a {
       text-decoration: none;
-      color: var(--light);
+      color: white;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 1px;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       position: relative;
       padding: 5px 0;
     }
@@ -101,12 +80,12 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: var(--accent);
-      transition: var(--transition);
+      background: #FF3C00;
+      transition: all 0.3s ease;
     }
 
     .nav-links a:hover {
-      color: var(--accent-light);
+      color: #FF6B3D;
     }
 
     .nav-links a:hover::after {
@@ -114,23 +93,23 @@
     }
 
     .admin-btn {
-      background: var(--primary);
-      color: var(--light);
+      background: #4A4DE7;
+      color: white;
       padding: 10px 24px;
       border-radius: 30px;
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       border: none;
       cursor: pointer;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .admin-btn:hover {
-      background: var(--primary-light);
+      background: #6266FF;
       transform: translateY(-3px);
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
 
@@ -178,9 +157,8 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: var(--primary);
-      background: rgba(255, 255, 255, 0);
-      box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.25);
+      border-color: black;
+      background: rgba(255,255,255,0.15);
     }
 
     textarea {
@@ -201,16 +179,14 @@
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
-      background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
       background-repeat: no-repeat;
       background-position: right 10px center;
       padding-right: 30px; /* Space for the dropdown arrow */
-      background-color: rgba(178, 178, 178, 0.7); /* Lighter background for black text */
     }
 
     select, select option {
-      color: black;
-      font-weight: 600;
+      color: white;
     }
 
     select option:first-child {
@@ -231,8 +207,34 @@
       transition: background 0.3s ease;
     }
 
+    .cancel-btn {
+      display: inline-block;
+      margin: 20px 10px 0;
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+    }
+
     .submit-btn:hover {
       background: #ddd;
+    }
+
+    .cancel-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
     }
 
     /* PDF upload area */
@@ -272,18 +274,83 @@
 
     .hidden-file{display:none}
 
-    /* Modal Styling */
-    .modal {
-      display: none;
+    /* Loading Animation - Music Theme */
+    .loading-overlay {
       position: fixed;
-      z-index: 1000;
-      left: 0;
       top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.7);
-      align-items: center;
+      background: rgba(21, 20, 36, 0.95);
+      display: flex;
       justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
+      opacity: 1;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .music-loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .loading-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      opacity: 0.8;
+    }
+
+    /* Music Bars Animation */
+    .music-bars {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      height: 60px;
+    }
+
+    .bar {
+      width: 8px;
+      background: linear-gradient(to top, #FF3C00, #4A4DE7);
+      border-radius: 4px;
+      animation: musicPulse 1.5s ease-in-out infinite;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+    .bar:nth-child(7) { animation-delay: 0.4s; }
+    .bar:nth-child(8) { animation-delay: 0.3s; }
+    .bar:nth-child(9) { animation-delay: 0.2s; }
+    .bar:nth-child(10) { animation-delay: 0.1s; }
+
+    @keyframes musicPulse {
+      0%, 40%, 100% {
+        height: 20px;
+        transform: scaleY(0.4);
+      }
+      20% {
+        height: 60px;
+        transform: scaleY(1);
+      }
+    }
+
+    .loading-overlay.show {
+      display: flex;
     }
 
     .modal-content {
@@ -364,86 +431,20 @@
       color: #10b981;
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
-    
-    /* Loading Animation - Music Theme */
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(21, 20, 36, 0.95);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      backdrop-filter: blur(10px);
-      opacity: 1;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
-    }
 
-    .loading-overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .music-loader {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-    }
-
-    .loading-text {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--light);
-      letter-spacing: 1px;
+    /* Page title */
+    .page-title {
+      text-align: center;
       margin-top: 20px;
-      opacity: 0.8;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
     }
 
-    /* Music Bars Animation */
-    .music-bars {
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
-      height: 60px;
-    }
-
-    .bar {
-      width: 8px;
-      background: linear-gradient(to top, var(--accent), var(--primary));
-      border-radius: 4px;
-      animation: musicPulse 1.5s ease-in-out infinite;
-    }
-
-    .bar:nth-child(1) { animation-delay: 0s; }
-    .bar:nth-child(2) { animation-delay: 0.1s; }
-    .bar:nth-child(3) { animation-delay: 0.2s; }
-    .bar:nth-child(4) { animation-delay: 0.3s; }
-    .bar:nth-child(5) { animation-delay: 0.4s; }
-    .bar:nth-child(6) { animation-delay: 0.5s; }
-    .bar:nth-child(7) { animation-delay: 0.4s; }
-    .bar:nth-child(8) { animation-delay: 0.3s; }
-    .bar:nth-child(9) { animation-delay: 0.2s; }
-    .bar:nth-child(10) { animation-delay: 0.1s; }
-
-    @keyframes musicPulse {
-      0%, 40%, 100% {
-        height: 20px;
-        transform: scaleY(0.4);
-      }
-      20% {
-        height: 60px;
-        transform: scaleY(1);
-      }
-    }
-
-    /* Basic animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .page-subtitle {
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 30px;
     }
   </style>
 </head>
@@ -465,34 +466,47 @@
         <div class="bar"></div>
         <div class="bar"></div>
       </div>
-      <div class="loading-text">Loading Booking...</div>
+      <div class="loading-text">Updating Booking...</div>
     </div>
   </div>
-
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/home" class="nav-link">
+      <a href="{{ url('/home') }}" class="nav-link">
         <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
       </a>
     </div>
-    
+
     <div class="nav-links">
+      <a href="{{ route('booking.create') }}" class="nav-link">BOOK</a>
+      <a href="{{ route('booking.check') }}" class="nav-link">CHECK</a>
       <a href="{{ route('schedule') }}" class="nav-link">SCHEDULE</a>
-      <a href="#" class="nav-link">UP COMING</a>
       <a href="{{ route('booking.history') }}" class="nav-link">HISTORY</a>
-      <a href="#" class="nav-link">ABOUT</a>
     </div>
-    
+
     <div class="auth-section">
-      <a href="{{ route('admin.login') }}" class="admin-btn nav-link">ADMIN</a>
+      @auth
+        @if(Auth::user()->role === 'admin')
+          <a href="{{ route('admin.dashboard') }}" class="admin-btn nav-link">ADMIN</a>
+        @else
+          <form action="{{ route('logout') }}" method="POST" style="display:inline;margin:0">
+            @csrf
+            <button type="submit" class="admin-btn">LOGOUT</button>
+          </form>
+        @endif
+      @else
+        <a href="{{ route('login') }}" class="admin-btn nav-link">LOGIN</a>
+      @endauth
     </div>
   </nav>
 
+  <h1 class="page-title">Edit Booking</h1>
+  <p class="page-subtitle">Update your booking details below</p>
+
   <!-- Booking Form Section -->
   <div class="form-container">
-    <form class="booking-form" action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data" id="bookingForm">
+    <form class="booking-form" action="{{ route('booking.update', $booking->id) }}" method="POST" enctype="multipart/form-data" id="bookingForm">
       @csrf
+      @method('PUT')
       
       @if(session('error'))
         <div class="alert alert-error">
@@ -513,61 +527,66 @@
       <div class="form-grid">
         <div>
           <label>Event Name</label>
-          <input type="text" name="purpose" placeholder="Name" required value="{{ old('purpose') }}">
+          <input type="text" name="purpose" placeholder="Name" required value="{{ old('purpose', $booking->purpose) }}">
         </div>
         <div>
           <label>Faculty</label>
-          <select name="faculty" required>
-            <option value="" disabled selected style="color: #423b3bff;">Select your faculty</option>
-            <option value="Faculty of Computing" {{ old('faculty') == 'Faculty of Computing' ? 'selected' : '' }}>Faculty of Computing</option>
-            <option value="Faculty of Geomatics" {{ old('faculty') == 'Faculty of Geomatics' ? 'selected' : '' }}>Faculty of Geomatics</option>
-            <option value="Faculty of Social Sciences and Languages" {{ old('faculty') == 'Faculty of Social Sciences and Languages' ? 'selected' : '' }}>Faculty of Social Sciences and Languages</option>
-            <option value="Faculty of Agriculture" {{ old('faculty') == 'Faculty of Agriculture' ? 'selected' : '' }}>Faculty of Agriculture</option>
-            <option value="Faculty of Management" {{ old('faculty') == 'Faculty of Management' ? 'selected' : '' }}>Faculty of Management</option>
-            <option value="Faculty of Technology" {{ old('faculty') == 'Faculty of Technology' ? 'selected' : '' }}>Faculty of Technology</option>
-            <option value="Faculty of Medicine" {{ old('faculty') == 'Faculty of Medicine' ? 'selected' : '' }}>Faculty of Medicine</option>
-            <option value="Faculty of Applied Science" {{ old('faculty') == 'Faculty of Applied Science' ? 'selected' : '' }}>Faculty of Applied Science</option>
+          <select name="faculty" style="color: white;" required>
+            <option value="" disabled style="color: #423b3bff;">Select your faculty</option>
+            <option value="Faculty of Computing" {{ old('faculty', $booking->faculty) == 'Faculty of Computing' ? 'selected' : '' }}>Faculty of Computing</option>
+            <option value="Faculty of Geomatics" {{ old('faculty', $booking->faculty) == 'Faculty of Geomatics' ? 'selected' : '' }}>Faculty of Geomatics</option>
+            <option value="Faculty of Social Sciences and Languages" {{ old('faculty', $booking->faculty) == 'Faculty of Social Sciences and Languages' ? 'selected' : '' }}>Faculty of Social Sciences and Languages</option>
+            <option value="Faculty of Agriculture" {{ old('faculty', $booking->faculty) == 'Faculty of Agriculture' ? 'selected' : '' }}>Faculty of Agriculture</option>
+            <option value="Faculty of Management" {{ old('faculty', $booking->faculty) == 'Faculty of Management' ? 'selected' : '' }}>Faculty of Management</option>
+            <option value="Faculty of Technology" {{ old('faculty', $booking->faculty) == 'Faculty of Technology' ? 'selected' : '' }}>Faculty of Technology</option>
+            <option value="Faculty of Medicine" {{ old('faculty', $booking->faculty) == 'Faculty of Medicine' ? 'selected' : '' }}>Faculty of Medicine</option>
+            <option value="Faculty of Applied Science" {{ old('faculty', $booking->faculty) == 'Faculty of Applied Science' ? 'selected' : '' }}>Faculty of Applied Science</option>
           </select>
         </div>
 
         <div>
           <label>Event Type</label>
-          <input type="text" name="event_type" placeholder="Event Type" required value="{{ old('event_type') }}">
+          <input type="text" name="event_type" placeholder="Event Type" required value="{{ old('event_type', $booking->event_type) }}">
         </div>
         <div>
           <label>Event Location</label>
           <select name="center_id" required>
-            <option value="" disabled selected style="color: #423b3bff;">Select a venue</option>
-            <option value="1" {{ old('center_id') == '1' ? 'selected' : '' }}>Art Center</option>
-            <option value="2" {{ old('center_id') == '2' ? 'selected' : '' }}>Matta</option>
-            <option value="3" {{ old('center_id') == '3' ? 'selected' : '' }}>Pnibharatha Open Air Theater</option>
-            <option value="4" {{ old('center_id') == '4' ? 'selected' : '' }}>Prof J.W. Dyananda Somasundara Auditorium</option>
-            <option value="5" {{ old('center_id') == '5' ? 'selected' : '' }}>Other</option>
+            <option value="" disabled style="color: #423b3bff;">Select a venue</option>
+            @php
+              $allowedCenters = ['Art Center', 'Matta', 'Pnibharatha Open Air Theater', 'Prof J.W. Dyananda Somasundara Auditorium', 'Other'];
+              $addedCenters = [];
+            @endphp
+            @foreach($centers as $center)
+              @if(in_array($center->name, $allowedCenters) && !in_array($center->name, $addedCenters))
+                <option value="{{ $center->id }}" {{ old('center_id', $booking->center_id) == $center->id ? 'selected' : '' }}>{{ $center->name }}</option>
+                @php $addedCenters[] = $center->name; @endphp
+              @endif
+            @endforeach
           </select>
         </div>
 
         <div>
           <label>Email</label>
-          <input type="email" name="email" placeholder="Email" value="{{ old('email', Auth::user()->email) }}" readonly>
+          <input type="email" name="email" placeholder="Email" value="{{ Auth::user()->email }}" readonly>
         </div>
         <div>
           <label>Date</label>
-          <input type="date" name="booking_date" id="booking_date" placeholder="Select date" style="color:white;" required value="{{ old('booking_date') }}">
+          <input type="date" name="booking_date" id="booking_date" placeholder="Select date" style="color:white;" required value="{{ old('booking_date', $booking->booking_date) }}">
         </div>
 
         <div>
           <label>Start Time</label>
-          <input type="time" name="start_time" id="start_time" placeholder="Select time" style="color:white;" required value="{{ old('start_time') }}">
+          <input type="time" name="start_time" id="start_time" placeholder="Select time" style="color:white;" required value="{{ old('start_time', $booking->start_time) }}">
         </div>
         <div>
           <label>End Time</label>
-          <input type="time" name="end_time" id="end_time" placeholder="Select time" style="color:white;" required value="{{ old('end_time') }}">
+          <input type="time" name="end_time" id="end_time" placeholder="Select time" style="color:white;" required value="{{ old('end_time', $booking->end_time) }}">
         </div>
       </div>
 
       <div>
         <label style="margin-top: 20px;">Description</label>
-        <textarea name="description" placeholder="Type Here">{{ old('description') }}</textarea>
+        <textarea name="description" placeholder="Type Here">{{ old('description', $booking->description) }}</textarea>
       </div>
 
       <!-- PDF upload area -->
@@ -582,34 +601,20 @@
         </div>
 
         <div class="pdf-info" id="pdfInfo">
-          <div class="name">No file selected</div>
-          <div class="meta">Upload a PDF with supporting documents (rider, schedule, proposal)</div>
+          <div class="name">{{ $booking->pdf_attachment ? 'Current file: PDF Attachment' : 'No file selected' }}</div>
+          <div class="meta">{{ $booking->pdf_attachment ? 'You can upload a new PDF to replace the current one' : 'Upload a PDF with supporting documents (rider, schedule, proposal)' }}</div>
           <div style="display:flex;gap:8px;margin-top:8px">
             <button id="removeFile" class="file-remove" type="button" style="display:none">Remove</button>
-            <button id="changeFile" class="file-remove" type="button" style="display:none">Change</button>
+            <button id="changeFile" class="file-remove" type="button" style="display:{{ $booking->pdf_attachment ? 'inline-block' : 'none' }}">Change</button>
           </div>
         </div>
       </div>
 
-      <button type="submit" class="submit-btn" id="submitBtn">Submit Booking</button>
+      <div class="btn-container">
+        <a href="{{ route('booking.check') }}" class="cancel-btn">Cancel</a>
+        <button type="submit" class="submit-btn" id="submitBtn">Update Booking</button>
+      </div>
     </form>
-  </div>
-
-  <!-- Unavailable Booking Modal -->
-  <div id="unavailableModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-title">
-        <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i>
-        Booking Unavailable
-      </div>
-      <div class="modal-message">
-        This time slot is already booked or pending approval. Please select a different date or time for your event.
-      </div>
-      <div class="modal-buttons">
-        <button class="modal-button primary" id="checkAvailabilityBtn">Check Availability</button>
-        <button class="modal-button secondary" id="closeModalBtn">Close</button>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -664,7 +669,11 @@
 
     // Booking Availability Check
     document.addEventListener('DOMContentLoaded', function() {
-      // Hide loading overlay when page loads
+      const form = document.getElementById('bookingForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const modal = document.getElementById('unavailableModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const checkAvailabilityBtn = document.getElementById('checkAvailabilityBtn');
       const loadingOverlay = document.getElementById('loadingOverlay');
       
       // Hide loading overlay after a brief delay for visual effect
@@ -685,18 +694,12 @@
           e.preventDefault();
           loadingOverlay.classList.remove('hidden');
           
-          // Show loading for a short time to display the music animation
+          // Show loading for 1 second to display the music animation
           setTimeout(() => {
             window.location.href = this.getAttribute('href');
           }, 800);
         });
       });
-      
-      const form = document.getElementById('bookingForm');
-      const submitBtn = document.getElementById('submitBtn');
-      const modal = document.getElementById('unavailableModal');
-      const closeModalBtn = document.getElementById('closeModalBtn');
-      const checkAvailabilityBtn = document.getElementById('checkAvailabilityBtn');
       
       // Close modal button event
       closeModalBtn.addEventListener('click', function() {
@@ -729,10 +732,14 @@
           return;
         }
         
-        // Check availability before submitting
+        // Check availability before submitting (excluding current booking)
         checkAvailability(centerId, bookingDate, startTime, endTime, function(isAvailable) {
           if (isAvailable) {
-            form.submit(); // Submit the form if slot is available
+            // Show loading overlay before submitting
+            loadingOverlay.classList.remove('hidden');
+            setTimeout(() => {
+              form.submit(); // Submit the form if slot is available
+            }, 300);
           } else {
             // Show unavailable modal
             modal.style.display = 'flex';
@@ -754,7 +761,8 @@
             center_id: centerId,
             date: date,
             start_time: startTime,
-            end_time: endTime
+            end_time: endTime,
+            exclude_booking_id: {{ $booking->id }} // Exclude current booking from check
           })
         })
         .then(response => response.json())

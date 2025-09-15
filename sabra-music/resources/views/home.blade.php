@@ -1,5 +1,5 @@
 <?php
-
+use Carbon\Carbon;
 
 // navbar.php (Laravel Blade style with PHP)
 ?>
@@ -10,7 +10,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sabra Music</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+
   <style>
+    :root{--accent1:#ff7a18;--accent2:#ff3d6b;--accent3:#6b8bff;--accent4:#00e0ff;--muted:#bbb}
+    /* Colorful theme tweaks for Home page */
+    .colorful-accent{transition:all .18s ease}
+    
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -27,49 +33,95 @@
       scroll-behavior: smooth;
     }
 
-    /* Navbar */
+    /* Navbar - Updated to match history page */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: none;
-      padding: 25px 100px;
+      background: rgba(21, 20, 36, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 20px 100px;
       height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      min-width: 100px;
     }
 
     .logo img {
       height: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    .auth-section {
+      min-width: 100px;
+      text-align: right;
     }
 
     .nav-links {
       display: flex;
       gap: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      justify-content: center;
     }
 
     .nav-links a {
       text-decoration: none;
       color: white;
       font-size: 14px;
+      font-weight: 600;
       letter-spacing: 1px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #FF3C00;
+      transition: all 0.3s ease;
     }
 
     .nav-links a:hover {
-      color: #bbb;
+      color: #FF6B3D;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .admin-btn {
-      background: white;
-      color: black;
-      padding: 8px 20px;
-      border-radius: 20px;
+      background: #4A4DE7;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 30px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 14px;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .admin-btn:hover {
-      background: #ddd;
+      background: #6266FF;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
     /* Hero Section */
@@ -79,17 +131,121 @@
     }
 
     .hero small {
+      display: inline-block;
       font-size: 12px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #bbb;
+      color: #fff;
+      background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+      position: relative;
+      z-index: 4;
+      font-weight: 700;
     }
 
+    /* subtle gradient lines either side of the small headline */
+    .hero small::before,
+    .hero small::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent1), var(--accent3));
+      opacity: 0.9;
+      border-radius: 2px;
+    }
+    .hero small::before { left: -46px; }
+    .hero small::after { right: -46px; }
+
     .hero h1 {
-      font-size: 50px;
-      font-weight: bold;
+      font-size: 56px;
+      font-weight: 800;
       margin: 20px 0;
-      line-height: 1.2;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      /* animated gradient text */
+      background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3), var(--accent4));
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      animation: gradientShift 8s linear infinite;
+      transition: transform .6s ease;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero .hero-sub {
+      margin-top: 12px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.95);
+      max-width: 640px;
+      line-height: 1.5;
+      opacity: 0.98;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-left: 4px solid;
+      border-image: linear-gradient(180deg, var(--accent2), var(--accent4)) 1;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+      display: inline-block;
+      align-items: center;
+    }
+
+    .hero .hero-sub::before {
+      content: '♪';
+      display: inline-block;
+      margin-right: 10px;
+      color: var(--accent2);
+      font-weight: 800;
+      background: rgba(255,255,255,0.03);
+      padding: 6px 8px;
+      border-radius: 8px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+    }
+
+    .floating-notes {
+      position: absolute;
+      right: 120px;
+      top: 140px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .floating-notes .note {
+      color: rgba(255,255,255,0.95);
+      font-size: 20px;
+      opacity: 0.9;
+      transform: translateY(0);
+      display:inline-block;
+    }
+    .floating-notes .note.n1 { animation: floatUp 4.5s ease-in-out infinite; margin-right:6px; }
+    .floating-notes .note.n2 { animation: floatUp 5.4s ease-in-out infinite; margin-right:6px; }
+    .floating-notes .note.n3 { animation: floatUp 6.2s ease-in-out infinite; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0.9; }
+      50% { transform: translateY(-18px); opacity: 0.6; }
+      100% { transform: translateY(0); opacity: 0.9; }
+    }
+
+    .hero h1 .accent { display: inline-block; }
+    .hero a.signup-btn, .hero a.login-btn { transform-origin: center; }
+    .hero a.signup-btn:hover { transform: translateY(-4px) scale(1.02); }
+
+    /* Respect user's reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .hero h1 { animation: none !important; }
+      .floating-notes .note { animation: none !important; }
     }
 
     .signup-btn {
@@ -108,6 +264,24 @@
       background: #ddd;
     }
 
+    .login-btn {
+      background: transparent;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 20px;
+      border: 2px solid white;
+    }
+
+    .login-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    
+    
     /* Footer Social Links */
     .footer {
       padding: 15px 30px;
@@ -188,12 +362,26 @@
       margin: 0 0 10px;
       font-size: 18px;
       font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .event-info p {
       font-size: 14px;
       color: #444;
       margin: 5px 0;
+    }
+
+    .event-info .description {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #666;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .event-info i {
@@ -267,32 +455,199 @@
       font-size: 14px;
       color: #aaa;
     }
+
+    /* Loading Animation - Music Theme */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(21, 20, 36, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
+      opacity: 1;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .music-loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .loading-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      opacity: 0.8;
+    }
+
+    /* Music Bars Animation */
+    .music-bars {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      height: 60px;
+    }
+
+    .bar {
+      width: 8px;
+      background: linear-gradient(to top, #FF3C00, #4A4DE7);
+      border-radius: 4px;
+      animation: musicPulse 1.5s ease-in-out infinite;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+    .bar:nth-child(7) { animation-delay: 0.4s; }
+    .bar:nth-child(8) { animation-delay: 0.3s; }
+    .bar:nth-child(9) { animation-delay: 0.2s; }
+    .bar:nth-child(10) { animation-delay: 0.1s; }
+
+    @keyframes musicPulse {
+      0%, 40%, 100% {
+        height: 20px;
+        transform: scaleY(0.4);
+      }
+      20% {
+        height: 60px;
+        transform: scaleY(1);
+      }
+    }
+
+    .loading-overlay.show {
+      display: flex;
+    }
+    /* Page load animations (slower for calmer feel) */
+    .hero, .logo img, .nav-links, .signup-btn, .login-btn {
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+      /* increased duration for a smoother entrance */
+      transition: opacity 1200ms cubic-bezier(.2,.9,.2,1), transform 1200ms cubic-bezier(.2,.9,.2,1);
+    }
+
+    body.page-loaded .logo img { opacity: 1; transform: translateY(0) scale(1); transition-delay: 260ms; }
+    body.page-loaded .nav-links { opacity: 1; transform: translateY(0) scale(1); transition-delay: 360ms; }
+    body.page-loaded .hero { opacity: 1; transform: translateY(0) scale(1); transition-delay: 480ms; }
+    body.page-loaded .signup-btn { opacity: 1; transform: translateY(0) scale(1); transition-delay: 600ms; }
+    body.page-loaded .login-btn { opacity: 1; transform: translateY(0) scale(1); transition-delay: 600ms; }
+
+    /* Slight parallax-like background reveal via pseudo element */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: -1;
+      background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.22));
+      opacity: 0.0;
+      /* slow background reveal to match hero timing */
+      transition: opacity 1500ms ease;
+    }
+    body.page-loaded::after { opacity: 1; }
     
   </style>
 </head>
 <body>
 
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="music-loader">
+      <!-- Music Bars -->
+      <div class="music-bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <div class="loading-text">Loading Music...</div>
+    </div>
+  </div>
+
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
+      <a href="/" class="nav-link">
+        <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+      </a>
     </div>
-
     <div class="nav-links">
-      <a href="/schedule">SCHEDULE</a>
+      <a href="/schedule" class="nav-link">SCHEDULE</a>
       <a href="#event">UP COMING</a>
-      <a href="#">HISTORY</a>
+      <a href="/history" class="nav-link">HISTORY</a>
       <a href="#about">ABOUT</a>
     </div>
-
-    <a href="admin.php" class="admin-btn">ADMIN</a>
+    <div class="auth-section">
+      <a href="/adminlogin" class="admin-btn">ADMIN</a>
+    </div>
   </nav>
+
+  <script>
+    // Hide loading overlay when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      
+      // Hide loading overlay after a brief delay for visual effect
+      setTimeout(() => {
+        loadingOverlay.classList.add('hidden');
+        document.body.classList.add('page-loaded');
+      }, 800);
+      
+      // Add music-themed loading animation for page navigation
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Only show loading for external links (not anchor links)
+          if (this.getAttribute('href').startsWith('#')) {
+            return;
+          }
+          
+          e.preventDefault();
+          loadingOverlay.classList.remove('hidden');
+          
+          // Show loading for 1 second to display the music animation
+          setTimeout(() => {
+            window.location.href = this.getAttribute('href');
+          }, 800);
+        });
+      });
+    });
+  </script>
 
   <!-- Hero Section -->
   <section class="hero">
     <small>ELEVATE YOUR MUSICAL JOURNEY</small>
-    <h1>Feel The <br> Rhythm Of Your <br> Soul!</h1>
-    <a href="/signup" class="signup-btn">Sign Up</a>
+  <h1 class="headline-lines">FEEL THE RYTHEM<br>OF YOUR SOUL !</h1>
+    <div class="hero-sub">Join a warm, friendly community of musicians and music lovers — discover events, learn, and share the rhythm that moves you.</div>
+
+    <a href="/signup" class="signup-btn nav-link" >Sign Up</a>
+    <a href="/login" class="login-btn nav-link" >Login</a>
+
+    <div class="floating-notes" aria-hidden="true">
+      <span class="note n1">♪</span>
+      <span class="note n2">♫</span>
+      <span class="note n3">♬</span>
+    </div>
   </section>
 
   <!-- Footer Social Icons -->
@@ -310,61 +665,30 @@
       <button class="nav-btn prev" onclick="scrollSlider(-1)">&#10094;</button>
 
       <div class="event-slider" id="eventSlider">
-        <div class="event-card">
-          <img src="<?= asset('images/bg.jpeg') ?>" alt="Event 1">
-          <div class="event-info">
-            <h3>Ridmya – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Management Studies</p>
+        @forelse($upcoming_events as $event)
+          <div class="event-card">
+            @if($event->image)
+              <img src="{{ Storage::url($event->image) }}" alt="{{ $event->title }}">
+            @else
+              <img src="{{ asset('images/bg1.jpg') }}" alt="{{ $event->title }}">
+            @endif
+            <div class="event-info">
+              <h3>{{ $event->title }}</h3>
+              <p><i class="fas fa-map-marker-alt"></i> {{ $event->location }}</p>
+              <p><i class="fas fa-calendar"></i> {{ \Carbon\Carbon::parse($event->event_date)->format('d M Y') }}</p>
+              <p><i class="fas fa-clock"></i> {{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}</p>
+              <p class="description">{{ \Illuminate\Support\Str::limit($event->description, 80) }}</p>
+            </div>
           </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg1.jpg') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
+        @empty
+          <div class="event-card">
+            <img src="{{ asset('images/bg.jpeg') }}" alt="No Events">
+            <div class="event-info">
+              <h3>No Upcoming Events</h3>
+              <p>Check back soon for new events</p>
+            </div>
           </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg 2.png') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg.jpeg') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg1.jpg') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg.jpeg') ?>" alt="Event 2">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
-
-        <div class="event-card">
-          <img src="<?= asset('images/bg1.jpg') ?>" alt="Event 3">
-          <div class="event-info">
-            <h3>Raathriya Wee – 2026</h3>
-            <p><i class="fas fa-map-marker-alt"></i> Faculty of Applied Science</p>
-          </div>
-        </div>
+        @endforelse
       </div>
 
       <button class="nav-btn next" onclick="scrollSlider(1)">&#10095;</button>
@@ -372,6 +696,29 @@
   </section>
 
   <script>
+ // Music-themed loading animation for page navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Only show loading for external links (not anchor links)
+          if (this.getAttribute('href').startsWith('#')) {
+            return;
+          }
+          
+          e.preventDefault();
+          loadingOverlay.classList.add('show');
+          
+          // Show loading for 1 second to display the music animation
+          setTimeout(() => {
+            window.location.href = this.getAttribute('href');
+          }, 1000);
+        });
+      });
+    });
+
     function scrollSlider(dir) {
       const slider = document.getElementById('eventSlider');
       if (!slider) return;
