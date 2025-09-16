@@ -114,8 +114,8 @@
     }
 
     .admin-btn {
-      background: var(--primary);
-      color: var(--light);
+      background: white;
+      color: black;
       padding: 10px 24px;
       border-radius: 30px;
       text-decoration: none;
@@ -246,6 +246,7 @@
       align-items: center;
       gap: 14px;
       color: #e6eef6;
+      width: 830px
     }
 
     .pdf-dropzone{

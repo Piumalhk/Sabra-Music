@@ -122,7 +122,19 @@
     }
 
     .signup-box button:hover {
-      background: #ddd;
+      background: #ccc;
+    }
+
+    /* Error and Success Messages */
+    .error-messages, .error-message {
+      margin: 15px 0;
+    }
+
+    .error {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin: 5px 0;
+      text-align: center;
     }
 
     .signup-box p {
@@ -213,27 +225,42 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/home">
-      <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
+      <a href="{{ url('/') }}">
+        <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+      </a>
     </div>
 
-    
-
-    <a href="admin.php" class="admin-btn">ADMIN</a>
+    <a href="{{ url('/adminlogin') }}" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Signup Section -->
   <div class="signup-container">
     <div class="signup-box">
       <h2>SIGN UP</h2>
-      <form action="#" method="POST">
-        <input type="email" name="email" placeholder="EMAIL :" required>
-        <input type="text" name="index_no" placeholder="INDEX NO :" required>
+      
+      @if ($errors->any())
+        <div class="error-messages">
+          @foreach ($errors->all() as $error)
+            <p class="error">{{ $error }}</p>
+          @endforeach
+        </div>
+      @endif
+
+      @if (session('error'))
+        <div class="error-message">
+          <p class="error">{{ session('error') }}</p>
+        </div>
+      @endif
+      
+      <form action="{{ url('/signup') }}" method="POST">
+        @csrf
+        <input type="email" name="email" value="{{ old('email') }}" placeholder="EMAIL :" required>
+        <input type="text" name="index_no" value="{{ old('index_no') }}" placeholder="INDEX NO :" required>
         <input type="password" name="password" placeholder="ENTER PASSWORD :" required>
         <input type="password" name="password_confirmation" placeholder="CONFIRM PASSWORD :" required>
         <button type="submit">SIGN UP</button>
       </form>
-      <p>Already Have An Account? <a href="/login">Login</a></p>
+      <p>Already Have An Account? <a href="{{ url('/login') }}">Login</a></p>
     </div>
   </div>
 
