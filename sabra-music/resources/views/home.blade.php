@@ -753,7 +753,7 @@ use Carbon\Carbon;
 
   <!-- About -->
   <section class="about" id="about">
-    <h2>About Us</h2>
+    <h2>About Our Team</h2>
     <p>
       Seamless Flight Booking And Travel Planning At Your Fingertips—Effortless, 
       Affordable, And Stress-Free Journeys Await You.
