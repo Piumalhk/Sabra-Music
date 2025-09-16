@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Sabra Music - Sign IN</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -213,30 +212,28 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/">
+      <a href="/home">
       <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
-      </a>
     </div>
+
+ 
+
+  <a href="/adminlogin" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Signin Section -->
   <div class="signin-container">
     <div class="signin-box">
-      <h2>LOG IN</h2>
-      <form action="{{ route('login') }}" method="POST">
-        @csrf
+      <h2>SIGN IN</h2>
+      <form action="#" method="POST">
+      
         <input type="text" name="index_no" placeholder="INDEX NO :" required>
         <input type="password" name="password" placeholder="ENTER PASSWORD :" required>
 
-        <button type="submit" style="margin-top: 40px;margin-bottom: 20px;">LOG IN</button>
-        
-        @if ($errors->any())
-          <div style="color: red; margin-top: 10px;">
-            {{ $errors->first() }}
-          </div>
-        @endif
+        <button type="submit" style="margin-top: 40px;margin-bottom: 20px;">SIGN IN</button>
       </form>
-      <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+      
+      <p>Don't have an account? <a href="/signup">Sign up</a></p>
     </div>
   </div>
 

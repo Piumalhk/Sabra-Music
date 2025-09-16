@@ -38,10 +38,10 @@ use Carbon\Carbon;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(21, 20, 36, 0.9);
+      background: none;
       backdrop-filter: blur(10px);
       padding: 20px 100px;
-      height: 60px;
+      height: 40px;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -105,8 +105,8 @@ use Carbon\Carbon;
     }
 
     .admin-btn {
-      background: #4A4DE7;
-      color: white;
+      background: #ffffff;
+      color: rgb(0, 0, 0);
       padding: 10px 24px;
       border-radius: 30px;
       text-decoration: none;
@@ -504,7 +504,7 @@ use Carbon\Carbon;
 
     .bar {
       width: 8px;
-      background: linear-gradient(to top, #FF3C00, #4A4DE7);
+      background: white;
       border-radius: 4px;
       animation: musicPulse 1.5s ease-in-out infinite;
     }
