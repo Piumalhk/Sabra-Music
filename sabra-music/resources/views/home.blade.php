@@ -21,16 +21,12 @@ use Carbon\Carbon;
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #111; 
-      background-image: url('<?= asset('images/bg1.jpg') ?>');
-      background-size: cover;
-      background-position: right;
-      background-repeat: no-repeat;
-      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       color: white;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     /* Navbar - Updated to match history page */
@@ -126,13 +122,67 @@ use Carbon\Carbon;
 
     /* Hero Section */
     .hero {
-      padding: 80px 110px;
-      max-width: 600px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 110px;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      background-image: url("{{ asset('images/bg1.jpg') }}");
+      background-size:cover;
+      background-position:center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      overflow:hidden;
+    }
+
+    /* Optional: Add overlay for better text readability */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    }
+
+    /* Ensure hero content appears above overlay */
+    .hero > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 0 40px;
+        text-align: center;
+        align-items: center;
+      }
+      
+      .hero h1 {
+        font-size: 48px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 0 20px;
+      }
+      
+      .hero h1 {
+        font-size: 36px;
+      }
     }
 
     .hero small {
       display: inline-block;
-      font-size: 12px;
+      font-size: 16px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: #fff;
@@ -155,7 +205,7 @@ use Carbon\Carbon;
       transform: translateY(-50%);
       width: 36px;
       height: 2px;
-      background: linear-gradient(90deg, var(--accent1), var(--accent3));
+      
       opacity: 0.9;
       border-radius: 2px;
     }
@@ -163,7 +213,7 @@ use Carbon\Carbon;
     .hero small::after { right: -46px; }
 
     .hero h1 {
-      font-size: 56px;
+      font-size: 86px;
       font-weight: 800;
       margin: 20px 0;
       line-height: 1.05;
@@ -184,7 +234,10 @@ use Carbon\Carbon;
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
+    .title-hero{
+      display: inline;
+      font-size: 24px;
+    }
     .hero .hero-sub {
       margin-top: 12px;
       font-size: 16px;
@@ -200,6 +253,7 @@ use Carbon\Carbon;
       box-shadow: 0 10px 30px rgba(0,0,0,0.45);
       display: inline-block;
       align-items: center;
+      text-align: justify;
     }
 
     .hero .hero-sub::before {
@@ -216,14 +270,14 @@ use Carbon\Carbon;
 
     .floating-notes {
       position: absolute;
-      right: 120px;
-      top: 140px;
+     left: 950px;
+      top: 150px;
       pointer-events: none;
       z-index: 5;
     }
     .floating-notes .note {
       color: rgba(255,255,255,0.95);
-      font-size: 20px;
+      font-size: 40px;
       opacity: 0.9;
       transform: translateY(0);
       display:inline-block;
@@ -247,17 +301,24 @@ use Carbon\Carbon;
       .hero h1 { animation: none !important; }
       .floating-notes .note { animation: none !important; }
     }
-
+    .button-row{
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
     .signup-btn {
       background: white;
       color: black;
+      width:70px;
       padding: 12px 30px;
       border-radius: 25px;
+      text-align: center;
       font-size: 16px;
       text-decoration: none;
       font-weight: bold;
       display: inline-block;
       margin-top: 20px;
+     
     }
 
     .signup-btn:hover {
@@ -265,6 +326,7 @@ use Carbon\Carbon;
     }
 
     .login-btn {
+      text-align: center;
       background: transparent;
       color: white;
       padding: 12px 30px;
@@ -275,6 +337,8 @@ use Carbon\Carbon;
       display: inline-block;
       margin-top: 20px;
       border: 2px solid white;
+     
+      width:70px;
     }
 
     .login-btn:hover {
@@ -290,7 +354,7 @@ use Carbon\Carbon;
       gap: 15px;
       background: rgba(33, 32, 32, 0.6);
       width: fit-content;
-      margin: 40px 90px;
+      margin: 40px 0px;
       border-radius: 25px;
     }
 
@@ -638,19 +702,26 @@ use Carbon\Carbon;
   <section class="hero">
     <small>ELEVATE YOUR MUSICAL JOURNEY</small>
   <h1 class="headline-lines">FEEL THE RYTHEM<br>OF YOUR SOUL !</h1>
-    <div class="hero-sub">Join a warm, friendly community of musicians and music lovers — discover events, learn, and share the rhythm that moves you.</div>
-
-    <a href="/signup" class="signup-btn nav-link" >Sign Up</a>
-    <a href="/login" class="login-btn nav-link" >Login</a>
-
-    <div class="floating-notes" aria-hidden="true">
+   <div class="floating-notes" aria-hidden="true">
       <span class="note n1">♪</span>
       <span class="note n2">♫</span>
       <span class="note n3">♬</span>
     </div>
-  </section>
+    <div class="hero-sub">
+      <h3 class="title-hero">Art Center Digital Platform - SUSL</h3><br>
+      A smart and user-friendly platform to manage the activities of the Art Center, including event scheduling, resource allocation, registrations, and performance records. This system enhances efficiency, supports creativity, and helps streamline cultural and artistic programs within the university.</div>
+    <!-- Call to Action Buttons -->
+     <div class="button-row">    
+      <a href="/signup" class="signup-btn nav-link" >Sign Up</a>
+      <a href="/login" class="login-btn nav-link" >Login</a>
+  </div>
+    <div class="logos-footer">
+      <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo" style="height: 60px; margin-top: 20px;">
+        <img src="{{ asset('images/SuslPNG.png') }}" alt="Sabra Music Logo" style="height: 60px; margin-top: 20px;">
 
-  <!-- Footer Social Icons -->
+    </div>
+   
+      <!-- Footer Social Icons -->
   <div class="footer">
     <span>Follow</span>
     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -658,6 +729,9 @@ use Carbon\Carbon;
     <a href="#"><i class="fab fa-facebook"></i></a>
     <a href="#"><i class="fab fa-linkedin"></i></a>
   </div>
+  </section>
+
+
 
   <section class="events" id="event">
     <h2>Up Coming Event</h2>
@@ -758,6 +832,7 @@ use Carbon\Carbon;
       Seamless Flight Booking And Travel Planning At Your Fingertips—Effortless, 
       Affordable, And Stress-Free Journeys Await You.
     </p>
+
   </section>
 
   <!-- Footer -->
