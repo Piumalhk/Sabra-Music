@@ -172,7 +172,7 @@
 
     .bar {
       width: 8px;
-      background: linear-gradient(to top, #FF3C00, #4A4DE7);
+      background: white
       border-radius: 4px;
       animation: musicPulse 1.5s ease-in-out infinite;
     }

@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Sabra Music - Sign IN</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -138,7 +137,35 @@
       text-decoration: underline;
     }
 
-      /* Auto-typing text popup */
+    /* Error and Success Messages */
+    .error-messages, .error-message {
+      margin: 15px 0;
+    }
+
+    .error {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin: 5px 0;
+      text-align: center;
+    }
+
+    .remember-me {
+      text-align: left;
+      margin: 15px 0;
+    }
+
+    .remember-me input[type="checkbox"] {
+      margin-right: 5px;
+      width: auto;
+    }
+
+    .remember-me label {
+      font-size: 13px;
+      color: #bbb;
+      cursor: pointer;
+    }
+
+    /* Auto-typing text popup */
     .typing-popup {
       position: fixed;
       right: 150px;
@@ -213,30 +240,44 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/">
-      <img src="<?= asset('images/Group-237.png') ?>" alt="Sabra Music Logo">
+      <a href="{{ url('/') }}">
+        <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
       </a>
     </div>
+
+    <a href="{{ url('/adminlogin') }}" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Signin Section -->
   <div class="signin-container">
     <div class="signin-box">
-      <h2>LOG IN</h2>
-      <form action="{{ route('login') }}" method="POST">
+      <h2>SIGN IN</h2>
+      
+      @if ($errors->any())
+        <div class="error-messages">
+          @foreach ($errors->all() as $error)
+            <p class="error">{{ $error }}</p>
+          @endforeach
+        </div>
+      @endif
+
+      @if (session('error'))
+        <div class="error-message">
+          <p class="error">{{ session('error') }}</p>
+        </div>
+      @endif
+      
+      <form action="{{ url('/login') }}" method="POST">
         @csrf
-        <input type="text" name="index_no" placeholder="INDEX NO :" required>
+        <input type="text" name="index_no" value="{{ old('index_no') }}" placeholder="INDEX NO :" required>
         <input type="password" name="password" placeholder="ENTER PASSWORD :" required>
 
-        <button type="submit" style="margin-top: 40px;margin-bottom: 20px;">LOG IN</button>
         
-        @if ($errors->any())
-          <div style="color: red; margin-top: 10px;">
-            {{ $errors->first() }}
-          </div>
-        @endif
+
+        <button type="submit" style="margin-top: 20px;margin-bottom: 20px;">SIGN IN</button>
       </form>
-      <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+      
+      <p>Don't have an account? <a href="{{ url('/signup') }}">Sign up</a></p>
     </div>
   </div>
 

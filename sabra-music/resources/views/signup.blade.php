@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Sabra Music - Sign Up</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -11,7 +10,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #111; 
-      background-image: url('{{ asset('images/bg1.jpg') }}');
+      background-image: url('<?= asset('images/bg1.jpg') ?>');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -123,7 +122,19 @@
     }
 
     .signup-box button:hover {
-      background: #ddd;
+      background: #ccc;
+    }
+
+    /* Error and Success Messages */
+    .error-messages, .error-message {
+      margin: 15px 0;
+    }
+
+    .error {
+      color: #ff6b6b;
+      font-size: 12px;
+      margin: 5px 0;
+      text-align: center;
     }
 
     .signup-box p {
@@ -214,10 +225,12 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">
-      <a href="/">
-      <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
+      <a href="{{ url('/') }}">
+        <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo">
       </a>
     </div>
+
+    <a href="{{ url('/adminlogin') }}" class="admin-btn">ADMIN</a>
   </nav>
 
   <!-- Signup Section -->
@@ -226,24 +239,28 @@
       <h2>SIGN UP</h2>
       
       @if ($errors->any())
-        <div style="background: rgba(255, 100, 100, 0.8); padding: 10px; border-radius: 4px; margin-bottom: 15px; text-align: left; color: white;">
-            <ul style="margin: 0; padding-left: 20px;">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+        <div class="error-messages">
+          @foreach ($errors->all() as $error)
+            <p class="error">{{ $error }}</p>
+          @endforeach
+        </div>
+      @endif
+
+      @if (session('error'))
+        <div class="error-message">
+          <p class="error">{{ session('error') }}</p>
         </div>
       @endif
       
       <form action="{{ url('/signup') }}" method="POST">
         @csrf
-        <input type="email" name="email" placeholder="EMAIL :" required value="{{ old('email') }}">
-        <input type="text" name="index_no" placeholder="INDEX NO :" required value="{{ old('index_no') }}">
+        <input type="email" name="email" value="{{ old('email') }}" placeholder="EMAIL :" required>
+        <input type="text" name="index_no" value="{{ old('index_no') }}" placeholder="INDEX NO :" required>
         <input type="password" name="password" placeholder="ENTER PASSWORD :" required>
         <input type="password" name="password_confirmation" placeholder="CONFIRM PASSWORD :" required>
         <button type="submit">SIGN UP</button>
       </form>
-      <p>Already Have An Account? <a href="{{ route('login') }}">Login</a></p>
+      <p>Already Have An Account? <a href="{{ url('/login') }}">Login</a></p>
     </div>
   </div>
 

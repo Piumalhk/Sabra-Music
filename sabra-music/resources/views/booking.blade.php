@@ -47,10 +47,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(21, 20, 36, 0.9);
+      background: none;
       backdrop-filter: blur(10px);
       padding: 20px 100px;
-      height: 60px;
+      height: 40px;
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -114,8 +114,8 @@
     }
 
     .admin-btn {
-      background: var(--primary);
-      color: var(--light);
+      background: white;
+      color: black;
       padding: 10px 24px;
       border-radius: 30px;
       text-decoration: none;
@@ -246,6 +246,7 @@
       align-items: center;
       gap: 14px;
       color: #e6eef6;
+      width: 830px
     }
 
     .pdf-dropzone{
@@ -413,7 +414,7 @@
 
     .bar {
       width: 8px;
-      background: linear-gradient(to top, var(--accent), var(--primary));
+      background: white;
       border-radius: 4px;
       animation: musicPulse 1.5s ease-in-out infinite;
     }
