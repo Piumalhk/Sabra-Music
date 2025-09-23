@@ -182,7 +182,7 @@ use Carbon\Carbon;
 
     .hero small {
       display: inline-block;
-      font-size: 16px;
+      font-size: 14px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: #fff;
@@ -213,7 +213,7 @@ use Carbon\Carbon;
     .hero small::after { right: -46px; }
 
     .hero h1 {
-      font-size: 86px;
+      font-size: 60px;
       font-weight: 800;
       margin: 20px 0;
       line-height: 1.05;
@@ -240,9 +240,9 @@ use Carbon\Carbon;
     }
     .hero .hero-sub {
       margin-top: 12px;
-      font-size: 16px;
+      font-size: 14px;
       color: rgba(255,255,255,0.95);
-      max-width: 640px;
+      max-width: 620px;
       line-height: 1.5;
       opacity: 0.98;
       padding: 12px 18px;
@@ -270,8 +270,8 @@ use Carbon\Carbon;
 
     .floating-notes {
       position: absolute;
-     left: 950px;
-      top: 150px;
+     left: 720px;
+      top: 100px;
       pointer-events: none;
       z-index: 5;
     }
@@ -505,10 +505,11 @@ use Carbon\Carbon;
     }
     .about p {
       position: relative;
-      max-width: 700px;
+      max-width: 1100px;
       margin: 0 auto;
       font-size: 18px;
       line-height: 1.6;
+      text-align: center
     }
 
     /* Main Footer */
@@ -715,11 +716,6 @@ use Carbon\Carbon;
       <a href="/signup" class="signup-btn nav-link" >Sign Up</a>
       <a href="/login" class="login-btn nav-link" >Login</a>
   </div>
-    <div class="logos-footer">
-      <img src="{{ asset('images/Group-237.png') }}" alt="Sabra Music Logo" style="height: 60px; margin-top: 20px;">
-        <img src="{{ asset('images/SuslPNG.png') }}" alt="Sabra Music Logo" style="height: 60px; margin-top: 20px;">
-
-    </div>
    
       <!-- Footer Social Icons -->
   <div class="footer">
@@ -827,10 +823,13 @@ use Carbon\Carbon;
 
   <!-- About -->
   <section class="about" id="about">
-    <h2>About Our Team</h2>
+    <h2>About Us</h2>
     <p>
-      Seamless Flight Booking And Travel Planning At Your Fingertips—Effortless, 
-      Affordable, And Stress-Free Journeys Await You.
+    Welcome to Sabra Music - the digital heart of SUSL's Art Center. We're dedicated to nurturing artistic talent and 
+    cultural expression within our university community. Our platform streamlines music resource management, 
+    practice scheduling, and performance organization, empowering students and faculty to focus on what matters most - 
+    creating beautiful music. Through technology and passion, we're building a vibrant musical ecosystem that 
+    celebrates creativity and cultural heritage at the University.
     </p>
 
   </section>
