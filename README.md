@@ -107,10 +107,6 @@ Before running this project, make sure you have:
 
 ## 👥 Default Login Credentials
 
-### **Student Login**
-- Index No: `IS001`
-- Password: `password123`
-
 ### **Admin Login**
 - Email: `admin@example.com`
 - Password: `password`
@@ -193,27 +189,5 @@ The application uses a custom authentication system with the following features:
 
 ---
 
-## 📝 License
-
-This project is developed as part of IS4102 Web Application Development course at Sabaragamuwa University of Sri Lanka.
-
----
-
-## 📞 Contact
-
-- **Developer**: [Your Name]
-- **Email**: [your.email@example.com]
-- **University**: Sabaragamuwa University of Sri Lanka
-- **Course**: IS4102 - Web Application Development
-
----
-
-## 🙏 Acknowledgments
-
-- Sabaragamuwa University of Sri Lanka Art Center
-- IS4102 Web Application Development Course
-- Laravel Framework Community
-
----
 
 *© 2025 | Sabra Music | All Rights Reserved*
