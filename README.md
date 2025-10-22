@@ -1,7 +1,7 @@
 
 # Sabra Music - Art Center Digital Platform
 
-![Sabra Music Home Page](public/images/homepage.png)
+![Sabra Music Home Page](./images/homepage.png)
 
 **SUSL Art Center Management System**
 
