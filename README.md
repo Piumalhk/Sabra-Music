@@ -66,7 +66,7 @@ Before running this project, make sure you have:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/sabra-music.git
+   git clone https://github.com/Piumalhk/sabra-music.git
    cd sabra-music
    ```
 
@@ -88,8 +88,8 @@ Before running this project, make sure you have:
    DB_HOST=127.0.0.1
    DB_PORT=3306
    DB_DATABASE=sabra_music
-   DB_USERNAME=your_username
-   DB_PASSWORD=your_password
+   DB_USERNAME=root
+   DB_PASSWORD=
    ```
 
 5. **Run migrations and seeders**
