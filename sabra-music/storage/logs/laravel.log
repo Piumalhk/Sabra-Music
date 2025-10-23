@@ -9611,3 +9611,43 @@ Did you mean one of these?
 #54 F:\\University\\4th Sem\\IS4102_Web Application Development\\Mini Project\\Sabra-Music\\sabra-music\\server.php(21): require_once('F:\\\\University\\\\4...')
 #55 {main}
 "} 
+[2025-09-23 14:56:23] local.INFO: Fetching past events for history page  
+[2025-09-23 14:56:23] local.INFO: Current date: 2025-09-23  
+[2025-09-23 14:56:23] local.INFO: Total published events: 7  
+[2025-09-23 14:56:23] local.INFO: Found 4 past events using DB query  
+[2025-09-23 14:56:23] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-23 14:56:24] local.INFO: Fetching past events for history page  
+[2025-09-23 14:56:24] local.INFO: Current date: 2025-09-23  
+[2025-09-23 14:56:24] local.INFO: Total published events: 7  
+[2025-09-23 14:56:24] local.INFO: Found 4 past events using DB query  
+[2025-09-23 14:56:24] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-23 15:11:23] local.INFO: Fetching past events for history page  
+[2025-09-23 15:11:23] local.INFO: Current date: 2025-09-23  
+[2025-09-23 15:11:23] local.INFO: Total published events: 8  
+[2025-09-23 15:11:23] local.INFO: Found 4 past events using DB query  
+[2025-09-23 15:11:23] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-23 15:11:23] local.INFO: Fetching past events for history page  
+[2025-09-23 15:11:23] local.INFO: Current date: 2025-09-23  
+[2025-09-23 15:11:23] local.INFO: Total published events: 8  
+[2025-09-23 15:11:23] local.INFO: Found 4 past events using DB query  
+[2025-09-23 15:11:23] local.INFO: Found 4 past events using Carbon comparison  
+[2025-09-27 08:25:48] local.INFO: Fetching past events for history page  
+[2025-09-27 08:25:48] local.INFO: Current date: 2025-09-27  
+[2025-09-27 08:25:48] local.INFO: Total published events: 8  
+[2025-09-27 08:25:48] local.INFO: Found 5 past events using DB query  
+[2025-09-27 08:25:48] local.INFO: Found 5 past events using Carbon comparison  
+[2025-09-27 08:25:48] local.INFO: Fetching past events for history page  
+[2025-09-27 08:25:48] local.INFO: Current date: 2025-09-27  
+[2025-09-27 08:25:48] local.INFO: Total published events: 8  
+[2025-09-27 08:25:48] local.INFO: Found 5 past events using DB query  
+[2025-09-27 08:25:48] local.INFO: Found 5 past events using Carbon comparison  
+[2025-10-19 20:57:46] local.INFO: Fetching past events for history page  
+[2025-10-19 20:57:46] local.INFO: Current date: 2025-10-19  
+[2025-10-19 20:57:46] local.INFO: Total published events: 8  
+[2025-10-19 20:57:46] local.INFO: Found 7 past events using DB query  
+[2025-10-19 20:57:46] local.INFO: Found 7 past events using Carbon comparison  
+[2025-10-19 20:57:47] local.INFO: Fetching past events for history page  
+[2025-10-19 20:57:47] local.INFO: Current date: 2025-10-19  
+[2025-10-19 20:57:47] local.INFO: Total published events: 8  
+[2025-10-19 20:57:47] local.INFO: Found 7 past events using DB query  
+[2025-10-19 20:57:47] local.INFO: Found 7 past events using Carbon comparison  
