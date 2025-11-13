@@ -32,7 +32,7 @@
 		.nav a i{width:18px;text-align:center;font-size:16px}
 
 		/* Main */
-		.main{flex:1;padding:20px}
+		.main{flex:1;padding:22px}
 		header.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 		.topbar-left{display:flex;align-items:center;gap:14px}
 		.search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.03);padding:8px;border-radius:10px}
