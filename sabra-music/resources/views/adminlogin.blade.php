@@ -37,7 +37,7 @@
 		.admin-btn {
 			background: #4A4DE7;
 			color: white;
-			padding: 9px 20px;
+			padding: 10px 20px;
 			border-radius: 20px;
 			text-decoration: none;
 			font-weight: bold;
